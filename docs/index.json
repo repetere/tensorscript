@@ -2,8 +2,163 @@
   {
     "__docId__": 0,
     "kind": "file",
+    "name": "lib/classification.mjs",
+    "content": "import { BaseNeuralNetwork, } from './deeplearning';\r\n\r\n/**\r\n * Deep Learning Classification with Tensorflow\r\n * @class DeepLearningClassification\r\n * @implements {BaseNeuralNetwork}\r\n */\r\nexport class DeepLearningClassification extends BaseNeuralNetwork{\r\n  /**\r\n   * @param {{layers:Array<Object>,compile:Object,fit:Object}} options - neural network configuration and tensorflow model hyperparameters\r\n   * @param {{model:Object,tf:Object,}} properties - extra instance properties\r\n   */\r\n  constructor(options = {}, properties) {\r\n    const config = Object.assign({\r\n      layers: [],\r\n      compile: {\r\n        loss: 'categoricalCrossentropy',\r\n        optimizer: 'adam',\r\n      },\r\n      fit: {\r\n        epochs: 100,\r\n        batchSize: 5,\r\n      },\r\n    }, options);\r\n    super(config, properties);\r\n    return this;\r\n  }\r\n  /**\r\n   * Adds dense layers to tensorflow classification model\r\n   * @override \r\n   * @param {Array<Array<number>>} x_matrix - independent variables\r\n   * @param {Array<Array<number>>} y_matrix - dependent variables\r\n   * @param {Array<Object>} layers - model dense layer parameters\r\n   */\r\n  generateLayers(x_matrix, y_matrix, layers) {\r\n    const xShape = this.getInputShape(x_matrix);\r\n    const yShape = this.getInputShape(y_matrix);\r\n    this.yShape = yShape;\r\n    this.xShape = xShape;\r\n    const denseLayers = [];\r\n    if (layers) {\r\n      denseLayers.push(...layers);\r\n    } else {\r\n      denseLayers.push({ units: (xShape[ 1 ] * 2), inputDim: xShape[1],  activation: 'relu', });\r\n      denseLayers.push({ units: yShape[ 1 ], activation: 'softmax', });\r\n    }\r\n    this.layers = denseLayers;\r\n    denseLayers.forEach(layer => {\r\n      this.model.add(this.tf.layers.dense(layer));\r\n    });\r\n  }\r\n}",
+    "static": true,
+    "longname": "/Users/yawjosephetse/Developer/github/repetere/ts-deeplearning/lib/classification.mjs",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 1,
+    "kind": "class",
+    "name": "DeepLearningClassification",
+    "memberof": "lib/classification.mjs",
+    "static": true,
+    "longname": "lib/classification.mjs~DeepLearningClassification",
+    "access": "public",
+    "export": true,
+    "importPath": "@tensorscript/ts-deeplearning/lib/classification.mjs",
+    "importStyle": "{DeepLearningClassification}",
+    "description": "Deep Learning Classification with Tensorflow",
+    "lineNumber": 8,
+    "unknown": [
+      {
+        "tagName": "@class",
+        "tagValue": "DeepLearningClassification"
+      }
+    ],
+    "interface": false,
+    "extends": [
+      "lib/deeplearning.js~BaseNeuralNetwork"
+    ],
+    "implements": [
+      "BaseNeuralNetwork"
+    ]
+  },
+  {
+    "__docId__": 2,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "lib/classification.mjs~DeepLearningClassification",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/classification.mjs~DeepLearningClassification#constructor",
+    "access": "public",
+    "description": "",
+    "lineNumber": 13,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "{layers:Array<Object>,compile:Object,fit:Object}"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options",
+        "description": "neural network configuration and tensorflow model hyperparameters"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "{model:Object,tf:Object,}"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "properties",
+        "description": "extra instance properties"
+      }
+    ]
+  },
+  {
+    "__docId__": 3,
+    "kind": "method",
+    "name": "generateLayers",
+    "memberof": "lib/classification.mjs~DeepLearningClassification",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/classification.mjs~DeepLearningClassification#generateLayers",
+    "access": "public",
+    "description": "Adds dense layers to tensorflow classification model",
+    "lineNumber": 35,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Array<Array<number>>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "x_matrix",
+        "description": "independent variables"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Array<Array<number>>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "y_matrix",
+        "description": "dependent variables"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Array<Object>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "layers",
+        "description": "model dense layer parameters"
+      }
+    ],
+    "override": true
+  },
+  {
+    "__docId__": 4,
+    "kind": "member",
+    "name": "yShape",
+    "memberof": "lib/classification.mjs~DeepLearningClassification",
+    "static": false,
+    "longname": "lib/classification.mjs~DeepLearningClassification#yShape",
+    "access": "public",
+    "description": null,
+    "lineNumber": 38,
+    "undocument": true
+  },
+  {
+    "__docId__": 5,
+    "kind": "member",
+    "name": "xShape",
+    "memberof": "lib/classification.mjs~DeepLearningClassification",
+    "static": false,
+    "longname": "lib/classification.mjs~DeepLearningClassification#xShape",
+    "access": "public",
+    "description": null,
+    "lineNumber": 39,
+    "undocument": true
+  },
+  {
+    "__docId__": 6,
+    "kind": "member",
+    "name": "layers",
+    "memberof": "lib/classification.mjs~DeepLearningClassification",
+    "static": false,
+    "longname": "lib/classification.mjs~DeepLearningClassification#layers",
+    "access": "public",
+    "description": null,
+    "lineNumber": 47,
+    "undocument": true
+  },
+  {
+    "__docId__": 7,
+    "kind": "file",
     "name": "lib/deeplearning.mjs",
-    "content": "import { TensorScriptModelInterface, } from '@tensorscript/core';\r\n\r\n/**\r\n * Deep Learning with Tensorflow\r\n * @class BaseNeuralNetwork\r\n * @implements {TensorScriptModelInterface}\r\n */\r\nexport class BaseNeuralNetwork extends TensorScriptModelInterface {\r\n  /**\r\n   * @param {{layers:Array<Object>,compile:Object,fit:Object}} options - neural network configuration and tensorflow model hyperparameters\r\n   * @param {{model:Object,tf:Object,}} properties - extra instance properties\r\n   */\r\n  constructor(options = {}, properties) {\r\n    const config = Object.assign({\r\n      layers: [],\r\n      compile: {\r\n        loss: 'meanSquaredError',\r\n        optimizer: 'adam',\r\n      },\r\n      fit: {\r\n        epochs: 100,\r\n        batchSize: 5,\r\n      },\r\n    }, options);\r\n    super(config, properties);\r\n    return this;\r\n  }\r\n  /**\r\n   * Adds dense layers to tensorflow model\r\n   * @abstract \r\n   * @param {Array<Array<number>>} x_matrix - independent variables\r\n   * @param {Array<Array<number>>} y_matrix - dependent variables\r\n   * @param {Array<Object>} layers - model dense layer parameters\r\n   */\r\n  generateLayers(x_matrix, y_matrix, layers) {\r\n    throw new ReferenceError('generateLayers method is not implemented');\r\n  }\r\n  /**\r\n   * Asynchronously trains tensorflow model\r\n   * @override\r\n   * @param {Array<Array<number>>} x_matrix - independent variables\r\n   * @param {Array<Array<number>>} y_matrix - dependent variables\r\n   * @param {Array<Object>} layers - array of model dense layer parameters\r\n   * @return {Object} returns trained tensorflow model \r\n   */\r\n  async train(x_matrix, y_matrix, layers) {\r\n    const xShape = this.getInputShape(x_matrix);\r\n    const yShape = this.getInputShape(y_matrix);\r\n    const xs = this.tf.tensor(x_matrix, xShape);\r\n    const ys = this.tf.tensor(y_matrix, yShape);\r\n    this.model = this.tf.sequential();\r\n    this.generateLayers.call(this, x_matrix, y_matrix, layers || this.layers);\r\n    this.model.compile(this.settings.compile);\r\n    await this.model.fit(xs, ys, this.settings.fit);\r\n    xs.dispose();\r\n    ys.dispose();\r\n    return this.model;\r\n  }\r\n  /**\r\n   * Predicts new dependent variables\r\n   * @override\r\n   * @param {Array<Array<number>>|Array<number>} matrix - new test independent variables\r\n   * @return {{data: Promise}} returns tensorflow prediction \r\n   */\r\n  calculate(input_matrix) {\r\n    const predictionInput = (Array.isArray(input_matrix[ 0 ]))\r\n      ? input_matrix\r\n      : [input_matrix, ];\r\n    const predictionTensor = this.tf.tensor(predictionInput);\r\n    const prediction = this.model.predict(predictionTensor);\r\n    predictionTensor.dispose();\r\n    return prediction;\r\n  }\r\n}\r\n\r\n/**\r\n * Deep Learning Regression with Tensorflow\r\n * @class DeepLearningRegression\r\n * @implements {BaseNeuralNetwork}\r\n */\r\nexport class DeepLearningRegression extends BaseNeuralNetwork {\r\n  /**\r\n   * @param {{layers:Array<Object>,compile:Object,fit:Object,layerPreference:String}} options - neural network configuration and tensorflow model hyperparameters\r\n   * @param {{model:Object,tf:Object,}} properties - extra instance properties\r\n   */\r\n  constructor(options = {}, properties) {\r\n    const config = Object.assign({\r\n      layers: [],\r\n      layerPreference:'deep',\r\n      compile: {\r\n        loss: 'meanSquaredError',\r\n        optimizer: 'adam',\r\n      },\r\n      fit: {\r\n        epochs: 100,\r\n        batchSize: 5,\r\n      },\r\n    }, options);\r\n    super(config, properties);\r\n    return this;\r\n  }\r\n  /**\r\n   * Adds dense layers to tensorflow regression model\r\n   * @override \r\n   * @param {Array<Array<number>>} x_matrix - independent variables\r\n   * @param {Array<Array<number>>} y_matrix - dependent variables\r\n   * @param {Array<Object>} layers - model dense layer parameters\r\n   */\r\n  generateLayers(x_matrix, y_matrix, layers) {\r\n    const xShape = this.getInputShape(x_matrix);\r\n    const yShape = this.getInputShape(y_matrix);\r\n    const denseLayers = [];\r\n    if (layers) {\r\n      denseLayers.push(...layers);\r\n    } else if(this.settings.layerPreference==='deep') {\r\n      denseLayers.push({ units: xShape[ 1 ], inputShape: [xShape[1],], kernelInitializer: 'randomNormal', activation: 'relu', });\r\n      denseLayers.push({ units: parseInt(Math.ceil(xShape[ 1 ] / 2), 10), kernelInitializer: 'randomNormal', activation: 'relu', });\r\n      denseLayers.push({ units: yShape[ 1 ], kernelInitializer: 'randomNormal', });\r\n    } else {\r\n      denseLayers.push({ units: (xShape[ 1 ] * 2), inputShape: [xShape[1],], kernelInitializer: 'randomNormal', activation: 'relu', });\r\n      denseLayers.push({ units: yShape[ 1 ], kernelInitializer: 'randomNormal', });\r\n    }\r\n    denseLayers.forEach(layer => {\r\n      this.model.add(this.tf.layers.dense(layer));\r\n    });\r\n  }\r\n}\r\n\r\n/**\r\n * Deep Learning Classification with Tensorflow\r\n * @class DeepLearningClassification\r\n * @implements {BaseNeuralNetwork}\r\n */\r\nexport class DeepLearningClassification extends BaseNeuralNetwork{\r\n  /**\r\n   * @param {{layers:Array<Object>,compile:Object,fit:Object}} options - neural network configuration and tensorflow model hyperparameters\r\n   * @param {{model:Object,tf:Object,}} properties - extra instance properties\r\n   */\r\n  constructor(options = {}, properties) {\r\n    const config = Object.assign({\r\n      layers: [],\r\n      compile: {\r\n        loss: 'categoricalCrossentropy',\r\n        optimizer: 'adam',\r\n      },\r\n      fit: {\r\n        epochs: 100,\r\n        batchSize: 5,\r\n      },\r\n    }, options);\r\n    super(config, properties);\r\n    return this;\r\n  }\r\n  /**\r\n   * Adds dense layers to tensorflow classification model\r\n   * @override \r\n   * @param {Array<Array<number>>} x_matrix - independent variables\r\n   * @param {Array<Array<number>>} y_matrix - dependent variables\r\n   * @param {Array<Object>} layers - model dense layer parameters\r\n   */\r\n  generateLayers(x_matrix, y_matrix, layers) {\r\n    const xShape = this.getInputShape(x_matrix);\r\n    const yShape = this.getInputShape(y_matrix);\r\n    this.yShape = yShape;\r\n    this.xShape = xShape;\r\n    const denseLayers = [];\r\n    if (layers) {\r\n      denseLayers.push(...layers);\r\n    } else {\r\n      denseLayers.push({ units: (xShape[ 1 ] * 2), inputDim: xShape[1],  activation: 'relu', });\r\n      denseLayers.push({ units: yShape[ 1 ], activation: 'softmax', });\r\n    }\r\n    denseLayers.forEach(layer => {\r\n      this.model.add(this.tf.layers.dense(layer));\r\n    });\r\n  }\r\n}",
+    "content": "import { TensorScriptModelInterface, } from '@tensorscript/core';\r\n\r\n/**\r\n * Deep Learning with Tensorflow\r\n * @class BaseNeuralNetwork\r\n * @implements {TensorScriptModelInterface}\r\n */\r\nexport class BaseNeuralNetwork extends TensorScriptModelInterface {\r\n  /**\r\n   * @param {{layers:Array<Object>,compile:Object,fit:Object}} options - neural network configuration and tensorflow model hyperparameters\r\n   * @param {{model:Object,tf:Object,}} properties - extra instance properties\r\n   */\r\n  constructor(options = {}, properties) {\r\n    const config = Object.assign({\r\n      layers: [],\r\n      compile: {\r\n        loss: 'meanSquaredError',\r\n        optimizer: 'adam',\r\n      },\r\n      fit: {\r\n        epochs: 100,\r\n        batchSize: 5,\r\n      },\r\n    }, options);\r\n    super(config, properties);\r\n    return this;\r\n  }\r\n  /**\r\n   * Adds dense layers to tensorflow model\r\n   * @abstract \r\n   * @param {Array<Array<number>>} x_matrix - independent variables\r\n   * @param {Array<Array<number>>} y_matrix - dependent variables\r\n   * @param {Array<Object>} layers - model dense layer parameters\r\n   */\r\n  generateLayers(x_matrix, y_matrix, layers) {\r\n    throw new ReferenceError('generateLayers method is not implemented');\r\n  }\r\n  /**\r\n   * Asynchronously trains tensorflow model\r\n   * @override\r\n   * @param {Array<Array<number>>} x_matrix - independent variables\r\n   * @param {Array<Array<number>>} y_matrix - dependent variables\r\n   * @param {Array<Object>} layers - array of model dense layer parameters\r\n   * @return {Object} returns trained tensorflow model \r\n   */\r\n  async train(x_matrix, y_matrix, layers) {\r\n    const xShape = this.getInputShape(x_matrix);\r\n    const yShape = this.getInputShape(y_matrix);\r\n    const xs = this.tf.tensor(x_matrix, xShape);\r\n    const ys = this.tf.tensor(y_matrix, yShape);\r\n    this.xShape = xShape;\r\n    this.yShape = yShape;\r\n    this.model = this.tf.sequential();\r\n    this.generateLayers.call(this, x_matrix, y_matrix, layers || this.layers);\r\n    this.model.compile(this.settings.compile);\r\n    await this.model.fit(xs, ys, this.settings.fit);\r\n    xs.dispose();\r\n    ys.dispose();\r\n    return this.model;\r\n  }\r\n  /**\r\n   * Predicts new dependent variables\r\n   * @override\r\n   * @param {Array<Array<number>>|Array<number>} matrix - new test independent variables\r\n   * @return {{data: Promise}} returns tensorflow prediction \r\n   */\r\n  calculate(input_matrix) {\r\n    if (!input_matrix || Array.isArray(input_matrix)===false) throw new Error('invalid input matrix');\r\n    const predictionInput = (Array.isArray(input_matrix[ 0 ]))\r\n      ? input_matrix\r\n      : [\r\n        input_matrix,\r\n      ];\r\n    const predictionTensor = this.tf.tensor(predictionInput);\r\n    const prediction = this.model.predict(predictionTensor);\r\n    predictionTensor.dispose();\r\n    return prediction;\r\n  }\r\n}",
     "static": true,
     "longname": "/Users/yawjosephetse/Developer/github/repetere/ts-deeplearning/lib/deeplearning.mjs",
     "access": "public",
@@ -11,7 +166,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 1,
+    "__docId__": 8,
     "kind": "class",
     "name": "BaseNeuralNetwork",
     "memberof": "lib/deeplearning.mjs",
@@ -38,7 +193,7 @@
     ]
   },
   {
-    "__docId__": 2,
+    "__docId__": 9,
     "kind": "constructor",
     "name": "constructor",
     "memberof": "lib/deeplearning.mjs~BaseNeuralNetwork",
@@ -73,7 +228,7 @@
     ]
   },
   {
-    "__docId__": 3,
+    "__docId__": 10,
     "kind": "method",
     "name": "generateLayers",
     "memberof": "lib/deeplearning.mjs~BaseNeuralNetwork",
@@ -119,7 +274,7 @@
     "abstract": true
   },
   {
-    "__docId__": 4,
+    "__docId__": 11,
     "kind": "method",
     "name": "train",
     "memberof": "lib/deeplearning.mjs~BaseNeuralNetwork",
@@ -173,7 +328,31 @@
     "override": true
   },
   {
-    "__docId__": 5,
+    "__docId__": 12,
+    "kind": "member",
+    "name": "xShape",
+    "memberof": "lib/deeplearning.mjs~BaseNeuralNetwork",
+    "static": false,
+    "longname": "lib/deeplearning.mjs~BaseNeuralNetwork#xShape",
+    "access": "public",
+    "description": null,
+    "lineNumber": 51,
+    "undocument": true
+  },
+  {
+    "__docId__": 13,
+    "kind": "member",
+    "name": "yShape",
+    "memberof": "lib/deeplearning.mjs~BaseNeuralNetwork",
+    "static": false,
+    "longname": "lib/deeplearning.mjs~BaseNeuralNetwork#yShape",
+    "access": "public",
+    "description": null,
+    "lineNumber": 52,
+    "undocument": true
+  },
+  {
+    "__docId__": 14,
     "kind": "member",
     "name": "model",
     "memberof": "lib/deeplearning.mjs~BaseNeuralNetwork",
@@ -181,11 +360,11 @@
     "longname": "lib/deeplearning.mjs~BaseNeuralNetwork#model",
     "access": "public",
     "description": null,
-    "lineNumber": 51,
+    "lineNumber": 53,
     "undocument": true
   },
   {
-    "__docId__": 6,
+    "__docId__": 15,
     "kind": "method",
     "name": "calculate",
     "memberof": "lib/deeplearning.mjs~BaseNeuralNetwork",
@@ -195,7 +374,7 @@
     "longname": "lib/deeplearning.mjs~BaseNeuralNetwork#calculate",
     "access": "public",
     "description": "Predicts new dependent variables",
-    "lineNumber": 65,
+    "lineNumber": 67,
     "params": [
       {
         "nullable": null,
@@ -219,18 +398,29 @@
     "override": true
   },
   {
-    "__docId__": 7,
+    "__docId__": 16,
+    "kind": "file",
+    "name": "lib/regression.mjs",
+    "content": "import { BaseNeuralNetwork, } from './deeplearning';\r\n\r\n/**\r\n * Deep Learning Regression with Tensorflow\r\n * @class DeepLearningRegression\r\n * @implements {BaseNeuralNetwork}\r\n */\r\nexport class DeepLearningRegression extends BaseNeuralNetwork {\r\n  /**\r\n   * @param {{layers:Array<Object>,compile:Object,fit:Object,layerPreference:String}} options - neural network configuration and tensorflow model hyperparameters\r\n   * @param {{model:Object,tf:Object,}} properties - extra instance properties\r\n   */\r\n  constructor(options = {}, properties) {\r\n    const config = Object.assign({\r\n      layers: [],\r\n      layerPreference:'deep',\r\n      compile: {\r\n        loss: 'meanSquaredError',\r\n        optimizer: 'adam',\r\n      },\r\n      fit: {\r\n        epochs: 100,\r\n        batchSize: 5,\r\n      },\r\n    }, options);\r\n    super(config, properties);\r\n    return this;\r\n  }\r\n  /**\r\n   * Adds dense layers to tensorflow regression model\r\n   * @override \r\n   * @param {Array<Array<number>>} x_matrix - independent variables\r\n   * @param {Array<Array<number>>} y_matrix - dependent variables\r\n   * @param {Array<Object>} layers - model dense layer parameters\r\n   */\r\n  generateLayers(x_matrix, y_matrix, layers) {\r\n    const xShape = this.getInputShape(x_matrix);\r\n    const yShape = this.getInputShape(y_matrix);\r\n    const denseLayers = [];\r\n    if (layers) {\r\n      denseLayers.push(...layers);\r\n    } else if(this.settings.layerPreference==='deep') {\r\n      denseLayers.push({ units: xShape[ 1 ], inputShape: [xShape[1],], kernelInitializer: 'randomNormal', activation: 'relu', });\r\n      denseLayers.push({ units: parseInt(Math.ceil(xShape[ 1 ] / 2), 10), kernelInitializer: 'randomNormal', activation: 'relu', });\r\n      denseLayers.push({ units: yShape[ 1 ], kernelInitializer: 'randomNormal', });\r\n    } else {\r\n      denseLayers.push({ units: (xShape[ 1 ] * 2), inputShape: [xShape[1],], kernelInitializer: 'randomNormal', activation: 'relu', });\r\n      denseLayers.push({ units: yShape[ 1 ], kernelInitializer: 'randomNormal', });\r\n    }\r\n    this.layers = denseLayers;\r\n    denseLayers.forEach(layer => {\r\n      this.model.add(this.tf.layers.dense(layer));\r\n    });\r\n  }\r\n}",
+    "static": true,
+    "longname": "/Users/yawjosephetse/Developer/github/repetere/ts-deeplearning/lib/regression.mjs",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 17,
     "kind": "class",
     "name": "DeepLearningRegression",
-    "memberof": "lib/deeplearning.mjs",
+    "memberof": "lib/regression.mjs",
     "static": true,
-    "longname": "lib/deeplearning.mjs~DeepLearningRegression",
+    "longname": "lib/regression.mjs~DeepLearningRegression",
     "access": "public",
     "export": true,
-    "importPath": "@tensorscript/ts-deeplearning/lib/deeplearning.mjs",
+    "importPath": "@tensorscript/ts-deeplearning/lib/regression.mjs",
     "importStyle": "{DeepLearningRegression}",
     "description": "Deep Learning Regression with Tensorflow",
-    "lineNumber": 81,
+    "lineNumber": 8,
     "unknown": [
       {
         "tagName": "@class",
@@ -239,24 +429,24 @@
     ],
     "interface": false,
     "extends": [
-      "BaseNeuralNetwork"
+      "lib/deeplearning.js~BaseNeuralNetwork"
     ],
     "implements": [
       "BaseNeuralNetwork"
     ]
   },
   {
-    "__docId__": 8,
+    "__docId__": 18,
     "kind": "constructor",
     "name": "constructor",
-    "memberof": "lib/deeplearning.mjs~DeepLearningRegression",
+    "memberof": "lib/regression.mjs~DeepLearningRegression",
     "generator": false,
     "async": false,
     "static": false,
-    "longname": "lib/deeplearning.mjs~DeepLearningRegression#constructor",
+    "longname": "lib/regression.mjs~DeepLearningRegression#constructor",
     "access": "public",
     "description": "",
-    "lineNumber": 86,
+    "lineNumber": 13,
     "params": [
       {
         "nullable": null,
@@ -281,17 +471,17 @@
     ]
   },
   {
-    "__docId__": 9,
+    "__docId__": 19,
     "kind": "method",
     "name": "generateLayers",
-    "memberof": "lib/deeplearning.mjs~DeepLearningRegression",
+    "memberof": "lib/regression.mjs~DeepLearningRegression",
     "generator": false,
     "async": false,
     "static": false,
-    "longname": "lib/deeplearning.mjs~DeepLearningRegression#generateLayers",
+    "longname": "lib/regression.mjs~DeepLearningRegression#generateLayers",
     "access": "public",
     "description": "Adds dense layers to tensorflow regression model",
-    "lineNumber": 109,
+    "lineNumber": 36,
     "params": [
       {
         "nullable": null,
@@ -327,135 +517,15 @@
     "override": true
   },
   {
-    "__docId__": 10,
-    "kind": "class",
-    "name": "DeepLearningClassification",
-    "memberof": "lib/deeplearning.mjs",
-    "static": true,
-    "longname": "lib/deeplearning.mjs~DeepLearningClassification",
-    "access": "public",
-    "export": true,
-    "importPath": "@tensorscript/ts-deeplearning/lib/deeplearning.mjs",
-    "importStyle": "{DeepLearningClassification}",
-    "description": "Deep Learning Classification with Tensorflow",
-    "lineNumber": 134,
-    "unknown": [
-      {
-        "tagName": "@class",
-        "tagValue": "DeepLearningClassification"
-      }
-    ],
-    "interface": false,
-    "extends": [
-      "BaseNeuralNetwork"
-    ],
-    "implements": [
-      "BaseNeuralNetwork"
-    ]
-  },
-  {
-    "__docId__": 11,
-    "kind": "constructor",
-    "name": "constructor",
-    "memberof": "lib/deeplearning.mjs~DeepLearningClassification",
-    "generator": false,
-    "async": false,
-    "static": false,
-    "longname": "lib/deeplearning.mjs~DeepLearningClassification#constructor",
-    "access": "public",
-    "description": "",
-    "lineNumber": 139,
-    "params": [
-      {
-        "nullable": null,
-        "types": [
-          "{layers:Array<Object>,compile:Object,fit:Object}"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "options",
-        "description": "neural network configuration and tensorflow model hyperparameters"
-      },
-      {
-        "nullable": null,
-        "types": [
-          "{model:Object,tf:Object,}"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "properties",
-        "description": "extra instance properties"
-      }
-    ]
-  },
-  {
-    "__docId__": 12,
-    "kind": "method",
-    "name": "generateLayers",
-    "memberof": "lib/deeplearning.mjs~DeepLearningClassification",
-    "generator": false,
-    "async": false,
-    "static": false,
-    "longname": "lib/deeplearning.mjs~DeepLearningClassification#generateLayers",
-    "access": "public",
-    "description": "Adds dense layers to tensorflow classification model",
-    "lineNumber": 161,
-    "params": [
-      {
-        "nullable": null,
-        "types": [
-          "Array<Array<number>>"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "x_matrix",
-        "description": "independent variables"
-      },
-      {
-        "nullable": null,
-        "types": [
-          "Array<Array<number>>"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "y_matrix",
-        "description": "dependent variables"
-      },
-      {
-        "nullable": null,
-        "types": [
-          "Array<Object>"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "layers",
-        "description": "model dense layer parameters"
-      }
-    ],
-    "override": true
-  },
-  {
-    "__docId__": 13,
+    "__docId__": 20,
     "kind": "member",
-    "name": "yShape",
-    "memberof": "lib/deeplearning.mjs~DeepLearningClassification",
+    "name": "layers",
+    "memberof": "lib/regression.mjs~DeepLearningRegression",
     "static": false,
-    "longname": "lib/deeplearning.mjs~DeepLearningClassification#yShape",
+    "longname": "lib/regression.mjs~DeepLearningRegression#layers",
     "access": "public",
     "description": null,
-    "lineNumber": 164,
-    "undocument": true
-  },
-  {
-    "__docId__": 14,
-    "kind": "member",
-    "name": "xShape",
-    "memberof": "lib/deeplearning.mjs~DeepLearningClassification",
-    "static": false,
-    "longname": "lib/deeplearning.mjs~DeepLearningClassification#xShape",
-    "access": "public",
-    "description": null,
-    "lineNumber": 165,
+    "lineNumber": 50,
     "undocument": true
   },
   {

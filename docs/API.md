@@ -1,10 +1,36 @@
 # Class
 
+## `DeepLearningClassification`
+
+Deep Learning Classification with Tensorflow
+
+### `constructor(options: {layers:Array<Object>,compile:Object,fit:Object}, properties: {model:Object,tf:Object,})`
+
+### `yShape: *`
+
+### `xShape: *`
+
+### `layers: *`
+
+### `generateLayers(x_matrix: Array<Array<number>>, y_matrix: Array<Array<number>>, layers: Array<Object>)`
+
+Adds dense layers to tensorflow classification model
+
+| Name | Type | Attribute | Description |
+| --- | --- | --- | --- |
+| x_matrix | Array<Array<number>> |  | independent variables |
+| y_matrix | Array<Array<number>> |  | dependent variables |
+| layers | Array<Object> |  | model dense layer parameters |
+
 ## `BaseNeuralNetwork`
 
 Deep Learning with Tensorflow
 
 ### `constructor(options: {layers:Array<Object>,compile:Object,fit:Object}, properties: {model:Object,tf:Object,})`
+
+### `xShape: *`
+
+### `yShape: *`
 
 ### `model: *`
 
@@ -42,29 +68,11 @@ Deep Learning Regression with Tensorflow
 
 ### `constructor(options: {layers:Array<Object>,compile:Object,fit:Object,layerPreference:String}, properties: {model:Object,tf:Object,})`
 
+### `layers: *`
+
 ### `generateLayers(x_matrix: Array<Array<number>>, y_matrix: Array<Array<number>>, layers: Array<Object>)`
 
 Adds dense layers to tensorflow regression model
-
-| Name | Type | Attribute | Description |
-| --- | --- | --- | --- |
-| x_matrix | Array<Array<number>> |  | independent variables |
-| y_matrix | Array<Array<number>> |  | dependent variables |
-| layers | Array<Object> |  | model dense layer parameters |
-
-## `DeepLearningClassification`
-
-Deep Learning Classification with Tensorflow
-
-### `constructor(options: {layers:Array<Object>,compile:Object,fit:Object}, properties: {model:Object,tf:Object,})`
-
-### `yShape: *`
-
-### `xShape: *`
-
-### `generateLayers(x_matrix: Array<Array<number>>, y_matrix: Array<Array<number>>, layers: Array<Object>)`
-
-Adds dense layers to tensorflow classification model
 
 | Name | Type | Attribute | Description |
 | --- | --- | --- | --- |

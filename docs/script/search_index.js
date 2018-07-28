@@ -6,16 +6,52 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
-    "@tensorscript/ts-deeplearning/lib/deeplearning.mjs~deeplearningclassification",
-    "class/lib/deeplearning.mjs~DeepLearningClassification.html",
-    "<span>DeepLearningClassification</span> <span class=\"search-result-import-path\">@tensorscript/ts-deeplearning/lib/deeplearning.mjs</span>",
+    "@tensorscript/ts-deeplearning/lib/classification.mjs~deeplearningclassification",
+    "class/lib/classification.mjs~DeepLearningClassification.html",
+    "<span>DeepLearningClassification</span> <span class=\"search-result-import-path\">@tensorscript/ts-deeplearning/lib/classification.mjs</span>",
     "class"
   ],
   [
-    "@tensorscript/ts-deeplearning/lib/deeplearning.mjs~deeplearningregression",
-    "class/lib/deeplearning.mjs~DeepLearningRegression.html",
-    "<span>DeepLearningRegression</span> <span class=\"search-result-import-path\">@tensorscript/ts-deeplearning/lib/deeplearning.mjs</span>",
+    "@tensorscript/ts-deeplearning/lib/regression.mjs~deeplearningregression",
+    "class/lib/regression.mjs~DeepLearningRegression.html",
+    "<span>DeepLearningRegression</span> <span class=\"search-result-import-path\">@tensorscript/ts-deeplearning/lib/regression.mjs</span>",
     "class"
+  ],
+  [
+    "lib/classification.mjs",
+    "file/lib/classification.mjs.html",
+    "lib/classification.mjs",
+    "file"
+  ],
+  [
+    "lib/classification.mjs~deeplearningclassification#constructor",
+    "class/lib/classification.mjs~DeepLearningClassification.html#instance-constructor-constructor",
+    "lib/classification.mjs~DeepLearningClassification#constructor",
+    "method"
+  ],
+  [
+    "lib/classification.mjs~deeplearningclassification#generatelayers",
+    "class/lib/classification.mjs~DeepLearningClassification.html#instance-method-generateLayers",
+    "lib/classification.mjs~DeepLearningClassification#generateLayers",
+    "method"
+  ],
+  [
+    "lib/classification.mjs~deeplearningclassification#layers",
+    "class/lib/classification.mjs~DeepLearningClassification.html#instance-member-layers",
+    "lib/classification.mjs~DeepLearningClassification#layers",
+    "member"
+  ],
+  [
+    "lib/classification.mjs~deeplearningclassification#xshape",
+    "class/lib/classification.mjs~DeepLearningClassification.html#instance-member-xShape",
+    "lib/classification.mjs~DeepLearningClassification#xShape",
+    "member"
+  ],
+  [
+    "lib/classification.mjs~deeplearningclassification#yshape",
+    "class/lib/classification.mjs~DeepLearningClassification.html#instance-member-yShape",
+    "lib/classification.mjs~DeepLearningClassification#yShape",
+    "member"
   ],
   [
     "lib/deeplearning.mjs",
@@ -54,39 +90,39 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "lib/deeplearning.mjs~deeplearningclassification#constructor",
-    "class/lib/deeplearning.mjs~DeepLearningClassification.html#instance-constructor-constructor",
-    "lib/deeplearning.mjs~DeepLearningClassification#constructor",
-    "method"
-  ],
-  [
-    "lib/deeplearning.mjs~deeplearningclassification#generatelayers",
-    "class/lib/deeplearning.mjs~DeepLearningClassification.html#instance-method-generateLayers",
-    "lib/deeplearning.mjs~DeepLearningClassification#generateLayers",
-    "method"
-  ],
-  [
-    "lib/deeplearning.mjs~deeplearningclassification#xshape",
-    "class/lib/deeplearning.mjs~DeepLearningClassification.html#instance-member-xShape",
-    "lib/deeplearning.mjs~DeepLearningClassification#xShape",
+    "lib/deeplearning.mjs~baseneuralnetwork#xshape",
+    "class/lib/deeplearning.mjs~BaseNeuralNetwork.html#instance-member-xShape",
+    "lib/deeplearning.mjs~BaseNeuralNetwork#xShape",
     "member"
   ],
   [
-    "lib/deeplearning.mjs~deeplearningclassification#yshape",
-    "class/lib/deeplearning.mjs~DeepLearningClassification.html#instance-member-yShape",
-    "lib/deeplearning.mjs~DeepLearningClassification#yShape",
+    "lib/deeplearning.mjs~baseneuralnetwork#yshape",
+    "class/lib/deeplearning.mjs~BaseNeuralNetwork.html#instance-member-yShape",
+    "lib/deeplearning.mjs~BaseNeuralNetwork#yShape",
     "member"
   ],
   [
-    "lib/deeplearning.mjs~deeplearningregression#constructor",
-    "class/lib/deeplearning.mjs~DeepLearningRegression.html#instance-constructor-constructor",
-    "lib/deeplearning.mjs~DeepLearningRegression#constructor",
+    "lib/regression.mjs",
+    "file/lib/regression.mjs.html",
+    "lib/regression.mjs",
+    "file"
+  ],
+  [
+    "lib/regression.mjs~deeplearningregression#constructor",
+    "class/lib/regression.mjs~DeepLearningRegression.html#instance-constructor-constructor",
+    "lib/regression.mjs~DeepLearningRegression#constructor",
     "method"
   ],
   [
-    "lib/deeplearning.mjs~deeplearningregression#generatelayers",
-    "class/lib/deeplearning.mjs~DeepLearningRegression.html#instance-method-generateLayers",
-    "lib/deeplearning.mjs~DeepLearningRegression#generateLayers",
+    "lib/regression.mjs~deeplearningregression#generatelayers",
+    "class/lib/regression.mjs~DeepLearningRegression.html#instance-method-generateLayers",
+    "lib/regression.mjs~DeepLearningRegression#generateLayers",
     "method"
+  ],
+  [
+    "lib/regression.mjs~deeplearningregression#layers",
+    "class/lib/regression.mjs~DeepLearningRegression.html#instance-member-layers",
+    "lib/regression.mjs~DeepLearningRegression#layers",
+    "member"
   ]
 ]

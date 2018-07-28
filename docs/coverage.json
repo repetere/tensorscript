@@ -1,15 +1,31 @@
 {
-  "coverage": "78.57%",
-  "expectCount": 14,
+  "coverage": "61.11%",
+  "expectCount": 18,
   "actualCount": 11,
   "files": {
+    "lib/classification.mjs": {
+      "expectCount": 6,
+      "actualCount": 3,
+      "undocumentLines": [
+        38,
+        39,
+        47
+      ]
+    },
     "lib/deeplearning.mjs": {
-      "expectCount": 14,
-      "actualCount": 11,
+      "expectCount": 8,
+      "actualCount": 5,
       "undocumentLines": [
         51,
-        164,
-        165
+        52,
+        53
+      ]
+    },
+    "lib/regression.mjs": {
+      "expectCount": 4,
+      "actualCount": 3,
+      "undocumentLines": [
+        50
       ]
     }
   }

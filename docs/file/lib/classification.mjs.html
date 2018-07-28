@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../">
-  <title data-ice="title">lib/deeplearning.mjs | @tensorscript/ts-deeplearning</title>
+  <title data-ice="title">lib/classification.mjs | @tensorscript/ts-deeplearning</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -36,15 +36,15 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1 data-ice="title">lib/deeplearning.mjs</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import { TensorScriptModelInterface, } from &apos;@tensorscript/core&apos;;
+<div class="content" data-ice="content"><h1 data-ice="title">lib/classification.mjs</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import { BaseNeuralNetwork, } from &apos;./deeplearning&apos;;
 
 /**
- * Deep Learning with Tensorflow
- * @class BaseNeuralNetwork
- * @implements {TensorScriptModelInterface}
+ * Deep Learning Classification with Tensorflow
+ * @class DeepLearningClassification
+ * @implements {BaseNeuralNetwork}
  */
-export class BaseNeuralNetwork extends TensorScriptModelInterface {
+export class DeepLearningClassification extends BaseNeuralNetwork{
   /**
    * @param {{layers:Array&lt;Object&gt;,compile:Object,fit:Object}} options - neural network configuration and tensorflow model hyperparameters
    * @param {{model:Object,tf:Object,}} properties - extra instance properties
@@ -53,7 +53,7 @@ export class BaseNeuralNetwork extends TensorScriptModelInterface {
     const config = Object.assign({
       layers: [],
       compile: {
-        loss: &apos;meanSquaredError&apos;,
+        loss: &apos;categoricalCrossentropy&apos;,
         optimizer: &apos;adam&apos;,
       },
       fit: {
@@ -65,55 +65,28 @@ export class BaseNeuralNetwork extends TensorScriptModelInterface {
     return this;
   }
   /**
-   * Adds dense layers to tensorflow model
-   * @abstract 
+   * Adds dense layers to tensorflow classification model
+   * @override 
    * @param {Array&lt;Array&lt;number&gt;&gt;} x_matrix - independent variables
    * @param {Array&lt;Array&lt;number&gt;&gt;} y_matrix - dependent variables
    * @param {Array&lt;Object&gt;} layers - model dense layer parameters
    */
   generateLayers(x_matrix, y_matrix, layers) {
-    throw new ReferenceError(&apos;generateLayers method is not implemented&apos;);
-  }
-  /**
-   * Asynchronously trains tensorflow model
-   * @override
-   * @param {Array&lt;Array&lt;number&gt;&gt;} x_matrix - independent variables
-   * @param {Array&lt;Array&lt;number&gt;&gt;} y_matrix - dependent variables
-   * @param {Array&lt;Object&gt;} layers - array of model dense layer parameters
-   * @return {Object} returns trained tensorflow model 
-   */
-  async train(x_matrix, y_matrix, layers) {
     const xShape = this.getInputShape(x_matrix);
     const yShape = this.getInputShape(y_matrix);
-    const xs = this.tf.tensor(x_matrix, xShape);
-    const ys = this.tf.tensor(y_matrix, yShape);
-    this.xShape = xShape;
     this.yShape = yShape;
-    this.model = this.tf.sequential();
-    this.generateLayers.call(this, x_matrix, y_matrix, layers || this.layers);
-    this.model.compile(this.settings.compile);
-    await this.model.fit(xs, ys, this.settings.fit);
-    xs.dispose();
-    ys.dispose();
-    return this.model;
-  }
-  /**
-   * Predicts new dependent variables
-   * @override
-   * @param {Array&lt;Array&lt;number&gt;&gt;|Array&lt;number&gt;} matrix - new test independent variables
-   * @return {{data: Promise}} returns tensorflow prediction 
-   */
-  calculate(input_matrix) {
-    if (!input_matrix || Array.isArray(input_matrix)===false) throw new Error(&apos;invalid input matrix&apos;);
-    const predictionInput = (Array.isArray(input_matrix[ 0 ]))
-      ? input_matrix
-      : [
-        input_matrix,
-      ];
-    const predictionTensor = this.tf.tensor(predictionInput);
-    const prediction = this.model.predict(predictionTensor);
-    predictionTensor.dispose();
-    return prediction;
+    this.xShape = xShape;
+    const denseLayers = [];
+    if (layers) {
+      denseLayers.push(...layers);
+    } else {
+      denseLayers.push({ units: (xShape[ 1 ] * 2), inputDim: xShape[1],  activation: &apos;relu&apos;, });
+      denseLayers.push({ units: yShape[ 1 ], activation: &apos;softmax&apos;, });
+    }
+    this.layers = denseLayers;
+    denseLayers.forEach(layer =&gt; {
+      this.model.add(this.tf.layers.dense(layer));
+    });
   }
 }</code></pre>
 
