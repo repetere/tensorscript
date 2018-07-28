@@ -2,7 +2,7 @@
 
 [![Coverage Status](https://coveralls.io/repos/github/repetere/ts-deeplearning/badge.svg?branch=master)](https://coveralls.io/github/repetere/ts-deeplearning?branch=master) [![Build Status](https://travis-ci.org/repetere/ts-deeplearning.svg?branch=master)](https://travis-ci.org/repetere/ts-deeplearning)
 
-Deep Learning Classification, Clustering and Regression with Tensorflow
+Deep Learning Classification and Regression with Tensorflow (Clustering coming soon)
 ### [Full Documentation](<https://github.com/repetere/ts-deeplearning/blob/master/docs/API.md>)
 
 ### Installation
