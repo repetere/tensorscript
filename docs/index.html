@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl">
+  <title data-ice="title">Home | @tensorscript/ts-deeplearning</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="Deep Learning Classification, Clustering and Regression with Tensorflow"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="@tensorscript/ts-deeplearning"><meta property="twitter:description" content="Deep Learning Classification, Clustering and Regression with Tensorflow"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/repetere/ts-deeplearning"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/deeplearning.mjs~BaseNeuralNetwork.html">BaseNeuralNetwork</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/deeplearning.mjs~DeepLearningClassification.html">DeepLearningClassification</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/deeplearning.mjs~DeepLearningRegression.html">DeepLearningRegression</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="-tensorscript-ts-deeplearning">@tensorscript/ts-deeplearning</h1><p><a href="https://coveralls.io/github/repetere/ts-deeplearning?branch=master"><img src="https://coveralls.io/repos/github/repetere/ts-deeplearning/badge.svg?branch=master" alt="Coverage Status"></a> <a href="https://travis-ci.org/repetere/ts-deeplearning"><img src="https://travis-ci.org/repetere/ts-deeplearning.svg?branch=master" alt="Build Status"></a></p>
+<p>Deep Learning Classification, Clustering and Regression with Tensorflow</p>
+<h3 id="-a-href--https---github-com-repetere-ts-deeplearning-blob-master-docs-api-md--full-documentation--a-"><a href="https://github.com/repetere/ts-deeplearning/blob/master/docs/API.md">Full Documentation</a></h3><h3 id="installation">Installation</h3><pre><code class="lang-sh"><code class="source-code prettyprint">$ npm i @tensorscript/ts-deeplearning</code>
+</code></pre>
+<h3 id="usage">Usage</h3><p>Test against the <a href="http://openclassroom.stanford.edu/MainFolder/DocumentPage.php?course=MachineLearning&amp;doc=exercises/ex3/ex3.html">Portland housing price dataset</a></p>
+<pre><code class="lang-javascript"><code class="source-code prettyprint">import { MultipleLinearRegression, } from &apos;@tensorscript/ts-deeplearning&apos;;
+import ms from &apos;modelscript&apos;;
+
+function scaleColumnMap(columnName) {
+  return {
+    name: columnName,
+    options: {
+      strategy: &apos;scale&apos;,
+      scaleOptions: {
+        strategy:&apos;standard&apos;
+      }
+    }
+  }
+}
+
+async function main(){
+  const housingdataCSV = await ms.csv.loadCSV(&apos;./test/mock/data/portland_housing_data.csv&apos;, {
+    colParser: {
+      sqft: &apos;number&apos;,
+      bedrooms: &apos;number&apos;,
+      price: &apos;number&apos;,
+    }
+  });
+  /*
+  housingdataCSV = [ 
+    { sqft: 2104, bedrooms: 3, price: 399900 },
+    { sqft: 1600, bedrooms: 3, price: 329900 },
+    ...
+    { sqft: 1203, bedrooms: 3, price: 239500 } 
+  ] 
+  */
+  const DataSet = new ms.DataSet(housingdataCSV);
+  DataSet.fitColumns({
+    columns: [
+      &apos;sqft&apos;,
+      &apos;bedrooms&apos;,
+      &apos;price&apos;,
+    ].map(scaleColumnMap),
+    returnData:true,
+  });
+  const independentVariables = [ &apos;sqft&apos;, &apos;bedrooms&apos;,];
+  const dependentVariables = [ &apos;price&apos;, ];
+  const x_matrix = DataSet.columnMatrix(independentVariables); 
+  const y_matrix = DataSet.columnMatrix(dependentVariables);
+  /* x_matrix = [
+      [2014, 3],
+      [1600, 3],
+    ];
+    y_matrix = [
+      [399900],
+      [329900],
+    ];
+    const y_vector = ms.util.pivotVector(y_matrix)[ 0 ];// not used but just illustrative
+    // y_vector = [ 399900, 329900]
+   */
+  const testSqft = DataSet.scalers.get(&apos;sqft&apos;).scale(1650);
+  const testBedrooms = DataSet.scalers.get(&apos;bedrooms&apos;).scale(3);
+  const input_x = [
+    testSqft,
+    testBedrooms,
+  ]; // input_x: [ -0.4412732005944351, -0.2236751871685913 ]
+  const tfMLR = new MultipleLinearRegression();
+  const model = await tfMLR.train(x_matrix, y_matrix);
+  const scaledPrediction = await tfMLR.predict(input_x); // [ -0.3785287367962629 ]
+  const prediction = DataSet.scalers.get(&apos;price&apos;).descale(scaledPrediction); // prediction: 293081.4643348962
+}
+
+main();
+</code>
+</code></pre>
+<p>This MLR module give you a similar ml.js interface for machine learning</p>
+<pre><code class="lang-javascript"><code class="source-code prettyprint">// Similarly with ml.js
+import ms from &apos;modelscript&apos;;
+const MLR = ms.ml.Regression.MultivariateLinearRegression;
+const regression = new MLR(x_matrix, y_matrix);
+const MLJSscaledPrediction = regression.predict(input_x); //[ -0.3785287367962629 ],
+const MLJSprediction = DataSet.scalers.get(&apos;price&apos;).descale(MLJSscaledPrediction); // prediction: 293081.4643348962</code>
+</code></pre>
+<h3 id="testing">Testing</h3><pre><code class="lang-sh"><code class="source-code prettyprint">$ npm i
+$ npm test</code>
+</code></pre>
+<h3 id="contributing">Contributing</h3><p>Fork, write tests and create a pull request!</p>
+<h3 id="misc">Misc</h3><p>As of Node 8, ES modules are still used behind a flag, when running natively as an ES module</p>
+<pre><code class="lang-sh"><code class="source-code prettyprint">$ node --experimental-modules my-machine-learning-script.mjs
+# Also there are native bindings that require Python 2.x, make sure if you&apos;re using Andaconda, you build with your Python 2.x bin
+$ npm i --python=/usr/bin/python</code>
+</code></pre>
+<h2 id="license">License</h2><p>MIT</p>
+</div>
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

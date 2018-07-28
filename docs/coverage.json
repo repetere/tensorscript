@@ -1,0 +1,16 @@
+{
+  "coverage": "78.57%",
+  "expectCount": 14,
+  "actualCount": 11,
+  "files": {
+    "lib/deeplearning.mjs": {
+      "expectCount": 14,
+      "actualCount": 11,
+      "undocumentLines": [
+        51,
+        164,
+        165
+      ]
+    }
+  }
+}

@@ -1,0 +1,4 @@
+{
+  "presets": ["env","es2017"],
+  "plugins": ["istanbul"]
+}

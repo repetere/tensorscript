@@ -1,0 +1,24 @@
+{
+  "source": "./lib",
+  "destination": "./docs",
+  "plugins": [
+    {
+      "name": "esdoc-ecmascript-proposal-plugin",
+      "option": {"all": true}
+    },
+    {
+      "name": "esdoc-standard-plugin",
+      "option":{
+        "typeInference": {"enable": false},
+        "lint": {"enable": false}
+      }
+    },
+    {
+      "name": "esdoc-publish-markdown-plugin",
+      "option": {
+        "filename":"./API.md"
+      }
+    }
+  ],
+  "includes": ["\\.mjs$"]
+}
