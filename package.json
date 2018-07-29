@@ -1,7 +1,7 @@
 {
   "name": "@tensorscript/ts-deeplearning",
   "displayName": "TensorScript Deep Learning",
-  "version": "0.9.0",
+  "version": "1.0.0",
   "description": "Deep Learning Classification, Clustering and Regression with Tensorflow",
   "main": "index.mjs",
   "scripts": {
