@@ -8,7 +8,7 @@ const expect = chai.expect;
 chai.use(sinonChai);
 chai.use(chaiAsPromised);
 
-describe('tensorscript core', () => {
+describe('TensorScriptModelInterface', () => {
   describe('constructor', () => {
     it('should export a named module class', () => {
       const TSM = new TensorScriptModelInterface();

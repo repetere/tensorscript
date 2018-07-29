@@ -86,10 +86,9 @@ export class TensorScriptModelInterface {
    * @return {Array&lt;Array&lt;number&gt;&gt;} returns a matrix with the defined shape
    */
   /* istanbul ignore next */
-  static reshape (array, shape) {
-    const flatArray = array;
-    let newArray;
-    const rows = shape[ 0 ];
+  static reshape(array, shape) {
+    const flatArray = flatten(array);
+   
 
     function product (arr) {
       return arr.reduce((prev, curr) =&gt; prev * curr);
@@ -102,9 +101,10 @@ export class TensorScriptModelInterface {
     if (shape.length === 0) {
       throw new DimensionError(0, product(size(array)), &apos;!=&apos;);
     }
-  
-    var totalSize = 1;
-    for (var sizeIndex = 0; sizeIndex &lt; shape.length; sizeIndex++) {
+    let newArray;
+    let totalSize = 1;
+    const rows = shape[ 0 ];
+    for (let sizeIndex = 0; sizeIndex &lt; shape.length; sizeIndex++) {
       totalSize *= shape[sizeIndex];
     }
   
@@ -216,7 +216,7 @@ export class TensorScriptModelInterface {
         if (config.json === false) {
           return predictions;
         } else {
-          const shape = [x_matrix.length, this.yShape[ 1 ],];
+          const shape = [x_matrix.length, this.yShape[ 1 ], ];
           const predictionValues = (options.probability === false) ? Array.from(predictions).map(Math.round) : Array.from(predictions);
           return this.reshape(predictionValues, shape);
         }
@@ -303,6 +303,36 @@ export class DimensionError extends RangeError {
     this.name = &apos;DimensionError&apos;;
     this.isDimensionError = true;
   }
+}
+
+/**
+ * Flatten a multi dimensional array, put all elements in a one dimensional
+ * array
+ * @param {Array} array   A multi dimensional array
+ * @ignore
+ * @see {https://github.com/josdejong/mathjs/blob/develop/src/utils/array.js}
+ * @return {Array}        The flattened array (1 dimensional)
+ */
+/* istanbul ignore next */
+export function flatten (array) {
+  /* istanbul ignore next */
+  if (!Array.isArray(array)) {
+    // if not an array, return as is
+    /* istanbul ignore next */
+    return array;
+  }
+  let flat = [];
+  
+  /* istanbul ignore next */
+  array.forEach(function callback (value) {
+    if (Array.isArray(value)) {
+      value.forEach(callback); // traverse through sub-arrays recursively
+    } else {
+      flat.push(value);
+    }
+  });
+
+  return flat;
 }</code></pre>
 
 </div>

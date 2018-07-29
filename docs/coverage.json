@@ -1,7 +1,7 @@
 {
-  "coverage": "64.7%",
-  "expectCount": 51,
-  "actualCount": 33,
+  "coverage": "65.38%",
+  "expectCount": 52,
+  "actualCount": 34,
   "files": {
     "lib/classification.mjs": {
       "expectCount": 6,
@@ -31,8 +31,8 @@
       ]
     },
     "lib/model_interface.mjs": {
-      "expectCount": 23,
-      "actualCount": 16,
+      "expectCount": 24,
+      "actualCount": 17,
       "undocumentLines": [
         251,
         256,

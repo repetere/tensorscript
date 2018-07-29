@@ -228,3 +228,11 @@ Iteratively re-shape a multi dimensional array to fit the specified dimensions (
 | --- | --- | --- | --- |
 | array | Array |  | Array to be reshaped |
 | sizes | Array.<number> |  | List of sizes for each dimension |
+
+## `flatten(array: Array): Array`
+
+Flatten a multi dimensional array, put all elements in a one dimensional array
+
+| Name | Type | Attribute | Description |
+| --- | --- | --- | --- |
+| array | Array |  | A multi dimensional array |
