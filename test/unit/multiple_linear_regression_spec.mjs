@@ -108,9 +108,16 @@ describe('MultipleLinearRegression', function () {
       return true;
     });
     it('should generate a network from layers', async () => { 
-      const nnLRCustom = new MultipleLinearRegression({ type:'custom', });
+      const nnLRCustom = new MultipleLinearRegression({
+        type: 'custom',
+        fit: {
+          epochs: 10,
+          batchSize: 5,
+        },
+      });
       await nnLRCustom.train(x_matrix, y_matrix, trainedMLR.layers);
       expect(nnLRCustom.layers).to.have.lengthOf(1);
+      return true;
     });
   });
 });
