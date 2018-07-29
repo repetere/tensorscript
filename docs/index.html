@@ -30,7 +30,10 @@
   <ul>
     
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/classification.mjs~DeepLearningClassification.html">DeepLearningClassification</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/deeplearning.mjs~BaseNeuralNetwork.html">BaseNeuralNetwork</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/deep_learning.mjs~BaseNeuralNetwork.html">BaseNeuralNetwork</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/logistic_regression.mjs~LogisticRegression.html">LogisticRegression</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/model_interface.mjs~TensorScriptModelInterface.html">TensorScriptModelInterface</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/multiple_linear_regression.mjs~MultipleLinearRegression.html">MultipleLinearRegression</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/regression.mjs~DeepLearningRegression.html">DeepLearningRegression</a></span></span></li>
 </ul>
 </div>
@@ -212,6 +215,143 @@ async function main(){
   const model = await nnRegression.train(x_matrix, y_matrix);
   const predictions = await nnRegressionWide.predict(input_x); // [ [ 0.43396109342575073 ], [ 0.12437985092401505 ] ]
   const predictions_unscaled = predictions.map(pred=&gt;DataSet.scalers.get(&apos;MEDV&apos;).descale(pred[0])); //[ 26.523991670220486, 23.67674075943165 ]
+}
+
+main();</code>
+</code></pre>
+<h4 id="multiple-linear-regression">Multiple Linear Regression</h4><p>Test against the <a href="http://openclassroom.stanford.edu/MainFolder/DocumentPage.php?course=MachineLearning&amp;doc=exercises/ex3/ex3.html">Portland housing price dataset</a></p>
+<pre><code class="lang-javascript"><code class="source-code prettyprint">import { MultipleLinearRegression, } from &apos;@tensorscript/ts-deeplearning&apos;;
+import ms from &apos;modelscript&apos;;
+
+function scaleColumnMap(columnName) {
+  return {
+    name: columnName,
+    options: {
+      strategy: &apos;scale&apos;,
+      scaleOptions: {
+        strategy:&apos;standard&apos;
+      }
+    }
+  }
+}
+
+async function main(){
+  const housingdataCSV = await ms.csv.loadCSV(&apos;./test/mock/data/portland_housing_data.csv&apos;);
+  /*
+  housingdataCSV = [
+    { sqft: 2104, bedrooms: 3, price: 399900 },
+    { sqft: 1600, bedrooms: 3, price: 329900 },
+    ...
+    { sqft: 1203, bedrooms: 3, price: 239500 }
+  ]
+  */
+  const DataSet = new ms.DataSet(housingdataCSV);
+  DataSet.fitColumns({
+    columns: [
+      &apos;sqft&apos;,
+      &apos;bedrooms&apos;,
+      &apos;price&apos;,
+    ].map(scaleColumnMap),
+    returnData:true,
+  });
+  const independentVariables = [ &apos;sqft&apos;, &apos;bedrooms&apos;,];
+  const dependentVariables = [ &apos;price&apos;, ];
+  const x_matrix = DataSet.columnMatrix(independentVariables);
+  const y_matrix = DataSet.columnMatrix(dependentVariables);
+  /* x_matrix = [
+      [2014, 3],
+      [1600, 3],
+    ];
+    y_matrix = [
+      [399900],
+      [329900],
+    ];
+    const y_vector = ms.util.pivotVector(y_matrix)[ 0 ];// not used but just illustrative
+    // y_vector = [ 399900, 329900]
+   */
+  const testSqft = DataSet.scalers.get(&apos;sqft&apos;).scale(1650);
+  const testBedrooms = DataSet.scalers.get(&apos;bedrooms&apos;).scale(3);
+  const input_x = [
+    testSqft,
+    testBedrooms,
+  ]; // input_x: [ -0.4412732005944351, -0.2236751871685913 ]
+  const tfMLR = new MultipleLinearRegression();
+  const model = await tfMLR.train(x_matrix, y_matrix);
+  const scaledPrediction = await tfMLR.predict(input_x); // [ -0.3785287367962629 ]
+  const prediction = DataSet.scalers.get(&apos;price&apos;).descale(scaledPrediction); // prediction: 293081.4643348962
+}
+
+main();</code>
+</code></pre>
+<h4 id="logistic-regression">Logistic Regression</h4><p>Test against the Social Media Ads</p>
+<pre><code class="lang-javascript"><code class="source-code prettyprint">import { LogisticRegression, } from &apos;@tensorscript/ts-deeplearning&apos;;
+import ms from &apos;modelscript&apos;;
+
+function scaleColumnMap(columnName) {
+  return {
+    name: columnName,
+    options: {
+      strategy: &apos;scale&apos;,
+      scaleOptions: {
+        strategy:&apos;standard&apos;
+      }
+    }
+  }
+}
+
+async function main(){
+  const CSVData = await ms.csv.loadCSV(&apos;./test/mock/data/social_network_ads.csv&apos;);
+  const DataSet = new ms.DataSet(CSVData);
+  const scaledData = DataSet.fitColumns({
+    columns: independentVariables.map(scaleColumnMap),
+    returnData:true,
+  });
+  /*
+    scaledData = [
+      { &apos;User ID&apos;: 15624510,
+         Gender: &apos;Male&apos;,
+         Age: -1.7795687879022388,
+         EstimatedSalary: -1.4881825118632386,
+         Purchased: 0 },
+      { &apos;User ID&apos;: 15810944,
+         Gender: &apos;Male&apos;,
+         Age: -0.253270175924977,
+         EstimatedSalary: -1.458854384319991,
+         Purchased: 0 },
+      ...
+    ];
+    */
+  const independentVariables = [
+    &apos;Age&apos;,
+    &apos;EstimatedSalary&apos;,
+  ];
+  const dependentVariables = [
+    &apos;Purchased&apos;,
+  ];
+  const x_matrix = DataSet.columnMatrix(independentVariables);
+  const y_matrix = DataSet.columnMatrix(dependentVariables);
+  /*
+    x_matrix = [
+      [ -1.7795687879022388, -1.4881825118632386 ],
+      [ -0.253270175924977, -1.458854384319991 ],
+      ...
+    ];
+    y_matrix = [
+      [ 0 ],
+      [ 0 ],
+      ...
+    ];
+    */
+  const input_x = [
+    [-0.062482849427819266, 0.30083326827486173,], //0
+    [0.7960601198093905, -1.1069168538010206,], //1
+    [0.7960601198093905, 0.12486450301537644,], //0
+    [0.4144854668150751, -0.49102617539282206,], //0
+    [0.3190918035664962, 0.5061301610775946,], //1
+  ];
+  const tfLR = new LogisticRegression();
+  const model = await tfLR.train(x_matrix, y_matrix);
+  const prediction = await tfLR.predict(input_x); // =&gt; [ [ 0 ], [ 0 ], [ 1 ], [ 0 ], [ 1 ] ],
 }
 
 main();</code>

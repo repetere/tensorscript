@@ -3,7 +3,7 @@
     "__docId__": 0,
     "kind": "file",
     "name": "lib/classification.mjs",
-    "content": "import { BaseNeuralNetwork, } from './deeplearning';\r\n\r\n/**\r\n * Deep Learning Classification with Tensorflow\r\n * @class DeepLearningClassification\r\n * @implements {BaseNeuralNetwork}\r\n */\r\nexport class DeepLearningClassification extends BaseNeuralNetwork{\r\n  /**\r\n   * @param {{layers:Array<Object>,compile:Object,fit:Object}} options - neural network configuration and tensorflow model hyperparameters\r\n   * @param {{model:Object,tf:Object,}} properties - extra instance properties\r\n   */\r\n  constructor(options = {}, properties) {\r\n    const config = Object.assign({\r\n      layers: [],\r\n      compile: {\r\n        loss: 'categoricalCrossentropy',\r\n        optimizer: 'adam',\r\n      },\r\n      fit: {\r\n        epochs: 100,\r\n        batchSize: 5,\r\n      },\r\n    }, options);\r\n    super(config, properties);\r\n    return this;\r\n  }\r\n  /**\r\n   * Adds dense layers to tensorflow classification model\r\n   * @override \r\n   * @param {Array<Array<number>>} x_matrix - independent variables\r\n   * @param {Array<Array<number>>} y_matrix - dependent variables\r\n   * @param {Array<Object>} layers - model dense layer parameters\r\n   */\r\n  generateLayers(x_matrix, y_matrix, layers) {\r\n    const xShape = this.getInputShape(x_matrix);\r\n    const yShape = this.getInputShape(y_matrix);\r\n    this.yShape = yShape;\r\n    this.xShape = xShape;\r\n    const denseLayers = [];\r\n    if (layers) {\r\n      denseLayers.push(...layers);\r\n    } else {\r\n      denseLayers.push({ units: (xShape[ 1 ] * 2), inputDim: xShape[1],  activation: 'relu', });\r\n      denseLayers.push({ units: yShape[ 1 ], activation: 'softmax', });\r\n    }\r\n    this.layers = denseLayers;\r\n    denseLayers.forEach(layer => {\r\n      this.model.add(this.tf.layers.dense(layer));\r\n    });\r\n  }\r\n}",
+    "content": "import { BaseNeuralNetwork, } from './deep_learning';\r\n\r\n/**\r\n * Deep Learning Classification with Tensorflow\r\n * @class DeepLearningClassification\r\n * @implements {BaseNeuralNetwork}\r\n */\r\nexport class DeepLearningClassification extends BaseNeuralNetwork{\r\n  /**\r\n   * @param {{layers:Array<Object>,compile:Object,fit:Object}} options - neural network configuration and tensorflow model hyperparameters\r\n   * @param {{model:Object,tf:Object,}} properties - extra instance properties\r\n   */\r\n  constructor(options = {}, properties) {\r\n    const config = Object.assign({\r\n      layers: [],\r\n      compile: {\r\n        loss: 'categoricalCrossentropy',\r\n        optimizer: 'adam',\r\n      },\r\n      fit: {\r\n        epochs: 100,\r\n        batchSize: 5,\r\n      },\r\n    }, options);\r\n    super(config, properties);\r\n    return this;\r\n  }\r\n  /**\r\n   * Adds dense layers to tensorflow classification model\r\n   * @override \r\n   * @param {Array<Array<number>>} x_matrix - independent variables\r\n   * @param {Array<Array<number>>} y_matrix - dependent variables\r\n   * @param {Array<Object>} layers - model dense layer parameters\r\n   */\r\n  generateLayers(x_matrix, y_matrix, layers) {\r\n    const xShape = this.getInputShape(x_matrix);\r\n    const yShape = this.getInputShape(y_matrix);\r\n    this.yShape = yShape;\r\n    this.xShape = xShape;\r\n    const denseLayers = [];\r\n    if (layers) {\r\n      denseLayers.push(...layers);\r\n    } else {\r\n      denseLayers.push({ units: (xShape[ 1 ] * 2), inputDim: xShape[1],  activation: 'relu', });\r\n      denseLayers.push({ units: yShape[ 1 ], activation: 'softmax', });\r\n    }\r\n    this.layers = denseLayers;\r\n    denseLayers.forEach(layer => {\r\n      this.model.add(this.tf.layers.dense(layer));\r\n    });\r\n  }\r\n}",
     "static": true,
     "longname": "/Users/yawjosephetse/Developer/github/repetere/ts-deeplearning/lib/classification.mjs",
     "access": "public",
@@ -31,7 +31,7 @@
     ],
     "interface": false,
     "extends": [
-      "lib/deeplearning.js~BaseNeuralNetwork"
+      "lib/deep_learning.js~BaseNeuralNetwork"
     ],
     "implements": [
       "BaseNeuralNetwork"
@@ -157,10 +157,10 @@
   {
     "__docId__": 7,
     "kind": "file",
-    "name": "lib/deeplearning.mjs",
-    "content": "import { TensorScriptModelInterface, } from '@tensorscript/core';\r\n\r\n/**\r\n * Deep Learning with Tensorflow\r\n * @class BaseNeuralNetwork\r\n * @implements {TensorScriptModelInterface}\r\n */\r\nexport class BaseNeuralNetwork extends TensorScriptModelInterface {\r\n  /**\r\n   * @param {{layers:Array<Object>,compile:Object,fit:Object}} options - neural network configuration and tensorflow model hyperparameters\r\n   * @param {{model:Object,tf:Object,}} properties - extra instance properties\r\n   */\r\n  constructor(options = {}, properties) {\r\n    const config = Object.assign({\r\n      layers: [],\r\n      compile: {\r\n        loss: 'meanSquaredError',\r\n        optimizer: 'adam',\r\n      },\r\n      fit: {\r\n        epochs: 100,\r\n        batchSize: 5,\r\n      },\r\n    }, options);\r\n    super(config, properties);\r\n    return this;\r\n  }\r\n  /**\r\n   * Adds dense layers to tensorflow model\r\n   * @abstract \r\n   * @param {Array<Array<number>>} x_matrix - independent variables\r\n   * @param {Array<Array<number>>} y_matrix - dependent variables\r\n   * @param {Array<Object>} layers - model dense layer parameters\r\n   */\r\n  generateLayers(x_matrix, y_matrix, layers) {\r\n    throw new ReferenceError('generateLayers method is not implemented');\r\n  }\r\n  /**\r\n   * Asynchronously trains tensorflow model\r\n   * @override\r\n   * @param {Array<Array<number>>} x_matrix - independent variables\r\n   * @param {Array<Array<number>>} y_matrix - dependent variables\r\n   * @param {Array<Object>} layers - array of model dense layer parameters\r\n   * @return {Object} returns trained tensorflow model \r\n   */\r\n  async train(x_matrix, y_matrix, layers) {\r\n    const xShape = this.getInputShape(x_matrix);\r\n    const yShape = this.getInputShape(y_matrix);\r\n    const xs = this.tf.tensor(x_matrix, xShape);\r\n    const ys = this.tf.tensor(y_matrix, yShape);\r\n    this.xShape = xShape;\r\n    this.yShape = yShape;\r\n    this.model = this.tf.sequential();\r\n    this.generateLayers.call(this, x_matrix, y_matrix, layers || this.layers);\r\n    this.model.compile(this.settings.compile);\r\n    await this.model.fit(xs, ys, this.settings.fit);\r\n    xs.dispose();\r\n    ys.dispose();\r\n    return this.model;\r\n  }\r\n  /**\r\n   * Predicts new dependent variables\r\n   * @override\r\n   * @param {Array<Array<number>>|Array<number>} matrix - new test independent variables\r\n   * @return {{data: Promise}} returns tensorflow prediction \r\n   */\r\n  calculate(input_matrix) {\r\n    if (!input_matrix || Array.isArray(input_matrix)===false) throw new Error('invalid input matrix');\r\n    const predictionInput = (Array.isArray(input_matrix[ 0 ]))\r\n      ? input_matrix\r\n      : [\r\n        input_matrix,\r\n      ];\r\n    const predictionTensor = this.tf.tensor(predictionInput);\r\n    const prediction = this.model.predict(predictionTensor);\r\n    predictionTensor.dispose();\r\n    return prediction;\r\n  }\r\n}",
+    "name": "lib/deep_learning.mjs",
+    "content": "import { TensorScriptModelInterface, } from './model_interface';\r\n\r\n/**\r\n * Deep Learning with Tensorflow\r\n * @class BaseNeuralNetwork\r\n * @implements {TensorScriptModelInterface}\r\n */\r\nexport class BaseNeuralNetwork extends TensorScriptModelInterface {\r\n  /**\r\n   * @param {{layers:Array<Object>,compile:Object,fit:Object}} options - neural network configuration and tensorflow model hyperparameters\r\n   * @param {{model:Object,tf:Object,}} properties - extra instance properties\r\n   */\r\n  constructor(options = {}, properties) {\r\n    const config = Object.assign({\r\n      layers: [],\r\n      compile: {\r\n        loss: 'meanSquaredError',\r\n        optimizer: 'adam',\r\n      },\r\n      fit: {\r\n        epochs: 100,\r\n        batchSize: 5,\r\n      },\r\n    }, options);\r\n    super(config, properties);\r\n    return this;\r\n  }\r\n  /**\r\n   * Adds dense layers to tensorflow model\r\n   * @abstract \r\n   * @param {Array<Array<number>>} x_matrix - independent variables\r\n   * @param {Array<Array<number>>} y_matrix - dependent variables\r\n   * @param {Array<Object>} layers - model dense layer parameters\r\n   */\r\n  generateLayers(x_matrix, y_matrix, layers) {\r\n    throw new ReferenceError('generateLayers method is not implemented');\r\n  }\r\n  /**\r\n   * Asynchronously trains tensorflow model\r\n   * @override\r\n   * @param {Array<Array<number>>} x_matrix - independent variables\r\n   * @param {Array<Array<number>>} y_matrix - dependent variables\r\n   * @param {Array<Object>} layers - array of model dense layer parameters\r\n   * @param {Array<Array<number>>} x_text - validation data independent variables\r\n   * @param {Array<Array<number>>} y_text - validation data dependent variables\r\n   * @return {Object} returns trained tensorflow model \r\n   */\r\n  async train(x_matrix, y_matrix, layers, x_test, y_test) {\r\n    const xShape = this.getInputShape(x_matrix);\r\n    const yShape = this.getInputShape(y_matrix);\r\n    const xs = this.tf.tensor(x_matrix, xShape);\r\n    const ys = this.tf.tensor(y_matrix, yShape);\r\n    this.xShape = xShape;\r\n    this.yShape = yShape;\r\n    this.model = this.tf.sequential();\r\n    this.generateLayers.call(this, x_matrix, y_matrix, layers || this.layers, x_test, y_test);\r\n    this.model.compile(this.settings.compile);\r\n    await this.model.fit(xs, ys, this.settings.fit);\r\n    xs.dispose();\r\n    ys.dispose();\r\n    return this.model;\r\n  }\r\n  /**\r\n   * Predicts new dependent variables\r\n   * @override\r\n   * @param {Array<Array<number>>|Array<number>} matrix - new test independent variables\r\n   * @return {{data: Promise}} returns tensorflow prediction \r\n   */\r\n  calculate(input_matrix) {\r\n    if (!input_matrix || Array.isArray(input_matrix)===false) throw new Error('invalid input matrix');\r\n    const predictionInput = (Array.isArray(input_matrix[ 0 ]))\r\n      ? input_matrix\r\n      : [\r\n        input_matrix,\r\n      ];\r\n    const predictionTensor = this.tf.tensor(predictionInput);\r\n    const prediction = this.model.predict(predictionTensor);\r\n    predictionTensor.dispose();\r\n    return prediction;\r\n  }\r\n}",
     "static": true,
-    "longname": "/Users/yawjosephetse/Developer/github/repetere/ts-deeplearning/lib/deeplearning.mjs",
+    "longname": "/Users/yawjosephetse/Developer/github/repetere/ts-deeplearning/lib/deep_learning.mjs",
     "access": "public",
     "description": null,
     "lineNumber": 1
@@ -169,12 +169,12 @@
     "__docId__": 8,
     "kind": "class",
     "name": "BaseNeuralNetwork",
-    "memberof": "lib/deeplearning.mjs",
+    "memberof": "lib/deep_learning.mjs",
     "static": true,
-    "longname": "lib/deeplearning.mjs~BaseNeuralNetwork",
+    "longname": "lib/deep_learning.mjs~BaseNeuralNetwork",
     "access": "public",
     "export": true,
-    "importPath": "@tensorscript/ts-deeplearning/lib/deeplearning.mjs",
+    "importPath": "@tensorscript/ts-deeplearning/lib/deep_learning.mjs",
     "importStyle": "{BaseNeuralNetwork}",
     "description": "Deep Learning with Tensorflow",
     "lineNumber": 8,
@@ -186,7 +186,7 @@
     ],
     "interface": false,
     "extends": [
-      "@tensorscript/core~TensorScriptModelInterface"
+      "lib/model_interface.js~TensorScriptModelInterface"
     ],
     "implements": [
       "TensorScriptModelInterface"
@@ -196,11 +196,11 @@
     "__docId__": 9,
     "kind": "constructor",
     "name": "constructor",
-    "memberof": "lib/deeplearning.mjs~BaseNeuralNetwork",
+    "memberof": "lib/deep_learning.mjs~BaseNeuralNetwork",
     "generator": false,
     "async": false,
     "static": false,
-    "longname": "lib/deeplearning.mjs~BaseNeuralNetwork#constructor",
+    "longname": "lib/deep_learning.mjs~BaseNeuralNetwork#constructor",
     "access": "public",
     "description": "",
     "lineNumber": 13,
@@ -231,11 +231,11 @@
     "__docId__": 10,
     "kind": "method",
     "name": "generateLayers",
-    "memberof": "lib/deeplearning.mjs~BaseNeuralNetwork",
+    "memberof": "lib/deep_learning.mjs~BaseNeuralNetwork",
     "generator": false,
     "async": false,
     "static": false,
-    "longname": "lib/deeplearning.mjs~BaseNeuralNetwork#generateLayers",
+    "longname": "lib/deep_learning.mjs~BaseNeuralNetwork#generateLayers",
     "access": "public",
     "description": "Adds dense layers to tensorflow model",
     "lineNumber": 35,
@@ -277,14 +277,14 @@
     "__docId__": 11,
     "kind": "method",
     "name": "train",
-    "memberof": "lib/deeplearning.mjs~BaseNeuralNetwork",
+    "memberof": "lib/deep_learning.mjs~BaseNeuralNetwork",
     "generator": false,
     "async": true,
     "static": false,
-    "longname": "lib/deeplearning.mjs~BaseNeuralNetwork#train",
+    "longname": "lib/deep_learning.mjs~BaseNeuralNetwork#train",
     "access": "public",
     "description": "Asynchronously trains tensorflow model",
-    "lineNumber": 46,
+    "lineNumber": 48,
     "params": [
       {
         "nullable": null,
@@ -315,6 +315,26 @@
         "optional": false,
         "name": "layers",
         "description": "array of model dense layer parameters"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Array<Array<number>>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "x_text",
+        "description": "validation data independent variables"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Array<Array<number>>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "y_text",
+        "description": "validation data dependent variables"
       }
     ],
     "return": {
@@ -331,50 +351,50 @@
     "__docId__": 12,
     "kind": "member",
     "name": "xShape",
-    "memberof": "lib/deeplearning.mjs~BaseNeuralNetwork",
+    "memberof": "lib/deep_learning.mjs~BaseNeuralNetwork",
     "static": false,
-    "longname": "lib/deeplearning.mjs~BaseNeuralNetwork#xShape",
-    "access": "public",
-    "description": null,
-    "lineNumber": 51,
-    "undocument": true
-  },
-  {
-    "__docId__": 13,
-    "kind": "member",
-    "name": "yShape",
-    "memberof": "lib/deeplearning.mjs~BaseNeuralNetwork",
-    "static": false,
-    "longname": "lib/deeplearning.mjs~BaseNeuralNetwork#yShape",
-    "access": "public",
-    "description": null,
-    "lineNumber": 52,
-    "undocument": true
-  },
-  {
-    "__docId__": 14,
-    "kind": "member",
-    "name": "model",
-    "memberof": "lib/deeplearning.mjs~BaseNeuralNetwork",
-    "static": false,
-    "longname": "lib/deeplearning.mjs~BaseNeuralNetwork#model",
+    "longname": "lib/deep_learning.mjs~BaseNeuralNetwork#xShape",
     "access": "public",
     "description": null,
     "lineNumber": 53,
     "undocument": true
   },
   {
+    "__docId__": 13,
+    "kind": "member",
+    "name": "yShape",
+    "memberof": "lib/deep_learning.mjs~BaseNeuralNetwork",
+    "static": false,
+    "longname": "lib/deep_learning.mjs~BaseNeuralNetwork#yShape",
+    "access": "public",
+    "description": null,
+    "lineNumber": 54,
+    "undocument": true
+  },
+  {
+    "__docId__": 14,
+    "kind": "member",
+    "name": "model",
+    "memberof": "lib/deep_learning.mjs~BaseNeuralNetwork",
+    "static": false,
+    "longname": "lib/deep_learning.mjs~BaseNeuralNetwork#model",
+    "access": "public",
+    "description": null,
+    "lineNumber": 55,
+    "undocument": true
+  },
+  {
     "__docId__": 15,
     "kind": "method",
     "name": "calculate",
-    "memberof": "lib/deeplearning.mjs~BaseNeuralNetwork",
+    "memberof": "lib/deep_learning.mjs~BaseNeuralNetwork",
     "generator": false,
     "async": false,
     "static": false,
-    "longname": "lib/deeplearning.mjs~BaseNeuralNetwork#calculate",
+    "longname": "lib/deep_learning.mjs~BaseNeuralNetwork#calculate",
     "access": "public",
     "description": "Predicts new dependent variables",
-    "lineNumber": 67,
+    "lineNumber": 69,
     "params": [
       {
         "nullable": null,
@@ -400,8 +420,1035 @@
   {
     "__docId__": 16,
     "kind": "file",
+    "name": "lib/logistic_regression.mjs",
+    "content": "import { BaseNeuralNetwork, } from './deep_learning';\r\n\r\n/**\r\n * Logistic Regression Classification with Tensorflow\r\n * @class LogisticRegression\r\n * @implements {BaseNeuralNetwork}\r\n */\r\nexport class LogisticRegression extends BaseNeuralNetwork {\r\n  /**\r\n   * @param {{layers:Array<Object>,compile:Object,fit:Object}} options - neural network configuration and tensorflow model hyperparameters\r\n   * @param {{model:Object,tf:Object,}} properties - extra instance properties\r\n   */\r\n  constructor(options = {}, properties) {\r\n    const config = Object.assign({\r\n      layers: [],\r\n      type:'simple',\r\n      compile: {\r\n        loss: 'meanSquaredError',\r\n        optimizer: 'rmsprop',\r\n      },\r\n      fit: {\r\n        epochs: 100,\r\n        batchSize: 5,\r\n      },\r\n    }, options);\r\n    super(config, properties);\r\n    return this;\r\n  }\r\n  /**\r\n   * Adds dense layers to tensorflow classification model\r\n   * @override \r\n   * @param {Array<Array<number>>} x_matrix - independent variables\r\n   * @param {Array<Array<number>>} y_matrix - dependent variables\r\n   * @param {Array<Object>} layers - model dense layer parameters\r\n   * @param {Array<Array<number>>} x_test - validation data independent variables\r\n   * @param {Array<Array<number>>} y_test - validation data dependent variables\r\n   */\r\n  generateLayers(x_matrix, y_matrix, layers, x_test, y_test) {\r\n    const xShape = this.getInputShape(x_matrix);\r\n    const yShape = this.getInputShape(y_matrix);\r\n    this.yShape = yShape;\r\n    this.xShape = xShape;\r\n    const denseLayers = [];\r\n    if (layers) {\r\n      denseLayers.push(...layers);\r\n    } else if (this.settings.type==='class') { \r\n      denseLayers.push({ units: 1, inputDim:  xShape[ 1 ], activation: 'sigmoid', });\r\n      this.settings.compile.loss = 'binaryCrossentropy';\r\n    } else if (this.settings.type === 'l1l2') { \r\n      const kernelRegularizer = this.tf.regularizers.l1l2({ l1: 0.01, l2: 0.01, });\r\n      denseLayers.push({ units: 1, inputDim:  xShape[ 1 ], activation: 'sigmoid', kernelRegularizer, });\r\n      this.settings.compile.loss = 'binaryCrossentropy';\r\n    } else {\r\n      denseLayers.push({ units: 1, inputShape: [xShape[1], ], });\r\n    }\r\n    this.layers = denseLayers;\r\n    denseLayers.forEach(layer => {\r\n      this.model.add(this.tf.layers.dense(layer));\r\n    });\r\n    /* istanbul ignore next */\r\n    if (x_test && y_test) {\r\n      this.settings.fit.validationData = [x_test, y_test];\r\n    }\r\n  }\r\n}",
+    "static": true,
+    "longname": "/Users/yawjosephetse/Developer/github/repetere/ts-deeplearning/lib/logistic_regression.mjs",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 17,
+    "kind": "class",
+    "name": "LogisticRegression",
+    "memberof": "lib/logistic_regression.mjs",
+    "static": true,
+    "longname": "lib/logistic_regression.mjs~LogisticRegression",
+    "access": "public",
+    "export": true,
+    "importPath": "@tensorscript/ts-deeplearning/lib/logistic_regression.mjs",
+    "importStyle": "{LogisticRegression}",
+    "description": "Logistic Regression Classification with Tensorflow",
+    "lineNumber": 8,
+    "unknown": [
+      {
+        "tagName": "@class",
+        "tagValue": "LogisticRegression"
+      }
+    ],
+    "interface": false,
+    "extends": [
+      "lib/deep_learning.js~BaseNeuralNetwork"
+    ],
+    "implements": [
+      "BaseNeuralNetwork"
+    ]
+  },
+  {
+    "__docId__": 18,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "lib/logistic_regression.mjs~LogisticRegression",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/logistic_regression.mjs~LogisticRegression#constructor",
+    "access": "public",
+    "description": "",
+    "lineNumber": 13,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "{layers:Array<Object>,compile:Object,fit:Object}"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options",
+        "description": "neural network configuration and tensorflow model hyperparameters"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "{model:Object,tf:Object,}"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "properties",
+        "description": "extra instance properties"
+      }
+    ]
+  },
+  {
+    "__docId__": 19,
+    "kind": "method",
+    "name": "generateLayers",
+    "memberof": "lib/logistic_regression.mjs~LogisticRegression",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/logistic_regression.mjs~LogisticRegression#generateLayers",
+    "access": "public",
+    "description": "Adds dense layers to tensorflow classification model",
+    "lineNumber": 38,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Array<Array<number>>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "x_matrix",
+        "description": "independent variables"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Array<Array<number>>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "y_matrix",
+        "description": "dependent variables"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Array<Object>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "layers",
+        "description": "model dense layer parameters"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Array<Array<number>>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "x_test",
+        "description": "validation data independent variables"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Array<Array<number>>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "y_test",
+        "description": "validation data dependent variables"
+      }
+    ],
+    "override": true
+  },
+  {
+    "__docId__": 20,
+    "kind": "member",
+    "name": "yShape",
+    "memberof": "lib/logistic_regression.mjs~LogisticRegression",
+    "static": false,
+    "longname": "lib/logistic_regression.mjs~LogisticRegression#yShape",
+    "access": "public",
+    "description": null,
+    "lineNumber": 41,
+    "undocument": true
+  },
+  {
+    "__docId__": 21,
+    "kind": "member",
+    "name": "xShape",
+    "memberof": "lib/logistic_regression.mjs~LogisticRegression",
+    "static": false,
+    "longname": "lib/logistic_regression.mjs~LogisticRegression#xShape",
+    "access": "public",
+    "description": null,
+    "lineNumber": 42,
+    "undocument": true
+  },
+  {
+    "__docId__": 22,
+    "kind": "member",
+    "name": "layers",
+    "memberof": "lib/logistic_regression.mjs~LogisticRegression",
+    "static": false,
+    "longname": "lib/logistic_regression.mjs~LogisticRegression#layers",
+    "access": "public",
+    "description": null,
+    "lineNumber": 56,
+    "undocument": true
+  },
+  {
+    "__docId__": 23,
+    "kind": "file",
+    "name": "lib/model_interface.mjs",
+    "content": "import tf from '@tensorflow/tfjs';\r\n\r\n/**\r\n * Base class for tensorscript models\r\n * @interface TensorScriptModelInterface\r\n * @property {Object} settings - tensorflow model hyperparameters\r\n * @property {Object} model - tensorflow model\r\n * @property {Object} tf - tensorflow / tensorflow-node / tensorflow-node-gpu\r\n * @property {Function} reshape - static reshape array function\r\n * @property {Function} getInputShape - static TensorScriptModelInterface\r\n */\r\nexport class TensorScriptModelInterface {\r\n  /**\r\n   * @param {Object} options - tensorflow model hyperparameters\r\n   * @param {Object} customTF - custom, overridale tensorflow / tensorflow-node / tensorflow-node-gpu\r\n   * @param {{model:Object,tf:Object,}} properties - extra instance properties\r\n   */\r\n  constructor(options = {}, properties = {}) {\r\n    /** @type {Object} */\r\n    this.settings = options;\r\n    /** @type {Object} */\r\n    this.model = properties.model;\r\n    /** @type {Object} */\r\n    this.tf = properties.tf || tf;\r\n    /** @type {Function} */\r\n    this.reshape = TensorScriptModelInterface.reshape;\r\n    /** @type {Function} */\r\n    this.getInputShape = TensorScriptModelInterface.getInputShape;\r\n    return this;\r\n  }\r\n  /**\r\n   * Reshapes an array\r\n   * @function\r\n   * @example \r\n   * const array = [ 0, 1, 1, 0, ];\r\n   * const shape = [2,2];\r\n   * TensorScriptModelInterface.reshape(array,shape) // => \r\n   * [\r\n   *   [ 0, 1, ],\r\n   *   [ 1, 0, ],\r\n   * ];\r\n   * @param {Array<number>} array - input array \r\n   * @param {Array<number>} shape - shape array \r\n   * @return {Array<Array<number>>} returns a matrix with the defined shape\r\n   */\r\n  /* istanbul ignore next */\r\n  static reshape (array, shape) {\r\n    const flatArray = array;\r\n    let newArray;\r\n    const rows = shape[ 0 ];\r\n\r\n    function product (arr) {\r\n      return arr.reduce((prev, curr) => prev * curr);\r\n    }\r\n  \r\n    if (!Array.isArray(array) || !Array.isArray(shape)) {\r\n      throw new TypeError('Array expected');\r\n    }\r\n  \r\n    if (shape.length === 0) {\r\n      throw new DimensionError(0, product(size(array)), '!=');\r\n    }\r\n  \r\n    var totalSize = 1;\r\n    for (var sizeIndex = 0; sizeIndex < shape.length; sizeIndex++) {\r\n      totalSize *= shape[sizeIndex];\r\n    }\r\n  \r\n    if (flatArray.length !== totalSize) {\r\n      throw new DimensionError(\r\n        product(shape),\r\n        product(size(array)),\r\n        '!='\r\n      );\r\n    }\r\n  \r\n    try {\r\n      newArray = _reshape(flatArray, shape);\r\n    } catch (e) {\r\n      if (e instanceof DimensionError) {\r\n        throw new DimensionError(\r\n          product(shape),\r\n          product(size(array)),\r\n          '!='\r\n        );\r\n      }\r\n      throw e;\r\n    }\r\n    if (newArray.length !== rows) throw new SyntaxError(`specified shape (${shape}) is compatible with input array or length (${array.length})`);\r\n\r\n    // console.log({ newArray ,});\r\n    return newArray;\r\n  }\r\n  /**\r\n   * Returns the shape of an input matrix\r\n   * @function\r\n   * @example \r\n   * const input = [\r\n   *   [ 0, 1, ],\r\n   *   [ 1, 0, ],\r\n   * ];\r\n   * TensorScriptModelInterface.getInputShape(input) // => [2,2]\r\n   * @see {https://stackoverflow.com/questions/10237615/get-size-of-dimensions-in-array}\r\n   * @param {Array<Array<number>>} matrix - input matrix \r\n   * @return {Array<number>} returns the shape of a matrix (e.g. [2,2])\r\n   */\r\n  static getInputShape(matrix=[]) {\r\n    if (Array.isArray(matrix) === false || !matrix[ 0 ] || !matrix[ 0 ].length || Array.isArray(matrix[ 0 ]) === false) throw new TypeError('input must be a matrix');\r\n    const dim = [];\r\n    const x_dimensions = matrix[ 0 ].length;\r\n    let vectors = matrix;\r\n    matrix.forEach(vector => {\r\n      if (vector.length !== x_dimensions) throw new SyntaxError('input must have the same length in each row');\r\n    });\r\n    for (;;) {\r\n      dim.push(vectors.length);\r\n      if (Array.isArray(vectors[0])) {\r\n        vectors = vectors[0];\r\n      } else {\r\n        break;\r\n      }\r\n    }\r\n    return dim;\r\n  }\r\n  /**\r\n   * Asynchronously trains tensorflow model, must be implemented by tensorscript class\r\n   * @abstract \r\n   * @param {Array<Array<number>>} x_matrix - independent variables\r\n   * @param {Array<Array<number>>} y_matrix - dependent variables\r\n   * @return {Object} returns trained tensorflow model \r\n   */\r\n  train(x_matrix, y_matrix) {\r\n    throw new ReferenceError('train method is not implemented');\r\n  }\r\n  /**\r\n   * Predicts new dependent variables\r\n   * @abstract \r\n   * @param {Array<Array<number>>|Array<number>} matrix - new test independent variables\r\n   * @return {{data: Promise}} returns tensorflow prediction \r\n   */\r\n  calculate(matrix) {\r\n    throw new ReferenceError('calculate method is not implemented');\r\n  }\r\n  /**\r\n   * Loads a saved tensoflow / keras model\r\n   * @param {Object} options - tensorflow load model options\r\n   * @return {Object} tensorflow model\r\n   */\r\n  async loadModel(options) {\r\n    this.model = await this.tf.loadModel(options);\r\n    return this.model;\r\n  }\r\n  /**\r\n   * Returns prediction values from tensorflow model\r\n   * @param {Array<Array<number>>|Array<number>} input_matrix - new test independent variables \r\n   * @param {Boolean} [options.json=true] - return object instead of typed array\r\n   * @param {Boolean} [options.probability=true] - return real values instead of integers\r\n   * @return {Array<number>|Array<Array<number>>} predicted model values\r\n   */\r\n  async predict(input_matrix, options = {}) {\r\n    if (!input_matrix || Array.isArray(input_matrix)===false) throw new Error('invalid input matrix');\r\n    const x_matrix = (Array.isArray(input_matrix[ 0 ]))\r\n      ? input_matrix\r\n      : [\r\n        input_matrix,\r\n      ];\r\n    const config = Object.assign({\r\n      json: true,\r\n      probability: true,\r\n    }, options);\r\n    return this.calculate(x_matrix)\r\n      .data()\r\n      .then(predictions => {\r\n        if (config.json === false) {\r\n          return predictions;\r\n        } else {\r\n          const shape = [x_matrix.length, this.yShape[ 1 ],];\r\n          const predictionValues = (options.probability === false) ? Array.from(predictions).map(Math.round) : Array.from(predictions);\r\n          return this.reshape(predictionValues, shape);\r\n        }\r\n      })\r\n      .catch(e => {\r\n        throw e; \r\n      });\r\n  }\r\n}\r\n\r\n/**\r\n * Calculate the size of a multi dimensional array.\r\n * This function checks the size of the first entry, it does not validate\r\n * whether all dimensions match. (use function `validate` for that) (from math.js)\r\n * @param {Array} x\r\n * @see {https://github.com/josdejong/mathjs/blob/develop/src/utils/array.js}\r\n * @ignore\r\n * @return {Number[]} size\r\n */\r\n/* istanbul ignore next */\r\nexport function size (x) {\r\n  let s = [];\r\n\r\n  while (Array.isArray(x)) {\r\n    s.push(x.length);\r\n    x = x[0];\r\n  }\r\n\r\n  return s;\r\n}\r\n/**\r\n * Iteratively re-shape a multi dimensional array to fit the specified dimensions (from math.js)\r\n * @param {Array} array           Array to be reshaped\r\n * @param {Array.<number>} sizes  List of sizes for each dimension\r\n * @returns {Array}               Array whose data has been formatted to fit the\r\n *                                specified dimensions\r\n * @ignore\r\n * @see {https://github.com/josdejong/mathjs/blob/develop/src/utils/array.js}\r\n */\r\n/* istanbul ignore next */\r\nexport function _reshape(array, sizes) {\r\n  // testing if there are enough elements for the requested shape\r\n  var tmpArray = array;\r\n  var tmpArray2;\r\n  // for each dimensions starting by the last one and ignoring the first one\r\n  for (var sizeIndex = sizes.length - 1; sizeIndex > 0; sizeIndex--) {\r\n    var size = sizes[sizeIndex];\r\n    tmpArray2 = [];\r\n\r\n    // aggregate the elements of the current tmpArray in elements of the requested size\r\n    var length = tmpArray.length / size;\r\n    for (var i = 0; i < length; i++) {\r\n      tmpArray2.push(tmpArray.slice(i * size, (i + 1) * size));\r\n    }\r\n    // set it as the new tmpArray for the next loop turn or for return\r\n    tmpArray = tmpArray2;\r\n  }\r\n  return tmpArray;\r\n}\r\n\r\n/**\r\n * Create a range error with the message:\r\n *     'Dimension mismatch (<actual size> != <expected size>)' (from math.js)\r\n * @param {number | number[]} actual        The actual size\r\n * @param {number | number[]} expected      The expected size\r\n * @param {string} [relation='!=']          Optional relation between actual\r\n *                                          and expected size: '!=', '<', etc.\r\n * @extends RangeError\r\n * @ignore\r\n * @see {https://github.com/josdejong/mathjs/blob/develop/src/utils/array.js}\r\n */\r\n/* istanbul ignore next */\r\nexport class DimensionError extends RangeError {\r\n  constructor(actual, expected, relation) {\r\n    /* istanbul ignore next */\r\n    const message = 'Dimension mismatch (' + (Array.isArray(actual) ? ('[' + actual.join(', ') + ']') : actual) + ' ' + ('!=') + ' ' + (Array.isArray(expected) ? ('[' + expected.join(', ') + ']') : expected) +  ')';\r\n    super(message);\r\n  \r\n    this.actual = actual;\r\n    this.expected = expected;\r\n    this.relation = relation;\r\n    // this.stack = (new Error()).stack\r\n    this.message = message;\r\n    this.name = 'DimensionError';\r\n    this.isDimensionError = true;\r\n  }\r\n}",
+    "static": true,
+    "longname": "/Users/yawjosephetse/Developer/github/repetere/ts-deeplearning/lib/model_interface.mjs",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 24,
+    "kind": "class",
+    "name": "TensorScriptModelInterface",
+    "memberof": "lib/model_interface.mjs",
+    "static": true,
+    "longname": "lib/model_interface.mjs~TensorScriptModelInterface",
+    "access": "public",
+    "export": true,
+    "importPath": "@tensorscript/ts-deeplearning/lib/model_interface.mjs",
+    "importStyle": "{TensorScriptModelInterface}",
+    "description": "Base class for tensorscript models",
+    "lineNumber": 12,
+    "properties": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "settings",
+        "description": "tensorflow model hyperparameters"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "model",
+        "description": "tensorflow model"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "tf",
+        "description": "tensorflow / tensorflow-node / tensorflow-node-gpu"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "reshape",
+        "description": "static reshape array function"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "getInputShape",
+        "description": "static TensorScriptModelInterface"
+      }
+    ],
+    "interface": false
+  },
+  {
+    "__docId__": 25,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "lib/model_interface.mjs~TensorScriptModelInterface",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/model_interface.mjs~TensorScriptModelInterface#constructor",
+    "access": "public",
+    "description": "",
+    "lineNumber": 18,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options",
+        "description": "tensorflow model hyperparameters"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "customTF",
+        "description": "custom, overridale tensorflow / tensorflow-node / tensorflow-node-gpu"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "{model:Object,tf:Object,}"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "properties",
+        "description": "extra instance properties"
+      }
+    ]
+  },
+  {
+    "__docId__": 26,
+    "kind": "member",
+    "name": "settings",
+    "memberof": "lib/model_interface.mjs~TensorScriptModelInterface",
+    "static": false,
+    "longname": "lib/model_interface.mjs~TensorScriptModelInterface#settings",
+    "access": "public",
+    "description": null,
+    "lineNumber": 20,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 27,
+    "kind": "member",
+    "name": "model",
+    "memberof": "lib/model_interface.mjs~TensorScriptModelInterface",
+    "static": false,
+    "longname": "lib/model_interface.mjs~TensorScriptModelInterface#model",
+    "access": "public",
+    "description": null,
+    "lineNumber": 22,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 28,
+    "kind": "member",
+    "name": "tf",
+    "memberof": "lib/model_interface.mjs~TensorScriptModelInterface",
+    "static": false,
+    "longname": "lib/model_interface.mjs~TensorScriptModelInterface#tf",
+    "access": "public",
+    "description": null,
+    "lineNumber": 24,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 29,
+    "kind": "member",
+    "name": "reshape",
+    "memberof": "lib/model_interface.mjs~TensorScriptModelInterface",
+    "static": false,
+    "longname": "lib/model_interface.mjs~TensorScriptModelInterface#reshape",
+    "access": "public",
+    "description": null,
+    "lineNumber": 26,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Function"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 30,
+    "kind": "member",
+    "name": "getInputShape",
+    "memberof": "lib/model_interface.mjs~TensorScriptModelInterface",
+    "static": false,
+    "longname": "lib/model_interface.mjs~TensorScriptModelInterface#getInputShape",
+    "access": "public",
+    "description": null,
+    "lineNumber": 28,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Function"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 31,
+    "kind": "method",
+    "name": "reshape",
+    "memberof": "lib/model_interface.mjs~TensorScriptModelInterface",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "lib/model_interface.mjs~TensorScriptModelInterface.reshape",
+    "access": "public",
+    "description": "Reshapes an array",
+    "examples": [
+      "const array = [ 0, 1, 1, 0, ];\nconst shape = [2,2];\nTensorScriptModelInterface.reshape(array,shape) // => \n[\n  [ 0, 1, ],\n  [ 1, 0, ],\n];"
+    ],
+    "lineNumber": 47,
+    "unknown": [
+      {
+        "tagName": "@function",
+        "tagValue": ""
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Array<number>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "array",
+        "description": "input array"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Array<number>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "shape",
+        "description": "shape array"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Array<Array<number>>"
+      ],
+      "spread": false,
+      "description": "returns a matrix with the defined shape"
+    }
+  },
+  {
+    "__docId__": 32,
+    "kind": "method",
+    "name": "getInputShape",
+    "memberof": "lib/model_interface.mjs~TensorScriptModelInterface",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "lib/model_interface.mjs~TensorScriptModelInterface.getInputShape",
+    "access": "public",
+    "description": "Returns the shape of an input matrix",
+    "examples": [
+      "const input = [\n  [ 0, 1, ],\n  [ 1, 0, ],\n];\nTensorScriptModelInterface.getInputShape(input) // => [2,2]"
+    ],
+    "see": [
+      "{https://stackoverflow.com/questions/10237615/get-size-of-dimensions-in-array}"
+    ],
+    "lineNumber": 107,
+    "unknown": [
+      {
+        "tagName": "@function",
+        "tagValue": ""
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Array<Array<number>>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "matrix",
+        "description": "input matrix"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Array<number>"
+      ],
+      "spread": false,
+      "description": "returns the shape of a matrix (e.g. [2,2])"
+    }
+  },
+  {
+    "__docId__": 33,
+    "kind": "method",
+    "name": "train",
+    "memberof": "lib/model_interface.mjs~TensorScriptModelInterface",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/model_interface.mjs~TensorScriptModelInterface#train",
+    "access": "public",
+    "description": "Asynchronously trains tensorflow model, must be implemented by tensorscript class",
+    "lineNumber": 132,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Array<Array<number>>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "x_matrix",
+        "description": "independent variables"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Array<Array<number>>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "y_matrix",
+        "description": "dependent variables"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "returns trained tensorflow model"
+    },
+    "abstract": true
+  },
+  {
+    "__docId__": 34,
+    "kind": "method",
+    "name": "calculate",
+    "memberof": "lib/model_interface.mjs~TensorScriptModelInterface",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/model_interface.mjs~TensorScriptModelInterface#calculate",
+    "access": "public",
+    "description": "Predicts new dependent variables",
+    "lineNumber": 141,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Array<Array<number>>|Array<number>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "matrix",
+        "description": "new test independent variables"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "{data: Promise}"
+      ],
+      "spread": false,
+      "description": "returns tensorflow prediction"
+    },
+    "abstract": true
+  },
+  {
+    "__docId__": 35,
+    "kind": "method",
+    "name": "loadModel",
+    "memberof": "lib/model_interface.mjs~TensorScriptModelInterface",
+    "generator": false,
+    "async": true,
+    "static": false,
+    "longname": "lib/model_interface.mjs~TensorScriptModelInterface#loadModel",
+    "access": "public",
+    "description": "Loads a saved tensoflow / keras model",
+    "lineNumber": 149,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options",
+        "description": "tensorflow load model options"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "tensorflow model"
+    }
+  },
+  {
+    "__docId__": 37,
+    "kind": "method",
+    "name": "predict",
+    "memberof": "lib/model_interface.mjs~TensorScriptModelInterface",
+    "generator": false,
+    "async": true,
+    "static": false,
+    "longname": "lib/model_interface.mjs~TensorScriptModelInterface#predict",
+    "access": "public",
+    "description": "Returns prediction values from tensorflow model",
+    "lineNumber": 160,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Array<Array<number>>|Array<number>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "input_matrix",
+        "description": "new test independent variables"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Boolean"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "true",
+        "defaultRaw": true,
+        "name": "options.json",
+        "description": "return object instead of typed array"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Boolean"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "true",
+        "defaultRaw": true,
+        "name": "options.probability",
+        "description": "return real values instead of integers"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Array<number>|Array<Array<number>>"
+      ],
+      "spread": false,
+      "description": "predicted model values"
+    }
+  },
+  {
+    "__docId__": 38,
+    "kind": "function",
+    "name": "size",
+    "memberof": "lib/model_interface.mjs",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "lib/model_interface.mjs~size",
+    "access": "public",
+    "export": true,
+    "importPath": "@tensorscript/ts-deeplearning/lib/model_interface.mjs",
+    "importStyle": "{size}",
+    "description": "Calculate the size of a multi dimensional array.\nThis function checks the size of the first entry, it does not validate\nwhether all dimensions match. (use function `validate` for that) (from math.js)",
+    "see": [
+      "{https://github.com/josdejong/mathjs/blob/develop/src/utils/array.js}"
+    ],
+    "lineNumber": 198,
+    "ignore": true,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Array"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "x",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Number[]"
+      ],
+      "spread": false,
+      "description": "size"
+    }
+  },
+  {
+    "__docId__": 39,
+    "kind": "function",
+    "name": "_reshape",
+    "memberof": "lib/model_interface.mjs",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "lib/model_interface.mjs~_reshape",
+    "access": "private",
+    "export": true,
+    "importPath": "@tensorscript/ts-deeplearning/lib/model_interface.mjs",
+    "importStyle": "{_reshape}",
+    "description": "Iteratively re-shape a multi dimensional array to fit the specified dimensions (from math.js)",
+    "see": [
+      "{https://github.com/josdejong/mathjs/blob/develop/src/utils/array.js}"
+    ],
+    "lineNumber": 218,
+    "ignore": true,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Array}               Array whose data has been formatted to fit the\n                               specified dimensions"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Array"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "array",
+        "description": "Array to be reshaped"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Array.<number>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "sizes",
+        "description": "List of sizes for each dimension"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Array"
+      ],
+      "spread": false,
+      "description": "Array whose data has been formatted to fit the\n                               specified dimensions"
+    }
+  },
+  {
+    "__docId__": 40,
+    "kind": "class",
+    "name": "DimensionError",
+    "memberof": "lib/model_interface.mjs",
+    "static": true,
+    "longname": "lib/model_interface.mjs~DimensionError",
+    "access": "public",
+    "export": true,
+    "importPath": "@tensorscript/ts-deeplearning/lib/model_interface.mjs",
+    "importStyle": "{DimensionError}",
+    "description": "Create a range error with the message:\n    'Dimension mismatch (<actual size> != <expected size>)' (from math.js)",
+    "see": [
+      "{https://github.com/josdejong/mathjs/blob/develop/src/utils/array.js}"
+    ],
+    "lineNumber": 250,
+    "ignore": true,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "number ",
+          " number[]"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "actual",
+        "description": "The actual size"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "number ",
+          " number[]"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "expected",
+        "description": "The expected size"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "relation",
+        "description": "Optional relation between actual\n                                         and expected size: '!=', '<', etc."
+      }
+    ],
+    "interface": false,
+    "extends": [
+      "*"
+    ]
+  },
+  {
+    "__docId__": 41,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "lib/model_interface.mjs~DimensionError",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/model_interface.mjs~DimensionError#constructor",
+    "access": "public",
+    "description": null,
+    "lineNumber": 251,
+    "undocument": true
+  },
+  {
+    "__docId__": 42,
+    "kind": "member",
+    "name": "actual",
+    "memberof": "lib/model_interface.mjs~DimensionError",
+    "static": false,
+    "longname": "lib/model_interface.mjs~DimensionError#actual",
+    "access": "public",
+    "description": null,
+    "lineNumber": 256,
+    "undocument": true
+  },
+  {
+    "__docId__": 43,
+    "kind": "member",
+    "name": "expected",
+    "memberof": "lib/model_interface.mjs~DimensionError",
+    "static": false,
+    "longname": "lib/model_interface.mjs~DimensionError#expected",
+    "access": "public",
+    "description": null,
+    "lineNumber": 257,
+    "undocument": true
+  },
+  {
+    "__docId__": 44,
+    "kind": "member",
+    "name": "relation",
+    "memberof": "lib/model_interface.mjs~DimensionError",
+    "static": false,
+    "longname": "lib/model_interface.mjs~DimensionError#relation",
+    "access": "public",
+    "description": null,
+    "lineNumber": 258,
+    "undocument": true
+  },
+  {
+    "__docId__": 45,
+    "kind": "member",
+    "name": "message",
+    "memberof": "lib/model_interface.mjs~DimensionError",
+    "static": false,
+    "longname": "lib/model_interface.mjs~DimensionError#message",
+    "access": "public",
+    "description": null,
+    "lineNumber": 260,
+    "undocument": true
+  },
+  {
+    "__docId__": 46,
+    "kind": "member",
+    "name": "name",
+    "memberof": "lib/model_interface.mjs~DimensionError",
+    "static": false,
+    "longname": "lib/model_interface.mjs~DimensionError#name",
+    "access": "public",
+    "description": null,
+    "lineNumber": 261,
+    "undocument": true
+  },
+  {
+    "__docId__": 47,
+    "kind": "member",
+    "name": "isDimensionError",
+    "memberof": "lib/model_interface.mjs~DimensionError",
+    "static": false,
+    "longname": "lib/model_interface.mjs~DimensionError#isDimensionError",
+    "access": "public",
+    "description": null,
+    "lineNumber": 262,
+    "undocument": true
+  },
+  {
+    "__docId__": 48,
+    "kind": "file",
+    "name": "lib/multiple_linear_regression.mjs",
+    "content": "import { BaseNeuralNetwork, } from './deep_learning';\r\n\r\n/**\r\n * Mulitple Linear Regression with Tensorflow\r\n * @class MultipleLinearRegression\r\n * @implements {BaseNeuralNetwork}\r\n */\r\nexport class MultipleLinearRegression extends BaseNeuralNetwork {\r\n  /**\r\n   * @param {{layers:Array<Object>,compile:Object,fit:Object}} options - neural network configuration and tensorflow model hyperparameters\r\n   * @param {{model:Object,tf:Object,}} properties - extra instance properties\r\n   */\r\n  constructor(options = {}, properties = {}) {\r\n    const config = Object.assign({\r\n      layers: [],\r\n      compile: {\r\n        loss: 'meanSquaredError',\r\n        optimizer: 'sgd',\r\n      },\r\n      fit: {\r\n        epochs: 500,\r\n        batchSize: 5,\r\n      },\r\n    }, options);\r\n    super(config, properties);\r\n    return this;\r\n  }\r\n  /**\r\n   * Adds dense layers to tensorflow regression model\r\n   * @override \r\n   * @param {Array<Array<number>>} x_matrix - independent variables\r\n   * @param {Array<Array<number>>} y_matrix - dependent variables\r\n   * @param {Array<Object>} layers - model dense layer parameters\r\n   */\r\n  generateLayers(x_matrix, y_matrix, layers) {\r\n    const xShape = this.getInputShape(x_matrix);\r\n    const yShape = this.getInputShape(y_matrix);\r\n    const denseLayers = [];\r\n    if (layers) {\r\n      denseLayers.push(...layers);\r\n    } else {\r\n      denseLayers.push({ units: yShape[1], inputShape: [xShape[1],], });\r\n    }\r\n    this.layers = denseLayers;\r\n    denseLayers.forEach(layer => {\r\n      this.model.add(this.tf.layers.dense(layer));\r\n    });\r\n  }\r\n}",
+    "static": true,
+    "longname": "/Users/yawjosephetse/Developer/github/repetere/ts-deeplearning/lib/multiple_linear_regression.mjs",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 49,
+    "kind": "class",
+    "name": "MultipleLinearRegression",
+    "memberof": "lib/multiple_linear_regression.mjs",
+    "static": true,
+    "longname": "lib/multiple_linear_regression.mjs~MultipleLinearRegression",
+    "access": "public",
+    "export": true,
+    "importPath": "@tensorscript/ts-deeplearning/lib/multiple_linear_regression.mjs",
+    "importStyle": "{MultipleLinearRegression}",
+    "description": "Mulitple Linear Regression with Tensorflow",
+    "lineNumber": 8,
+    "unknown": [
+      {
+        "tagName": "@class",
+        "tagValue": "MultipleLinearRegression"
+      }
+    ],
+    "interface": false,
+    "extends": [
+      "lib/deep_learning.js~BaseNeuralNetwork"
+    ],
+    "implements": [
+      "BaseNeuralNetwork"
+    ]
+  },
+  {
+    "__docId__": 50,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "lib/multiple_linear_regression.mjs~MultipleLinearRegression",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/multiple_linear_regression.mjs~MultipleLinearRegression#constructor",
+    "access": "public",
+    "description": "",
+    "lineNumber": 13,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "{layers:Array<Object>,compile:Object,fit:Object}"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options",
+        "description": "neural network configuration and tensorflow model hyperparameters"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "{model:Object,tf:Object,}"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "properties",
+        "description": "extra instance properties"
+      }
+    ]
+  },
+  {
+    "__docId__": 51,
+    "kind": "method",
+    "name": "generateLayers",
+    "memberof": "lib/multiple_linear_regression.mjs~MultipleLinearRegression",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/multiple_linear_regression.mjs~MultipleLinearRegression#generateLayers",
+    "access": "public",
+    "description": "Adds dense layers to tensorflow regression model",
+    "lineNumber": 35,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Array<Array<number>>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "x_matrix",
+        "description": "independent variables"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Array<Array<number>>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "y_matrix",
+        "description": "dependent variables"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Array<Object>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "layers",
+        "description": "model dense layer parameters"
+      }
+    ],
+    "override": true
+  },
+  {
+    "__docId__": 52,
+    "kind": "member",
+    "name": "layers",
+    "memberof": "lib/multiple_linear_regression.mjs~MultipleLinearRegression",
+    "static": false,
+    "longname": "lib/multiple_linear_regression.mjs~MultipleLinearRegression#layers",
+    "access": "public",
+    "description": null,
+    "lineNumber": 44,
+    "undocument": true
+  },
+  {
+    "__docId__": 53,
+    "kind": "file",
     "name": "lib/regression.mjs",
-    "content": "import { BaseNeuralNetwork, } from './deeplearning';\r\n\r\n/**\r\n * Deep Learning Regression with Tensorflow\r\n * @class DeepLearningRegression\r\n * @implements {BaseNeuralNetwork}\r\n */\r\nexport class DeepLearningRegression extends BaseNeuralNetwork {\r\n  /**\r\n   * @param {{layers:Array<Object>,compile:Object,fit:Object,layerPreference:String}} options - neural network configuration and tensorflow model hyperparameters\r\n   * @param {{model:Object,tf:Object,}} properties - extra instance properties\r\n   */\r\n  constructor(options = {}, properties) {\r\n    const config = Object.assign({\r\n      layers: [],\r\n      layerPreference:'deep',\r\n      compile: {\r\n        loss: 'meanSquaredError',\r\n        optimizer: 'adam',\r\n      },\r\n      fit: {\r\n        epochs: 100,\r\n        batchSize: 5,\r\n      },\r\n    }, options);\r\n    super(config, properties);\r\n    return this;\r\n  }\r\n  /**\r\n   * Adds dense layers to tensorflow regression model\r\n   * @override \r\n   * @param {Array<Array<number>>} x_matrix - independent variables\r\n   * @param {Array<Array<number>>} y_matrix - dependent variables\r\n   * @param {Array<Object>} layers - model dense layer parameters\r\n   */\r\n  generateLayers(x_matrix, y_matrix, layers) {\r\n    const xShape = this.getInputShape(x_matrix);\r\n    const yShape = this.getInputShape(y_matrix);\r\n    const denseLayers = [];\r\n    if (layers) {\r\n      denseLayers.push(...layers);\r\n    } else if(this.settings.layerPreference==='deep') {\r\n      denseLayers.push({ units: xShape[ 1 ], inputShape: [xShape[1],], kernelInitializer: 'randomNormal', activation: 'relu', });\r\n      denseLayers.push({ units: parseInt(Math.ceil(xShape[ 1 ] / 2), 10), kernelInitializer: 'randomNormal', activation: 'relu', });\r\n      denseLayers.push({ units: yShape[ 1 ], kernelInitializer: 'randomNormal', });\r\n    } else {\r\n      denseLayers.push({ units: (xShape[ 1 ] * 2), inputShape: [xShape[1],], kernelInitializer: 'randomNormal', activation: 'relu', });\r\n      denseLayers.push({ units: yShape[ 1 ], kernelInitializer: 'randomNormal', });\r\n    }\r\n    this.layers = denseLayers;\r\n    denseLayers.forEach(layer => {\r\n      this.model.add(this.tf.layers.dense(layer));\r\n    });\r\n  }\r\n}",
+    "content": "import { BaseNeuralNetwork, } from './deep_learning';\r\n\r\n/**\r\n * Deep Learning Regression with Tensorflow\r\n * @class DeepLearningRegression\r\n * @implements {BaseNeuralNetwork}\r\n */\r\nexport class DeepLearningRegression extends BaseNeuralNetwork {\r\n  /**\r\n   * @param {{layers:Array<Object>,compile:Object,fit:Object,layerPreference:String}} options - neural network configuration and tensorflow model hyperparameters\r\n   * @param {{model:Object,tf:Object,}} properties - extra instance properties\r\n   */\r\n  constructor(options = {}, properties) {\r\n    const config = Object.assign({\r\n      layers: [],\r\n      layerPreference:'deep',\r\n      compile: {\r\n        loss: 'meanSquaredError',\r\n        optimizer: 'adam',\r\n      },\r\n      fit: {\r\n        epochs: 100,\r\n        batchSize: 5,\r\n      },\r\n    }, options);\r\n    super(config, properties);\r\n    return this;\r\n  }\r\n  /**\r\n   * Adds dense layers to tensorflow regression model\r\n   * @override \r\n   * @param {Array<Array<number>>} x_matrix - independent variables\r\n   * @param {Array<Array<number>>} y_matrix - dependent variables\r\n   * @param {Array<Object>} layers - model dense layer parameters\r\n   */\r\n  generateLayers(x_matrix, y_matrix, layers) {\r\n    const xShape = this.getInputShape(x_matrix);\r\n    const yShape = this.getInputShape(y_matrix);\r\n    const denseLayers = [];\r\n    if (layers) {\r\n      denseLayers.push(...layers);\r\n    } else if(this.settings.layerPreference==='deep') {\r\n      denseLayers.push({ units: xShape[ 1 ], inputShape: [xShape[1],], kernelInitializer: 'randomNormal', activation: 'relu', });\r\n      denseLayers.push({ units: parseInt(Math.ceil(xShape[ 1 ] / 2), 10), kernelInitializer: 'randomNormal', activation: 'relu', });\r\n      denseLayers.push({ units: yShape[ 1 ], kernelInitializer: 'randomNormal', });\r\n    } else {\r\n      denseLayers.push({ units: (xShape[ 1 ] * 2), inputShape: [xShape[1],], kernelInitializer: 'randomNormal', activation: 'relu', });\r\n      denseLayers.push({ units: yShape[ 1 ], kernelInitializer: 'randomNormal', });\r\n    }\r\n    this.layers = denseLayers;\r\n    denseLayers.forEach(layer => {\r\n      this.model.add(this.tf.layers.dense(layer));\r\n    });\r\n  }\r\n}",
     "static": true,
     "longname": "/Users/yawjosephetse/Developer/github/repetere/ts-deeplearning/lib/regression.mjs",
     "access": "public",
@@ -409,7 +1456,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 17,
+    "__docId__": 54,
     "kind": "class",
     "name": "DeepLearningRegression",
     "memberof": "lib/regression.mjs",
@@ -429,14 +1476,14 @@
     ],
     "interface": false,
     "extends": [
-      "lib/deeplearning.js~BaseNeuralNetwork"
+      "lib/deep_learning.js~BaseNeuralNetwork"
     ],
     "implements": [
       "BaseNeuralNetwork"
     ]
   },
   {
-    "__docId__": 18,
+    "__docId__": 55,
     "kind": "constructor",
     "name": "constructor",
     "memberof": "lib/regression.mjs~DeepLearningRegression",
@@ -471,7 +1518,7 @@
     ]
   },
   {
-    "__docId__": 19,
+    "__docId__": 56,
     "kind": "method",
     "name": "generateLayers",
     "memberof": "lib/regression.mjs~DeepLearningRegression",
@@ -517,7 +1564,7 @@
     "override": true
   },
   {
-    "__docId__": 20,
+    "__docId__": 57,
     "kind": "member",
     "name": "layers",
     "memberof": "lib/regression.mjs~DeepLearningRegression",
@@ -530,7 +1577,7 @@
   },
   {
     "kind": "index",
-    "content": "# @tensorscript/ts-deeplearning\n\n[![Coverage Status](https://coveralls.io/repos/github/repetere/ts-deeplearning/badge.svg?branch=master)](https://coveralls.io/github/repetere/ts-deeplearning?branch=master) [![Build Status](https://travis-ci.org/repetere/ts-deeplearning.svg?branch=master)](https://travis-ci.org/repetere/ts-deeplearning)\n\nDeep Learning Classification and Regression with Tensorflow (Clustering coming soon)\n### [Full Documentation](<https://github.com/repetere/ts-deeplearning/blob/master/docs/API.md>)\n\n### Installation\n\n```sh\n$ npm i @tensorscript/ts-deeplearning\n```\n\n### Usage\n\n#### Classification\n\nTest against the [Iris Flower Data Set](https://archive.ics.uci.edu/ml/datasets/Iris)\n\n```javascript\nimport { DeepLearningClassification, } from '@tensorscript/ts-deeplearning';\nimport ms from 'modelscript';\n\nasync function main(){\n  const irisFlowerDataCSV = await ms.csv.loadCSV('./test/mock/data/iris_data.csv');\n  const DataSet = new ms.DataSet(irisFlowerDataCSV);\n    /**\n     * encodedData = [ \n     *  { sepal_length_cm: 5.1,\n         sepal_width_cm: 3.5,\n        petal_length_cm: 1.4,\n        petal_width_cm: 0.2,\n        plant: 'Iris-setosa',\n        'plant_Iris-setosa': 1,\n        'plant_Iris-versicolor': 0,\n        'plant_Iris-virginica': 0 },\n        ...\n        { sepal_length_cm: 5.9,\n        sepal_width_cm: 3,\n        petal_length_cm: 4.2,\n        petal_width_cm: 1.5,\n        plant: 'Iris-versicolor',\n        'plant_Iris-setosa': 0,\n        'plant_Iris-versicolor': 1,\n        'plant_Iris-virginica': 0 },\n      ];\n    */\n  const encodedData = DataSet.fitColumns({\n    columns: [\n      {\n        name: 'plant',\n        options: {\n          strategy: 'onehot',\n        },\n      },\n    ],\n    returnData:true,\n  });\n  const independentVariables = [\n    'sepal_length_cm',\n    'sepal_width_cm',\n    'petal_length_cm',\n    'petal_width_cm',\n  ];\n  const dependentVariables = [\n    'plant_Iris-setosa',\n    'plant_Iris-versicolor',\n    'plant_Iris-virginica',\n  ];\n  const x_matrix = DataSet.columnMatrix(independentVariables); \n  const y_matrix = DataSet.columnMatrix(dependentVariables);\n  /*\n    x_matrix = [\n      [ 5.1, 3.5, 1.4, 0.2 ],\n      [ 4.9, 3, 1.4, 0.2 ],\n      [ 4.7, 3.2, 1.3, 0.2 ],\n      ...\n    ]; \n    y_matrix = [\n      [ 1, 0, 0 ],\n      [ 1, 0, 0 ],\n      [ 1, 0, 0 ],\n      ...\n    ] \n    */\n  const input_x = [\n    [5.1, 3.5, 1.4, 0.2, ],\n    [6.3, 3.3, 6.0, 2.5, ],\n    [5.6, 3.0, 4.5, 1.5, ],\n    [5.0, 3.2, 1.2, 0.2, ],\n    [4.5, 2.3, 1.3, 0.3, ],\n  ];\n  const nnClassification = new DeepLearningClassification();\n  const nnClassificationModel = await nnClassification.train(x_matrix, y_matrix);\n  const predictions = await nnClassification.predict(input_x);\n  const answers = await nnClassification.predict(input_x, {\n    probability:false,\n  });\n  /*\n    predictions = [\n      [ 0.989512026309967, 0.010471616871654987, 0.00001649192017794121, ],\n      [ 0.0000016141033256644732, 0.054614484310150146, 0.9453839063644409, ],\n      [ 0.001930746017023921, 0.6456733345985413, 0.3523959517478943, ],\n      [ 0.9875779747962952, 0.01239941269159317, 0.00002274810685776174, ],\n      [ 0.9545140862464905, 0.04520365223288536, 0.0002823179238475859, ],\n    ];\n    answers = [\n      [ 1, 0, 0, ],\n      [ 0, 0, 1, ],\n      [ 0, 1, 0, ],\n      [ 1, 0, 0, ],\n      [ 1, 0, 0, ],\n    ];\n   */\n}\n\nmain();\n\n```\n\n#### Regression\n\nTest against the [Boston Housing Data Set](https://machinelearningmastery.com/regression-tutorial-keras-deep-learning-library-python/)\n\n```javascript\nimport { DeepLearningRegression, } from '@tensorscript/ts-deeplearning';\nimport ms from 'modelscript';\n\nfunction scaleColumnMap(columnName) {\n  return {\n    name: columnName,\n    options: {\n      strategy: 'scale',\n      scaleOptions: {\n        strategy:'standard'\n      }\n    }\n  }\n}\n\nasync function main(){\n  const housingdataCSV = await ms.csv.loadCSV('./test/mock/data/boston_housing_data.csv');\n  /*\n  housingdataCSV = [\n    { CRIM: 0.00632, ZN: 18, INDUS: 2.31, CHAS: 0, NOX: 0.538, RM: 6.575, AGE: 65.2, DIS: 4.09, RAD: 1, TAX: 296, PTRATIO: 15.3, B: 396.9, LSTAT: 4.98, MEDV: 24 },\n    { CRIM: 0.02731, ZN: 0, INDUS: 7.07, CHAS: 0, NOX: 0.469, RM: 6.421, AGE: 78.9, DIS: 4.9671, RAD: 2, TAX: 242, PTRATIO: 17.8, B: 396.9, LSTAT: 9.14, MEDV: 21.6 },\n    ...\n  ]\n  */\n  const DataSet = new ms.DataSet(housingdataCSV);\n  const independentVariables = [\n    'CRIM',\n    'ZN',\n    'INDUS',\n    'CHAS',\n    'NOX',\n    'RM',\n    'AGE',\n    'DIS',\n    'RAD',\n    'TAX',\n    'PTRATIO',\n    'B',\n    'LSTAT',\n  ];\n  const dependentVariables = [\n    'MEDV',\n  ];\n  const columns = independentVariables.concat(dependentVariables);\n  DataSet.fitColumns({\n    columns: columns.map(scaleColumnMap),\n    returnData:false,\n  });\n  const x_matrix = DataSet.columnMatrix(independentVariables);\n  const y_matrix = DataSet.columnMatrix(dependentVariables);\n  /* x_matrix = [\n    [ -0.41936692921321594, 0.2845482693404666, -1.2866362317172035, -0.272329067679207, -0.1440748547324509, 0.4132629204530747, -0.119894767215809, 0.1400749839795629, -0.981871187861867, -0.6659491794887338, -1.457557967289609, 0.4406158949991029, -1.074498970343932 ],\n    [ -0.41692666996409716, -0.4872401872268264, -0.5927943782429392, -0.272329067679207, -0.7395303607434242, 0.1940823874370036, 0.3668034264326209, 0.5566090495704026, -0.8670244885881488, -0.9863533804386945, -0.3027944997494681, 0.4406158949991029, -0.49195252491856634 ]\n    ...\n  ];\n  y_matrix = [\n    [ 0.15952778852449556 ],\n    [ -0.1014239172731213 ],\n    ...\n  ];\n  const y_vector = ms.util.pivotVector(y_matrix)[ 0 ];// not used but just illustrative\n  y_vector = [ 0.15952778852449556, -0.1014239172731213, ... ]\n    */\n  const input_x = [\n    [-0.41936692921321594, 0.2845482693404666, -1.2866362317172035, -0.272329067679207, -0.1440748547324509, 0.4132629204530747, -0.119894767215809, 0.1400749839795629, -0.981871187861867, -0.6659491794887338, -1.457557967289609, 0.4406158949991029, -1.074498970343932,],\n    [-0.41692666996409716, -0.4872401872268264, -0.5927943782429392, -0.272329067679207, -0.7395303607434242, 0.1940823874370036, 0.3668034264326209, 0.5566090495704026, -0.8670244885881488, -0.9863533804386945, -0.3027944997494681, 0.4406158949991029, -0.49195252491856634,],\n  ];\n  const nnRegression = new DeepLearningRegression();\n  const model = await nnRegression.train(x_matrix, y_matrix);\n  const predictions = await nnRegressionWide.predict(input_x); // [ [ 0.43396109342575073 ], [ 0.12437985092401505 ] ]\n  const predictions_unscaled = predictions.map(pred=>DataSet.scalers.get('MEDV').descale(pred[0])); //[ 26.523991670220486, 23.67674075943165 ]\n}\n\nmain();\n```\n\n### Testing\n\n```sh\n$ npm i\n$ npm test\n```\n\n### Contributing\n\nFork, write tests and create a pull request!\n\n### Misc\n\nAs of Node 8, ES modules are still used behind a flag, when running natively as an ES module\n\n```sh\n$ node --experimental-modules my-machine-learning-script.mjs\n# Also there are native bindings that require Python 2.x, make sure if you're using Andaconda, you build with your Python 2.x bin\n$ npm i --python=/usr/bin/python\n ```\n\nLicense\n----\n\nMIT",
+    "content": "# @tensorscript/ts-deeplearning\n\n[![Coverage Status](https://coveralls.io/repos/github/repetere/ts-deeplearning/badge.svg?branch=master)](https://coveralls.io/github/repetere/ts-deeplearning?branch=master) [![Build Status](https://travis-ci.org/repetere/ts-deeplearning.svg?branch=master)](https://travis-ci.org/repetere/ts-deeplearning)\n\nDeep Learning Classification and Regression with Tensorflow (Clustering coming soon)\n### [Full Documentation](<https://github.com/repetere/ts-deeplearning/blob/master/docs/API.md>)\n\n### Installation\n\n```sh\n$ npm i @tensorscript/ts-deeplearning\n```\n\n### Usage\n\n#### Classification\n\nTest against the [Iris Flower Data Set](https://archive.ics.uci.edu/ml/datasets/Iris)\n\n```javascript\nimport { DeepLearningClassification, } from '@tensorscript/ts-deeplearning';\nimport ms from 'modelscript';\n\nasync function main(){\n  const irisFlowerDataCSV = await ms.csv.loadCSV('./test/mock/data/iris_data.csv');\n  const DataSet = new ms.DataSet(irisFlowerDataCSV);\n    /**\n     * encodedData = [ \n     *  { sepal_length_cm: 5.1,\n         sepal_width_cm: 3.5,\n        petal_length_cm: 1.4,\n        petal_width_cm: 0.2,\n        plant: 'Iris-setosa',\n        'plant_Iris-setosa': 1,\n        'plant_Iris-versicolor': 0,\n        'plant_Iris-virginica': 0 },\n        ...\n        { sepal_length_cm: 5.9,\n        sepal_width_cm: 3,\n        petal_length_cm: 4.2,\n        petal_width_cm: 1.5,\n        plant: 'Iris-versicolor',\n        'plant_Iris-setosa': 0,\n        'plant_Iris-versicolor': 1,\n        'plant_Iris-virginica': 0 },\n      ];\n    */\n  const encodedData = DataSet.fitColumns({\n    columns: [\n      {\n        name: 'plant',\n        options: {\n          strategy: 'onehot',\n        },\n      },\n    ],\n    returnData:true,\n  });\n  const independentVariables = [\n    'sepal_length_cm',\n    'sepal_width_cm',\n    'petal_length_cm',\n    'petal_width_cm',\n  ];\n  const dependentVariables = [\n    'plant_Iris-setosa',\n    'plant_Iris-versicolor',\n    'plant_Iris-virginica',\n  ];\n  const x_matrix = DataSet.columnMatrix(independentVariables); \n  const y_matrix = DataSet.columnMatrix(dependentVariables);\n  /*\n    x_matrix = [\n      [ 5.1, 3.5, 1.4, 0.2 ],\n      [ 4.9, 3, 1.4, 0.2 ],\n      [ 4.7, 3.2, 1.3, 0.2 ],\n      ...\n    ]; \n    y_matrix = [\n      [ 1, 0, 0 ],\n      [ 1, 0, 0 ],\n      [ 1, 0, 0 ],\n      ...\n    ] \n    */\n  const input_x = [\n    [5.1, 3.5, 1.4, 0.2, ],\n    [6.3, 3.3, 6.0, 2.5, ],\n    [5.6, 3.0, 4.5, 1.5, ],\n    [5.0, 3.2, 1.2, 0.2, ],\n    [4.5, 2.3, 1.3, 0.3, ],\n  ];\n  const nnClassification = new DeepLearningClassification();\n  const nnClassificationModel = await nnClassification.train(x_matrix, y_matrix);\n  const predictions = await nnClassification.predict(input_x);\n  const answers = await nnClassification.predict(input_x, {\n    probability:false,\n  });\n  /*\n    predictions = [\n      [ 0.989512026309967, 0.010471616871654987, 0.00001649192017794121, ],\n      [ 0.0000016141033256644732, 0.054614484310150146, 0.9453839063644409, ],\n      [ 0.001930746017023921, 0.6456733345985413, 0.3523959517478943, ],\n      [ 0.9875779747962952, 0.01239941269159317, 0.00002274810685776174, ],\n      [ 0.9545140862464905, 0.04520365223288536, 0.0002823179238475859, ],\n    ];\n    answers = [\n      [ 1, 0, 0, ],\n      [ 0, 0, 1, ],\n      [ 0, 1, 0, ],\n      [ 1, 0, 0, ],\n      [ 1, 0, 0, ],\n    ];\n   */\n}\n\nmain();\n\n```\n\n#### Regression\n\nTest against the [Boston Housing Data Set](https://machinelearningmastery.com/regression-tutorial-keras-deep-learning-library-python/)\n\n```javascript\nimport { DeepLearningRegression, } from '@tensorscript/ts-deeplearning';\nimport ms from 'modelscript';\n\nfunction scaleColumnMap(columnName) {\n  return {\n    name: columnName,\n    options: {\n      strategy: 'scale',\n      scaleOptions: {\n        strategy:'standard'\n      }\n    }\n  }\n}\n\nasync function main(){\n  const housingdataCSV = await ms.csv.loadCSV('./test/mock/data/boston_housing_data.csv');\n  /*\n  housingdataCSV = [\n    { CRIM: 0.00632, ZN: 18, INDUS: 2.31, CHAS: 0, NOX: 0.538, RM: 6.575, AGE: 65.2, DIS: 4.09, RAD: 1, TAX: 296, PTRATIO: 15.3, B: 396.9, LSTAT: 4.98, MEDV: 24 },\n    { CRIM: 0.02731, ZN: 0, INDUS: 7.07, CHAS: 0, NOX: 0.469, RM: 6.421, AGE: 78.9, DIS: 4.9671, RAD: 2, TAX: 242, PTRATIO: 17.8, B: 396.9, LSTAT: 9.14, MEDV: 21.6 },\n    ...\n  ]\n  */\n  const DataSet = new ms.DataSet(housingdataCSV);\n  const independentVariables = [\n    'CRIM',\n    'ZN',\n    'INDUS',\n    'CHAS',\n    'NOX',\n    'RM',\n    'AGE',\n    'DIS',\n    'RAD',\n    'TAX',\n    'PTRATIO',\n    'B',\n    'LSTAT',\n  ];\n  const dependentVariables = [\n    'MEDV',\n  ];\n  const columns = independentVariables.concat(dependentVariables);\n  DataSet.fitColumns({\n    columns: columns.map(scaleColumnMap),\n    returnData:false,\n  });\n  const x_matrix = DataSet.columnMatrix(independentVariables);\n  const y_matrix = DataSet.columnMatrix(dependentVariables);\n  /* x_matrix = [\n    [ -0.41936692921321594, 0.2845482693404666, -1.2866362317172035, -0.272329067679207, -0.1440748547324509, 0.4132629204530747, -0.119894767215809, 0.1400749839795629, -0.981871187861867, -0.6659491794887338, -1.457557967289609, 0.4406158949991029, -1.074498970343932 ],\n    [ -0.41692666996409716, -0.4872401872268264, -0.5927943782429392, -0.272329067679207, -0.7395303607434242, 0.1940823874370036, 0.3668034264326209, 0.5566090495704026, -0.8670244885881488, -0.9863533804386945, -0.3027944997494681, 0.4406158949991029, -0.49195252491856634 ]\n    ...\n  ];\n  y_matrix = [\n    [ 0.15952778852449556 ],\n    [ -0.1014239172731213 ],\n    ...\n  ];\n  const y_vector = ms.util.pivotVector(y_matrix)[ 0 ];// not used but just illustrative\n  y_vector = [ 0.15952778852449556, -0.1014239172731213, ... ]\n    */\n  const input_x = [\n    [-0.41936692921321594, 0.2845482693404666, -1.2866362317172035, -0.272329067679207, -0.1440748547324509, 0.4132629204530747, -0.119894767215809, 0.1400749839795629, -0.981871187861867, -0.6659491794887338, -1.457557967289609, 0.4406158949991029, -1.074498970343932,],\n    [-0.41692666996409716, -0.4872401872268264, -0.5927943782429392, -0.272329067679207, -0.7395303607434242, 0.1940823874370036, 0.3668034264326209, 0.5566090495704026, -0.8670244885881488, -0.9863533804386945, -0.3027944997494681, 0.4406158949991029, -0.49195252491856634,],\n  ];\n  const nnRegression = new DeepLearningRegression();\n  const model = await nnRegression.train(x_matrix, y_matrix);\n  const predictions = await nnRegressionWide.predict(input_x); // [ [ 0.43396109342575073 ], [ 0.12437985092401505 ] ]\n  const predictions_unscaled = predictions.map(pred=>DataSet.scalers.get('MEDV').descale(pred[0])); //[ 26.523991670220486, 23.67674075943165 ]\n}\n\nmain();\n```\n\n#### Multiple Linear Regression\n\nTest against the [Portland housing price dataset](http://openclassroom.stanford.edu/MainFolder/DocumentPage.php?course=MachineLearning&doc=exercises/ex3/ex3.html)\n\n```javascript\nimport { MultipleLinearRegression, } from '@tensorscript/ts-deeplearning';\nimport ms from 'modelscript';\n\nfunction scaleColumnMap(columnName) {\n  return {\n    name: columnName,\n    options: {\n      strategy: 'scale',\n      scaleOptions: {\n        strategy:'standard'\n      }\n    }\n  }\n}\n\nasync function main(){\n  const housingdataCSV = await ms.csv.loadCSV('./test/mock/data/portland_housing_data.csv');\n  /*\n  housingdataCSV = [\n    { sqft: 2104, bedrooms: 3, price: 399900 },\n    { sqft: 1600, bedrooms: 3, price: 329900 },\n    ...\n    { sqft: 1203, bedrooms: 3, price: 239500 }\n  ]\n  */\n  const DataSet = new ms.DataSet(housingdataCSV);\n  DataSet.fitColumns({\n    columns: [\n      'sqft',\n      'bedrooms',\n      'price',\n    ].map(scaleColumnMap),\n    returnData:true,\n  });\n  const independentVariables = [ 'sqft', 'bedrooms',];\n  const dependentVariables = [ 'price', ];\n  const x_matrix = DataSet.columnMatrix(independentVariables);\n  const y_matrix = DataSet.columnMatrix(dependentVariables);\n  /* x_matrix = [\n      [2014, 3],\n      [1600, 3],\n    ];\n    y_matrix = [\n      [399900],\n      [329900],\n    ];\n    const y_vector = ms.util.pivotVector(y_matrix)[ 0 ];// not used but just illustrative\n    // y_vector = [ 399900, 329900]\n   */\n  const testSqft = DataSet.scalers.get('sqft').scale(1650);\n  const testBedrooms = DataSet.scalers.get('bedrooms').scale(3);\n  const input_x = [\n    testSqft,\n    testBedrooms,\n  ]; // input_x: [ -0.4412732005944351, -0.2236751871685913 ]\n  const tfMLR = new MultipleLinearRegression();\n  const model = await tfMLR.train(x_matrix, y_matrix);\n  const scaledPrediction = await tfMLR.predict(input_x); // [ -0.3785287367962629 ]\n  const prediction = DataSet.scalers.get('price').descale(scaledPrediction); // prediction: 293081.4643348962\n}\n\nmain();\n```\n\n#### Logistic Regression\n\nTest against the Social Media Ads\n\n```javascript\nimport { LogisticRegression, } from '@tensorscript/ts-deeplearning';\nimport ms from 'modelscript';\n\nfunction scaleColumnMap(columnName) {\n  return {\n    name: columnName,\n    options: {\n      strategy: 'scale',\n      scaleOptions: {\n        strategy:'standard'\n      }\n    }\n  }\n}\n\nasync function main(){\n  const CSVData = await ms.csv.loadCSV('./test/mock/data/social_network_ads.csv');\n  const DataSet = new ms.DataSet(CSVData);\n  const scaledData = DataSet.fitColumns({\n    columns: independentVariables.map(scaleColumnMap),\n    returnData:true,\n  });\n  /*\n    scaledData = [\n      { 'User ID': 15624510,\n         Gender: 'Male',\n         Age: -1.7795687879022388,\n         EstimatedSalary: -1.4881825118632386,\n         Purchased: 0 },\n      { 'User ID': 15810944,\n         Gender: 'Male',\n         Age: -0.253270175924977,\n         EstimatedSalary: -1.458854384319991,\n         Purchased: 0 },\n      ...\n    ];\n    */\n  const independentVariables = [\n    'Age',\n    'EstimatedSalary',\n  ];\n  const dependentVariables = [\n    'Purchased',\n  ];\n  const x_matrix = DataSet.columnMatrix(independentVariables);\n  const y_matrix = DataSet.columnMatrix(dependentVariables);\n  /*\n    x_matrix = [\n      [ -1.7795687879022388, -1.4881825118632386 ],\n      [ -0.253270175924977, -1.458854384319991 ],\n      ...\n    ];\n    y_matrix = [\n      [ 0 ],\n      [ 0 ],\n      ...\n    ];\n    */\n  const input_x = [\n    [-0.062482849427819266, 0.30083326827486173,], //0\n    [0.7960601198093905, -1.1069168538010206,], //1\n    [0.7960601198093905, 0.12486450301537644,], //0\n    [0.4144854668150751, -0.49102617539282206,], //0\n    [0.3190918035664962, 0.5061301610775946,], //1\n  ];\n  const tfLR = new LogisticRegression();\n  const model = await tfLR.train(x_matrix, y_matrix);\n  const prediction = await tfLR.predict(input_x); // => [ [ 0 ], [ 0 ], [ 1 ], [ 0 ], [ 1 ] ],\n}\n\nmain();\n```\n\n### Testing\n\n```sh\n$ npm i\n$ npm test\n```\n\n### Contributing\n\nFork, write tests and create a pull request!\n\n### Misc\n\nAs of Node 8, ES modules are still used behind a flag, when running natively as an ES module\n\n```sh\n$ node --experimental-modules my-machine-learning-script.mjs\n# Also there are native bindings that require Python 2.x, make sure if you're using Andaconda, you build with your Python 2.x bin\n$ npm i --python=/usr/bin/python\n ```\n\nLicense\n----\n\nMIT",
     "longname": "/Users/yawjosephetse/Developer/github/repetere/ts-deeplearning/README.md",
     "name": "./README.md",
     "static": true,

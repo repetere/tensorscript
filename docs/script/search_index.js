@@ -1,8 +1,8 @@
 window.esdocSearchIndex = [
   [
-    "@tensorscript/ts-deeplearning/lib/deeplearning.mjs~baseneuralnetwork",
-    "class/lib/deeplearning.mjs~BaseNeuralNetwork.html",
-    "<span>BaseNeuralNetwork</span> <span class=\"search-result-import-path\">@tensorscript/ts-deeplearning/lib/deeplearning.mjs</span>",
+    "@tensorscript/ts-deeplearning/lib/deep_learning.mjs~baseneuralnetwork",
+    "class/lib/deep_learning.mjs~BaseNeuralNetwork.html",
+    "<span>BaseNeuralNetwork</span> <span class=\"search-result-import-path\">@tensorscript/ts-deeplearning/lib/deep_learning.mjs</span>",
     "class"
   ],
   [
@@ -15,6 +15,24 @@ window.esdocSearchIndex = [
     "@tensorscript/ts-deeplearning/lib/regression.mjs~deeplearningregression",
     "class/lib/regression.mjs~DeepLearningRegression.html",
     "<span>DeepLearningRegression</span> <span class=\"search-result-import-path\">@tensorscript/ts-deeplearning/lib/regression.mjs</span>",
+    "class"
+  ],
+  [
+    "@tensorscript/ts-deeplearning/lib/logistic_regression.mjs~logisticregression",
+    "class/lib/logistic_regression.mjs~LogisticRegression.html",
+    "<span>LogisticRegression</span> <span class=\"search-result-import-path\">@tensorscript/ts-deeplearning/lib/logistic_regression.mjs</span>",
+    "class"
+  ],
+  [
+    "@tensorscript/ts-deeplearning/lib/multiple_linear_regression.mjs~multiplelinearregression",
+    "class/lib/multiple_linear_regression.mjs~MultipleLinearRegression.html",
+    "<span>MultipleLinearRegression</span> <span class=\"search-result-import-path\">@tensorscript/ts-deeplearning/lib/multiple_linear_regression.mjs</span>",
+    "class"
+  ],
+  [
+    "@tensorscript/ts-deeplearning/lib/model_interface.mjs~tensorscriptmodelinterface",
+    "class/lib/model_interface.mjs~TensorScriptModelInterface.html",
+    "<span>TensorScriptModelInterface</span> <span class=\"search-result-import-path\">@tensorscript/ts-deeplearning/lib/model_interface.mjs</span>",
     "class"
   ],
   [
@@ -54,51 +72,189 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
-    "lib/deeplearning.mjs",
-    "file/lib/deeplearning.mjs.html",
-    "lib/deeplearning.mjs",
+    "lib/deep_learning.mjs",
+    "file/lib/deep_learning.mjs.html",
+    "lib/deep_learning.mjs",
     "file"
   ],
   [
-    "lib/deeplearning.mjs~baseneuralnetwork#calculate",
-    "class/lib/deeplearning.mjs~BaseNeuralNetwork.html#instance-method-calculate",
-    "lib/deeplearning.mjs~BaseNeuralNetwork#calculate",
+    "lib/deep_learning.mjs~baseneuralnetwork#calculate",
+    "class/lib/deep_learning.mjs~BaseNeuralNetwork.html#instance-method-calculate",
+    "lib/deep_learning.mjs~BaseNeuralNetwork#calculate",
     "method"
   ],
   [
-    "lib/deeplearning.mjs~baseneuralnetwork#constructor",
-    "class/lib/deeplearning.mjs~BaseNeuralNetwork.html#instance-constructor-constructor",
-    "lib/deeplearning.mjs~BaseNeuralNetwork#constructor",
+    "lib/deep_learning.mjs~baseneuralnetwork#constructor",
+    "class/lib/deep_learning.mjs~BaseNeuralNetwork.html#instance-constructor-constructor",
+    "lib/deep_learning.mjs~BaseNeuralNetwork#constructor",
     "method"
   ],
   [
-    "lib/deeplearning.mjs~baseneuralnetwork#generatelayers",
-    "class/lib/deeplearning.mjs~BaseNeuralNetwork.html#instance-method-generateLayers",
-    "lib/deeplearning.mjs~BaseNeuralNetwork#generateLayers",
+    "lib/deep_learning.mjs~baseneuralnetwork#generatelayers",
+    "class/lib/deep_learning.mjs~BaseNeuralNetwork.html#instance-method-generateLayers",
+    "lib/deep_learning.mjs~BaseNeuralNetwork#generateLayers",
     "method"
   ],
   [
-    "lib/deeplearning.mjs~baseneuralnetwork#model",
-    "class/lib/deeplearning.mjs~BaseNeuralNetwork.html#instance-member-model",
-    "lib/deeplearning.mjs~BaseNeuralNetwork#model",
+    "lib/deep_learning.mjs~baseneuralnetwork#model",
+    "class/lib/deep_learning.mjs~BaseNeuralNetwork.html#instance-member-model",
+    "lib/deep_learning.mjs~BaseNeuralNetwork#model",
     "member"
   ],
   [
-    "lib/deeplearning.mjs~baseneuralnetwork#train",
-    "class/lib/deeplearning.mjs~BaseNeuralNetwork.html#instance-method-train",
-    "lib/deeplearning.mjs~BaseNeuralNetwork#train",
+    "lib/deep_learning.mjs~baseneuralnetwork#train",
+    "class/lib/deep_learning.mjs~BaseNeuralNetwork.html#instance-method-train",
+    "lib/deep_learning.mjs~BaseNeuralNetwork#train",
     "method"
   ],
   [
-    "lib/deeplearning.mjs~baseneuralnetwork#xshape",
-    "class/lib/deeplearning.mjs~BaseNeuralNetwork.html#instance-member-xShape",
-    "lib/deeplearning.mjs~BaseNeuralNetwork#xShape",
+    "lib/deep_learning.mjs~baseneuralnetwork#xshape",
+    "class/lib/deep_learning.mjs~BaseNeuralNetwork.html#instance-member-xShape",
+    "lib/deep_learning.mjs~BaseNeuralNetwork#xShape",
     "member"
   ],
   [
-    "lib/deeplearning.mjs~baseneuralnetwork#yshape",
-    "class/lib/deeplearning.mjs~BaseNeuralNetwork.html#instance-member-yShape",
-    "lib/deeplearning.mjs~BaseNeuralNetwork#yShape",
+    "lib/deep_learning.mjs~baseneuralnetwork#yshape",
+    "class/lib/deep_learning.mjs~BaseNeuralNetwork.html#instance-member-yShape",
+    "lib/deep_learning.mjs~BaseNeuralNetwork#yShape",
+    "member"
+  ],
+  [
+    "lib/logistic_regression.mjs",
+    "file/lib/logistic_regression.mjs.html",
+    "lib/logistic_regression.mjs",
+    "file"
+  ],
+  [
+    "lib/logistic_regression.mjs~logisticregression#constructor",
+    "class/lib/logistic_regression.mjs~LogisticRegression.html#instance-constructor-constructor",
+    "lib/logistic_regression.mjs~LogisticRegression#constructor",
+    "method"
+  ],
+  [
+    "lib/logistic_regression.mjs~logisticregression#generatelayers",
+    "class/lib/logistic_regression.mjs~LogisticRegression.html#instance-method-generateLayers",
+    "lib/logistic_regression.mjs~LogisticRegression#generateLayers",
+    "method"
+  ],
+  [
+    "lib/logistic_regression.mjs~logisticregression#layers",
+    "class/lib/logistic_regression.mjs~LogisticRegression.html#instance-member-layers",
+    "lib/logistic_regression.mjs~LogisticRegression#layers",
+    "member"
+  ],
+  [
+    "lib/logistic_regression.mjs~logisticregression#xshape",
+    "class/lib/logistic_regression.mjs~LogisticRegression.html#instance-member-xShape",
+    "lib/logistic_regression.mjs~LogisticRegression#xShape",
+    "member"
+  ],
+  [
+    "lib/logistic_regression.mjs~logisticregression#yshape",
+    "class/lib/logistic_regression.mjs~LogisticRegression.html#instance-member-yShape",
+    "lib/logistic_regression.mjs~LogisticRegression#yShape",
+    "member"
+  ],
+  [
+    "lib/model_interface.mjs",
+    "file/lib/model_interface.mjs.html",
+    "lib/model_interface.mjs",
+    "file"
+  ],
+  [
+    "lib/model_interface.mjs~tensorscriptmodelinterface#calculate",
+    "class/lib/model_interface.mjs~TensorScriptModelInterface.html#instance-method-calculate",
+    "lib/model_interface.mjs~TensorScriptModelInterface#calculate",
+    "method"
+  ],
+  [
+    "lib/model_interface.mjs~tensorscriptmodelinterface#constructor",
+    "class/lib/model_interface.mjs~TensorScriptModelInterface.html#instance-constructor-constructor",
+    "lib/model_interface.mjs~TensorScriptModelInterface#constructor",
+    "method"
+  ],
+  [
+    "lib/model_interface.mjs~tensorscriptmodelinterface#getinputshape",
+    "class/lib/model_interface.mjs~TensorScriptModelInterface.html#instance-member-getInputShape",
+    "lib/model_interface.mjs~TensorScriptModelInterface#getInputShape",
+    "member"
+  ],
+  [
+    "lib/model_interface.mjs~tensorscriptmodelinterface#loadmodel",
+    "class/lib/model_interface.mjs~TensorScriptModelInterface.html#instance-method-loadModel",
+    "lib/model_interface.mjs~TensorScriptModelInterface#loadModel",
+    "method"
+  ],
+  [
+    "lib/model_interface.mjs~tensorscriptmodelinterface#model",
+    "class/lib/model_interface.mjs~TensorScriptModelInterface.html#instance-member-model",
+    "lib/model_interface.mjs~TensorScriptModelInterface#model",
+    "member"
+  ],
+  [
+    "lib/model_interface.mjs~tensorscriptmodelinterface#predict",
+    "class/lib/model_interface.mjs~TensorScriptModelInterface.html#instance-method-predict",
+    "lib/model_interface.mjs~TensorScriptModelInterface#predict",
+    "method"
+  ],
+  [
+    "lib/model_interface.mjs~tensorscriptmodelinterface#reshape",
+    "class/lib/model_interface.mjs~TensorScriptModelInterface.html#instance-member-reshape",
+    "lib/model_interface.mjs~TensorScriptModelInterface#reshape",
+    "member"
+  ],
+  [
+    "lib/model_interface.mjs~tensorscriptmodelinterface#settings",
+    "class/lib/model_interface.mjs~TensorScriptModelInterface.html#instance-member-settings",
+    "lib/model_interface.mjs~TensorScriptModelInterface#settings",
+    "member"
+  ],
+  [
+    "lib/model_interface.mjs~tensorscriptmodelinterface#tf",
+    "class/lib/model_interface.mjs~TensorScriptModelInterface.html#instance-member-tf",
+    "lib/model_interface.mjs~TensorScriptModelInterface#tf",
+    "member"
+  ],
+  [
+    "lib/model_interface.mjs~tensorscriptmodelinterface#train",
+    "class/lib/model_interface.mjs~TensorScriptModelInterface.html#instance-method-train",
+    "lib/model_interface.mjs~TensorScriptModelInterface#train",
+    "method"
+  ],
+  [
+    "lib/model_interface.mjs~tensorscriptmodelinterface.getinputshape",
+    "class/lib/model_interface.mjs~TensorScriptModelInterface.html#static-method-getInputShape",
+    "lib/model_interface.mjs~TensorScriptModelInterface.getInputShape",
+    "method"
+  ],
+  [
+    "lib/model_interface.mjs~tensorscriptmodelinterface.reshape",
+    "class/lib/model_interface.mjs~TensorScriptModelInterface.html#static-method-reshape",
+    "lib/model_interface.mjs~TensorScriptModelInterface.reshape",
+    "method"
+  ],
+  [
+    "lib/multiple_linear_regression.mjs",
+    "file/lib/multiple_linear_regression.mjs.html",
+    "lib/multiple_linear_regression.mjs",
+    "file"
+  ],
+  [
+    "lib/multiple_linear_regression.mjs~multiplelinearregression#constructor",
+    "class/lib/multiple_linear_regression.mjs~MultipleLinearRegression.html#instance-constructor-constructor",
+    "lib/multiple_linear_regression.mjs~MultipleLinearRegression#constructor",
+    "method"
+  ],
+  [
+    "lib/multiple_linear_regression.mjs~multiplelinearregression#generatelayers",
+    "class/lib/multiple_linear_regression.mjs~MultipleLinearRegression.html#instance-method-generateLayers",
+    "lib/multiple_linear_regression.mjs~MultipleLinearRegression#generateLayers",
+    "method"
+  ],
+  [
+    "lib/multiple_linear_regression.mjs~multiplelinearregression#layers",
+    "class/lib/multiple_linear_regression.mjs~MultipleLinearRegression.html#instance-member-layers",
+    "lib/multiple_linear_regression.mjs~MultipleLinearRegression#layers",
     "member"
   ],
   [

@@ -1,7 +1,7 @@
 {
-  "coverage": "61.11%",
-  "expectCount": 18,
-  "actualCount": 11,
+  "coverage": "64.7%",
+  "expectCount": 51,
+  "actualCount": 33,
   "files": {
     "lib/classification.mjs": {
       "expectCount": 6,
@@ -12,13 +12,42 @@
         47
       ]
     },
-    "lib/deeplearning.mjs": {
+    "lib/deep_learning.mjs": {
       "expectCount": 8,
       "actualCount": 5,
       "undocumentLines": [
-        51,
-        52,
-        53
+        53,
+        54,
+        55
+      ]
+    },
+    "lib/logistic_regression.mjs": {
+      "expectCount": 6,
+      "actualCount": 3,
+      "undocumentLines": [
+        41,
+        42,
+        56
+      ]
+    },
+    "lib/model_interface.mjs": {
+      "expectCount": 23,
+      "actualCount": 16,
+      "undocumentLines": [
+        251,
+        256,
+        257,
+        258,
+        260,
+        261,
+        262
+      ]
+    },
+    "lib/multiple_linear_regression.mjs": {
+      "expectCount": 4,
+      "actualCount": 3,
+      "undocumentLines": [
+        44
       ]
     },
     "lib/regression.mjs": {

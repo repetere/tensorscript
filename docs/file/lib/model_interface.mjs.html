@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">lib/model_interface.mjs | @tensorscript/ts-deeplearning</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="Deep Learning Classification, Clustering and Regression with Tensorflow"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="@tensorscript/ts-deeplearning"><meta property="twitter:description" content="Deep Learning Classification, Clustering and Regression with Tensorflow"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/repetere/ts-deeplearning"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/classification.mjs~DeepLearningClassification.html">DeepLearningClassification</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/deep_learning.mjs~BaseNeuralNetwork.html">BaseNeuralNetwork</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/logistic_regression.mjs~LogisticRegression.html">LogisticRegression</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/model_interface.mjs~TensorScriptModelInterface.html">TensorScriptModelInterface</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/multiple_linear_regression.mjs~MultipleLinearRegression.html">MultipleLinearRegression</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/regression.mjs~DeepLearningRegression.html">DeepLearningRegression</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">lib/model_interface.mjs</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import tf from &apos;@tensorflow/tfjs&apos;;
+
+/**
+ * Base class for tensorscript models
+ * @interface TensorScriptModelInterface
+ * @property {Object} settings - tensorflow model hyperparameters
+ * @property {Object} model - tensorflow model
+ * @property {Object} tf - tensorflow / tensorflow-node / tensorflow-node-gpu
+ * @property {Function} reshape - static reshape array function
+ * @property {Function} getInputShape - static TensorScriptModelInterface
+ */
+export class TensorScriptModelInterface {
+  /**
+   * @param {Object} options - tensorflow model hyperparameters
+   * @param {Object} customTF - custom, overridale tensorflow / tensorflow-node / tensorflow-node-gpu
+   * @param {{model:Object,tf:Object,}} properties - extra instance properties
+   */
+  constructor(options = {}, properties = {}) {
+    /** @type {Object} */
+    this.settings = options;
+    /** @type {Object} */
+    this.model = properties.model;
+    /** @type {Object} */
+    this.tf = properties.tf || tf;
+    /** @type {Function} */
+    this.reshape = TensorScriptModelInterface.reshape;
+    /** @type {Function} */
+    this.getInputShape = TensorScriptModelInterface.getInputShape;
+    return this;
+  }
+  /**
+   * Reshapes an array
+   * @function
+   * @example 
+   * const array = [ 0, 1, 1, 0, ];
+   * const shape = [2,2];
+   * TensorScriptModelInterface.reshape(array,shape) // =&gt; 
+   * [
+   *   [ 0, 1, ],
+   *   [ 1, 0, ],
+   * ];
+   * @param {Array&lt;number&gt;} array - input array 
+   * @param {Array&lt;number&gt;} shape - shape array 
+   * @return {Array&lt;Array&lt;number&gt;&gt;} returns a matrix with the defined shape
+   */
+  /* istanbul ignore next */
+  static reshape (array, shape) {
+    const flatArray = array;
+    let newArray;
+    const rows = shape[ 0 ];
+
+    function product (arr) {
+      return arr.reduce((prev, curr) =&gt; prev * curr);
+    }
+  
+    if (!Array.isArray(array) || !Array.isArray(shape)) {
+      throw new TypeError(&apos;Array expected&apos;);
+    }
+  
+    if (shape.length === 0) {
+      throw new DimensionError(0, product(size(array)), &apos;!=&apos;);
+    }
+  
+    var totalSize = 1;
+    for (var sizeIndex = 0; sizeIndex &lt; shape.length; sizeIndex++) {
+      totalSize *= shape[sizeIndex];
+    }
+  
+    if (flatArray.length !== totalSize) {
+      throw new DimensionError(
+        product(shape),
+        product(size(array)),
+        &apos;!=&apos;
+      );
+    }
+  
+    try {
+      newArray = _reshape(flatArray, shape);
+    } catch (e) {
+      if (e instanceof DimensionError) {
+        throw new DimensionError(
+          product(shape),
+          product(size(array)),
+          &apos;!=&apos;
+        );
+      }
+      throw e;
+    }
+    if (newArray.length !== rows) throw new SyntaxError(`specified shape (${shape}) is compatible with input array or length (${array.length})`);
+
+    // console.log({ newArray ,});
+    return newArray;
+  }
+  /**
+   * Returns the shape of an input matrix
+   * @function
+   * @example 
+   * const input = [
+   *   [ 0, 1, ],
+   *   [ 1, 0, ],
+   * ];
+   * TensorScriptModelInterface.getInputShape(input) // =&gt; [2,2]
+   * @see {https://stackoverflow.com/questions/10237615/get-size-of-dimensions-in-array}
+   * @param {Array&lt;Array&lt;number&gt;&gt;} matrix - input matrix 
+   * @return {Array&lt;number&gt;} returns the shape of a matrix (e.g. [2,2])
+   */
+  static getInputShape(matrix=[]) {
+    if (Array.isArray(matrix) === false || !matrix[ 0 ] || !matrix[ 0 ].length || Array.isArray(matrix[ 0 ]) === false) throw new TypeError(&apos;input must be a matrix&apos;);
+    const dim = [];
+    const x_dimensions = matrix[ 0 ].length;
+    let vectors = matrix;
+    matrix.forEach(vector =&gt; {
+      if (vector.length !== x_dimensions) throw new SyntaxError(&apos;input must have the same length in each row&apos;);
+    });
+    for (;;) {
+      dim.push(vectors.length);
+      if (Array.isArray(vectors[0])) {
+        vectors = vectors[0];
+      } else {
+        break;
+      }
+    }
+    return dim;
+  }
+  /**
+   * Asynchronously trains tensorflow model, must be implemented by tensorscript class
+   * @abstract 
+   * @param {Array&lt;Array&lt;number&gt;&gt;} x_matrix - independent variables
+   * @param {Array&lt;Array&lt;number&gt;&gt;} y_matrix - dependent variables
+   * @return {Object} returns trained tensorflow model 
+   */
+  train(x_matrix, y_matrix) {
+    throw new ReferenceError(&apos;train method is not implemented&apos;);
+  }
+  /**
+   * Predicts new dependent variables
+   * @abstract 
+   * @param {Array&lt;Array&lt;number&gt;&gt;|Array&lt;number&gt;} matrix - new test independent variables
+   * @return {{data: Promise}} returns tensorflow prediction 
+   */
+  calculate(matrix) {
+    throw new ReferenceError(&apos;calculate method is not implemented&apos;);
+  }
+  /**
+   * Loads a saved tensoflow / keras model
+   * @param {Object} options - tensorflow load model options
+   * @return {Object} tensorflow model
+   */
+  async loadModel(options) {
+    this.model = await this.tf.loadModel(options);
+    return this.model;
+  }
+  /**
+   * Returns prediction values from tensorflow model
+   * @param {Array&lt;Array&lt;number&gt;&gt;|Array&lt;number&gt;} input_matrix - new test independent variables 
+   * @param {Boolean} [options.json=true] - return object instead of typed array
+   * @param {Boolean} [options.probability=true] - return real values instead of integers
+   * @return {Array&lt;number&gt;|Array&lt;Array&lt;number&gt;&gt;} predicted model values
+   */
+  async predict(input_matrix, options = {}) {
+    if (!input_matrix || Array.isArray(input_matrix)===false) throw new Error(&apos;invalid input matrix&apos;);
+    const x_matrix = (Array.isArray(input_matrix[ 0 ]))
+      ? input_matrix
+      : [
+        input_matrix,
+      ];
+    const config = Object.assign({
+      json: true,
+      probability: true,
+    }, options);
+    return this.calculate(x_matrix)
+      .data()
+      .then(predictions =&gt; {
+        if (config.json === false) {
+          return predictions;
+        } else {
+          const shape = [x_matrix.length, this.yShape[ 1 ],];
+          const predictionValues = (options.probability === false) ? Array.from(predictions).map(Math.round) : Array.from(predictions);
+          return this.reshape(predictionValues, shape);
+        }
+      })
+      .catch(e =&gt; {
+        throw e; 
+      });
+  }
+}
+
+/**
+ * Calculate the size of a multi dimensional array.
+ * This function checks the size of the first entry, it does not validate
+ * whether all dimensions match. (use function `validate` for that) (from math.js)
+ * @param {Array} x
+ * @see {https://github.com/josdejong/mathjs/blob/develop/src/utils/array.js}
+ * @ignore
+ * @return {Number[]} size
+ */
+/* istanbul ignore next */
+export function size (x) {
+  let s = [];
+
+  while (Array.isArray(x)) {
+    s.push(x.length);
+    x = x[0];
+  }
+
+  return s;
+}
+/**
+ * Iteratively re-shape a multi dimensional array to fit the specified dimensions (from math.js)
+ * @param {Array} array           Array to be reshaped
+ * @param {Array.&lt;number&gt;} sizes  List of sizes for each dimension
+ * @returns {Array}               Array whose data has been formatted to fit the
+ *                                specified dimensions
+ * @ignore
+ * @see {https://github.com/josdejong/mathjs/blob/develop/src/utils/array.js}
+ */
+/* istanbul ignore next */
+export function _reshape(array, sizes) {
+  // testing if there are enough elements for the requested shape
+  var tmpArray = array;
+  var tmpArray2;
+  // for each dimensions starting by the last one and ignoring the first one
+  for (var sizeIndex = sizes.length - 1; sizeIndex &gt; 0; sizeIndex--) {
+    var size = sizes[sizeIndex];
+    tmpArray2 = [];
+
+    // aggregate the elements of the current tmpArray in elements of the requested size
+    var length = tmpArray.length / size;
+    for (var i = 0; i &lt; length; i++) {
+      tmpArray2.push(tmpArray.slice(i * size, (i + 1) * size));
+    }
+    // set it as the new tmpArray for the next loop turn or for return
+    tmpArray = tmpArray2;
+  }
+  return tmpArray;
+}
+
+/**
+ * Create a range error with the message:
+ *     &apos;Dimension mismatch (&lt;actual size&gt; != &lt;expected size&gt;)&apos; (from math.js)
+ * @param {number | number[]} actual        The actual size
+ * @param {number | number[]} expected      The expected size
+ * @param {string} [relation=&apos;!=&apos;]          Optional relation between actual
+ *                                          and expected size: &apos;!=&apos;, &apos;&lt;&apos;, etc.
+ * @extends RangeError
+ * @ignore
+ * @see {https://github.com/josdejong/mathjs/blob/develop/src/utils/array.js}
+ */
+/* istanbul ignore next */
+export class DimensionError extends RangeError {
+  constructor(actual, expected, relation) {
+    /* istanbul ignore next */
+    const message = &apos;Dimension mismatch (&apos; + (Array.isArray(actual) ? (&apos;[&apos; + actual.join(&apos;, &apos;) + &apos;]&apos;) : actual) + &apos; &apos; + (&apos;!=&apos;) + &apos; &apos; + (Array.isArray(expected) ? (&apos;[&apos; + expected.join(&apos;, &apos;) + &apos;]&apos;) : expected) +  &apos;)&apos;;
+    super(message);
+  
+    this.actual = actual;
+    this.expected = expected;
+    this.relation = relation;
+    // this.stack = (new Error()).stack
+    this.message = message;
+    this.name = &apos;DimensionError&apos;;
+    this.isDimensionError = true;
+  }
+}</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

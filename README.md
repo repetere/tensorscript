@@ -199,6 +199,153 @@ async function main(){
 main();
 ```
 
+#### Multiple Linear Regression
+
+Test against the [Portland housing price dataset](http://openclassroom.stanford.edu/MainFolder/DocumentPage.php?course=MachineLearning&doc=exercises/ex3/ex3.html)
+
+```javascript
+import { MultipleLinearRegression, } from '@tensorscript/ts-deeplearning';
+import ms from 'modelscript';
+
+function scaleColumnMap(columnName) {
+  return {
+    name: columnName,
+    options: {
+      strategy: 'scale',
+      scaleOptions: {
+        strategy:'standard'
+      }
+    }
+  }
+}
+
+async function main(){
+  const housingdataCSV = await ms.csv.loadCSV('./test/mock/data/portland_housing_data.csv');
+  /*
+  housingdataCSV = [
+    { sqft: 2104, bedrooms: 3, price: 399900 },
+    { sqft: 1600, bedrooms: 3, price: 329900 },
+    ...
+    { sqft: 1203, bedrooms: 3, price: 239500 }
+  ]
+  */
+  const DataSet = new ms.DataSet(housingdataCSV);
+  DataSet.fitColumns({
+    columns: [
+      'sqft',
+      'bedrooms',
+      'price',
+    ].map(scaleColumnMap),
+    returnData:true,
+  });
+  const independentVariables = [ 'sqft', 'bedrooms',];
+  const dependentVariables = [ 'price', ];
+  const x_matrix = DataSet.columnMatrix(independentVariables);
+  const y_matrix = DataSet.columnMatrix(dependentVariables);
+  /* x_matrix = [
+      [2014, 3],
+      [1600, 3],
+    ];
+    y_matrix = [
+      [399900],
+      [329900],
+    ];
+    const y_vector = ms.util.pivotVector(y_matrix)[ 0 ];// not used but just illustrative
+    // y_vector = [ 399900, 329900]
+   */
+  const testSqft = DataSet.scalers.get('sqft').scale(1650);
+  const testBedrooms = DataSet.scalers.get('bedrooms').scale(3);
+  const input_x = [
+    testSqft,
+    testBedrooms,
+  ]; // input_x: [ -0.4412732005944351, -0.2236751871685913 ]
+  const tfMLR = new MultipleLinearRegression();
+  const model = await tfMLR.train(x_matrix, y_matrix);
+  const scaledPrediction = await tfMLR.predict(input_x); // [ -0.3785287367962629 ]
+  const prediction = DataSet.scalers.get('price').descale(scaledPrediction); // prediction: 293081.4643348962
+}
+
+main();
+```
+
+#### Logistic Regression
+
+Test against the Social Media Ads
+
+```javascript
+import { LogisticRegression, } from '@tensorscript/ts-deeplearning';
+import ms from 'modelscript';
+
+function scaleColumnMap(columnName) {
+  return {
+    name: columnName,
+    options: {
+      strategy: 'scale',
+      scaleOptions: {
+        strategy:'standard'
+      }
+    }
+  }
+}
+
+async function main(){
+  const CSVData = await ms.csv.loadCSV('./test/mock/data/social_network_ads.csv');
+  const DataSet = new ms.DataSet(CSVData);
+  const scaledData = DataSet.fitColumns({
+    columns: independentVariables.map(scaleColumnMap),
+    returnData:true,
+  });
+  /*
+    scaledData = [
+      { 'User ID': 15624510,
+         Gender: 'Male',
+         Age: -1.7795687879022388,
+         EstimatedSalary: -1.4881825118632386,
+         Purchased: 0 },
+      { 'User ID': 15810944,
+         Gender: 'Male',
+         Age: -0.253270175924977,
+         EstimatedSalary: -1.458854384319991,
+         Purchased: 0 },
+      ...
+    ];
+    */
+  const independentVariables = [
+    'Age',
+    'EstimatedSalary',
+  ];
+  const dependentVariables = [
+    'Purchased',
+  ];
+  const x_matrix = DataSet.columnMatrix(independentVariables);
+  const y_matrix = DataSet.columnMatrix(dependentVariables);
+  /*
+    x_matrix = [
+      [ -1.7795687879022388, -1.4881825118632386 ],
+      [ -0.253270175924977, -1.458854384319991 ],
+      ...
+    ];
+    y_matrix = [
+      [ 0 ],
+      [ 0 ],
+      ...
+    ];
+    */
+  const input_x = [
+    [-0.062482849427819266, 0.30083326827486173,], //0
+    [0.7960601198093905, -1.1069168538010206,], //1
+    [0.7960601198093905, 0.12486450301537644,], //0
+    [0.4144854668150751, -0.49102617539282206,], //0
+    [0.3190918035664962, 0.5061301610775946,], //1
+  ];
+  const tfLR = new LogisticRegression();
+  const model = await tfLR.train(x_matrix, y_matrix);
+  const prediction = await tfLR.predict(input_x); // => [ [ 0 ], [ 0 ], [ 1 ], [ 0 ], [ 1 ] ],
+}
+
+main();
+```
+
 ### Testing
 
 ```sh
