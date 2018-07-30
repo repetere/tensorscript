@@ -6,8 +6,8 @@ import chaiAsPromised from 'chai-as-promised';
 import 'babel-polyfill';
 import { MultipleLinearRegression, } from '../../index.mjs';
 const expect = chai.expect;
-const independentVariables = [ 'sqft', 'bedrooms',];
-const dependentVariables = [ 'price', ];
+const independentVariables = ['sqft', 'bedrooms', ];
+const dependentVariables = ['price',];
 let housingDataCSV;
 let input_x;
 let DataSet;
@@ -32,13 +32,7 @@ function scaleColumnMap(columnName) {
 describe('MultipleLinearRegression', function () {
   this.timeout(10000);
   before(async function () {
-    housingDataCSV = await ms.csv.loadCSV('./test/mock/data/portland_housing_data.csv', {
-      colParser: {
-        sqft: 'number',
-        bedrooms: 'number',
-        price: 'number',
-      },
-    });
+    housingDataCSV = await ms.csv.loadCSV('./test/mock/data/portland_housing_data.csv');
     /*
     housingdataCSV = [ 
       { sqft: 2104, bedrooms: 3, price: 399900 },
@@ -49,11 +43,7 @@ describe('MultipleLinearRegression', function () {
     */
     DataSet = new ms.DataSet(housingDataCSV);
     DataSet.fitColumns({
-      columns: [
-        'sqft',
-        'bedrooms',
-        'price',
-      ].map(scaleColumnMap),
+      columns: independentVariables.concat(dependentVariables).map(scaleColumnMap),
       returnData:false,
     });
     x_matrix = DataSet.columnMatrix(independentVariables); 
@@ -81,10 +71,16 @@ describe('MultipleLinearRegression', function () {
         DataSet.scalers.get('bedrooms').scale(2),
       ], //179900
     ];
+    return true;
   });
   describe('constructor', () => {
     it('should export a named module class', () => {
-      const MLR = new MultipleLinearRegression();
+      const MLR = new MultipleLinearRegression({
+        fit: {
+          epochs: 200,
+          batchSize: 5,
+        },
+      });
       const MLRConfigured = new MultipleLinearRegression({ test: 'prop', });
       expect(MultipleLinearRegression).to.be.a('function');
       expect(MLR).to.be.instanceOf(MultipleLinearRegression);

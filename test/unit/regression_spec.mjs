@@ -96,6 +96,7 @@ describe('DeepLearningRegression', function () {
     ]);
     nnRegressionDeepModel = models[ 0 ];
     nnRegressionWideModel = models[ 1 ];
+    return true;
   });
   describe('constructor', () => {
     it('should export a named module class', () => {

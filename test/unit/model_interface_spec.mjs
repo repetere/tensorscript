@@ -41,7 +41,7 @@ describe('TensorScriptModelInterface', () => {
         [ [1], [1], [0], ],
       ];
       const result = TensorScriptModelInterface.reshape(array, shape);
-      console.log({ result });
+      // console.log({ result });
     });
   });
   describe('getInputShape', () => {
