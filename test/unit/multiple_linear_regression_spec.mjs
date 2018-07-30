@@ -86,7 +86,7 @@ describe('MultipleLinearRegression', function () {
           batchSize: 5,
         },
       });
-      const MLRConfigured = new MultipleLinearRegression({ test: 'prop', });
+      const MLRConfigured = new MultipleLinearRegression({ test: 'prop', }, {});
       expect(MultipleLinearRegression).to.be.a('function');
       expect(MLR).to.be.instanceOf(MultipleLinearRegression);
       expect(MLRConfigured.settings.test).to.eql('prop');

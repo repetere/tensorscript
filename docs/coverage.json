@@ -1,7 +1,7 @@
 {
-  "coverage": "65.38%",
-  "expectCount": 52,
-  "actualCount": 34,
+  "coverage": "58.82%",
+  "expectCount": 68,
+  "actualCount": 40,
   "files": {
     "lib/classification.mjs": {
       "expectCount": 6,
@@ -30,6 +30,22 @@
         56
       ]
     },
+    "lib/lstm_time_series.mjs": {
+      "expectCount": 16,
+      "actualCount": 6,
+      "undocumentLines": [
+        113,
+        114,
+        115,
+        130,
+        131,
+        175,
+        182,
+        203,
+        215,
+        220
+      ]
+    },
     "lib/model_interface.mjs": {
       "expectCount": 24,
       "actualCount": 17,
@@ -47,7 +63,7 @@
       "expectCount": 4,
       "actualCount": 3,
       "undocumentLines": [
-        44
+        45
       ]
     },
     "lib/regression.mjs": {

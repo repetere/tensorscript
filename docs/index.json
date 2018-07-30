@@ -158,7 +158,7 @@
     "__docId__": 7,
     "kind": "file",
     "name": "lib/deep_learning.mjs",
-    "content": "import { TensorScriptModelInterface, } from './model_interface';\r\n\r\n/**\r\n * Deep Learning with Tensorflow\r\n * @class BaseNeuralNetwork\r\n * @implements {TensorScriptModelInterface}\r\n */\r\nexport class BaseNeuralNetwork extends TensorScriptModelInterface {\r\n  /**\r\n   * @param {{layers:Array<Object>,compile:Object,fit:Object}} options - neural network configuration and tensorflow model hyperparameters\r\n   * @param {{model:Object,tf:Object,}} properties - extra instance properties\r\n   */\r\n  constructor(options = {}, properties) {\r\n    const config = Object.assign({\r\n      layers: [],\r\n      compile: {\r\n        loss: 'meanSquaredError',\r\n        optimizer: 'adam',\r\n      },\r\n      fit: {\r\n        epochs: 100,\r\n        batchSize: 5,\r\n      },\r\n    }, options);\r\n    super(config, properties);\r\n    return this;\r\n  }\r\n  /**\r\n   * Adds dense layers to tensorflow model\r\n   * @abstract \r\n   * @param {Array<Array<number>>} x_matrix - independent variables\r\n   * @param {Array<Array<number>>} y_matrix - dependent variables\r\n   * @param {Array<Object>} layers - model dense layer parameters\r\n   */\r\n  generateLayers(x_matrix, y_matrix, layers) {\r\n    throw new ReferenceError('generateLayers method is not implemented');\r\n  }\r\n  /**\r\n   * Asynchronously trains tensorflow model\r\n   * @override\r\n   * @param {Array<Array<number>>} x_matrix - independent variables\r\n   * @param {Array<Array<number>>} y_matrix - dependent variables\r\n   * @param {Array<Object>} layers - array of model dense layer parameters\r\n   * @param {Array<Array<number>>} x_text - validation data independent variables\r\n   * @param {Array<Array<number>>} y_text - validation data dependent variables\r\n   * @return {Object} returns trained tensorflow model \r\n   */\r\n  async train(x_matrix, y_matrix, layers, x_test, y_test) {\r\n    const xShape = this.getInputShape(x_matrix);\r\n    const yShape = this.getInputShape(y_matrix);\r\n    const xs = this.tf.tensor(x_matrix, xShape);\r\n    const ys = this.tf.tensor(y_matrix, yShape);\r\n    this.xShape = xShape;\r\n    this.yShape = yShape;\r\n    this.model = this.tf.sequential();\r\n    this.generateLayers.call(this, x_matrix, y_matrix, layers || this.layers, x_test, y_test);\r\n    this.model.compile(this.settings.compile);\r\n    await this.model.fit(xs, ys, this.settings.fit);\r\n    xs.dispose();\r\n    ys.dispose();\r\n    return this.model;\r\n  }\r\n  /**\r\n   * Predicts new dependent variables\r\n   * @override\r\n   * @param {Array<Array<number>>|Array<number>} matrix - new test independent variables\r\n   * @return {{data: Promise}} returns tensorflow prediction \r\n   */\r\n  calculate(input_matrix) {\r\n    if (!input_matrix || Array.isArray(input_matrix)===false) throw new Error('invalid input matrix');\r\n    const predictionInput = (Array.isArray(input_matrix[ 0 ]))\r\n      ? input_matrix\r\n      : [\r\n        input_matrix,\r\n      ];\r\n    const predictionTensor = this.tf.tensor(predictionInput);\r\n    const prediction = this.model.predict(predictionTensor);\r\n    predictionTensor.dispose();\r\n    return prediction;\r\n  }\r\n}",
+    "content": "import { TensorScriptModelInterface, } from './model_interface';\r\n\r\n/**\r\n * Deep Learning with Tensorflow\r\n * @class BaseNeuralNetwork\r\n * @implements {TensorScriptModelInterface}\r\n */\r\nexport class BaseNeuralNetwork extends TensorScriptModelInterface {\r\n  /**\r\n   * @param {{layers:Array<Object>,compile:Object,fit:Object}} options - neural network configuration and tensorflow model hyperparameters\r\n   * @param {{model:Object,tf:Object,}} properties - extra instance properties\r\n   */\r\n  constructor(options = {}, properties) {\r\n    const config = Object.assign({\r\n      layers: [],\r\n      compile: {\r\n        loss: 'meanSquaredError',\r\n        optimizer: 'adam',\r\n      },\r\n      fit: {\r\n        epochs: 100,\r\n        batchSize: 5,\r\n      },\r\n    }, options);\r\n    super(config, properties);\r\n    return this;\r\n  }\r\n  /**\r\n   * Adds dense layers to tensorflow model\r\n   * @abstract \r\n   * @param {Array<Array<number>>} x_matrix - independent variables\r\n   * @param {Array<Array<number>>} y_matrix - dependent variables\r\n   * @param {Array<Object>} layers - model dense layer parameters\r\n   */\r\n  generateLayers(x_matrix, y_matrix, layers) {\r\n    throw new ReferenceError('generateLayers method is not implemented');\r\n  }\r\n  /**\r\n   * Asynchronously trains tensorflow model\r\n   * @override\r\n   * @param {Array<Array<number>>} x_matrix - independent variables\r\n   * @param {Array<Array<number>>} y_matrix - dependent variables\r\n   * @param {Array<Object>} layers - array of model dense layer parameters\r\n   * @param {Array<Array<number>>} x_text - validation data independent variables\r\n   * @param {Array<Array<number>>} y_text - validation data dependent variables\r\n   * @return {Object} returns trained tensorflow model \r\n   */\r\n  async train(x_matrix, y_matrix, layers, x_test, y_test) {\r\n    const xShape = this.getInputShape(x_matrix);\r\n    const yShape = this.getInputShape(y_matrix);\r\n    const xs = this.tf.tensor(x_matrix, xShape);\r\n    const ys = this.tf.tensor(y_matrix, yShape);\r\n    this.xShape = xShape;\r\n    this.yShape = yShape;\r\n    this.model = this.tf.sequential();\r\n    this.generateLayers.call(this, x_matrix, y_matrix, layers || this.layers, x_test, y_test);\r\n    this.model.compile(this.settings.compile);\r\n    await this.model.fit(xs, ys, this.settings.fit);\r\n    xs.dispose();\r\n    ys.dispose();\r\n    return this.model;\r\n  }\r\n  /**\r\n   * Predicts new dependent variables\r\n   * @override\r\n   * @param {Array<Array<number>>|Array<number>} matrix - new test independent variables\r\n   * @param {Object} options - model prediction options\r\n   * @return {{data: Promise}} returns tensorflow prediction \r\n   */\r\n  calculate(input_matrix, options) {\r\n    if (!input_matrix || Array.isArray(input_matrix)===false) throw new Error('invalid input matrix');\r\n    const predictionInput = (Array.isArray(input_matrix[ 0 ]))\r\n      ? input_matrix\r\n      : [\r\n        input_matrix,\r\n      ];\r\n    const predictionTensor = this.tf.tensor(predictionInput);\r\n    const prediction = this.model.predict(predictionTensor, options);\r\n    predictionTensor.dispose();\r\n    return prediction;\r\n  }\r\n}",
     "static": true,
     "longname": "/Users/yawjosephetse/Developer/github/repetere/ts-deeplearning/lib/deep_learning.mjs",
     "access": "public",
@@ -394,7 +394,7 @@
     "longname": "lib/deep_learning.mjs~BaseNeuralNetwork#calculate",
     "access": "public",
     "description": "Predicts new dependent variables",
-    "lineNumber": 69,
+    "lineNumber": 70,
     "params": [
       {
         "nullable": null,
@@ -405,6 +405,16 @@
         "optional": false,
         "name": "matrix",
         "description": "new test independent variables"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options",
+        "description": "model prediction options"
       }
     ],
     "return": {
@@ -595,6 +605,388 @@
   {
     "__docId__": 23,
     "kind": "file",
+    "name": "lib/lstm_time_series.mjs",
+    "content": "import { BaseNeuralNetwork, } from './deep_learning';\r\nimport range from 'lodash.range';\r\n\r\n/**\r\n * Long Short Term Memory Time Series with Tensorflow\r\n * @class LSTMTimeSeries\r\n * @implements {BaseNeuralNetwork}\r\n */\r\nexport class LSTMTimeSeries extends BaseNeuralNetwork {\r\n  /**\r\n   * Creates dataset data\r\n   * @example\r\n   * LSTMTimeSeries.createDataset([ [ 1, ], [ 2, ], [ 3, ], [ 4, ], [ 5, ], [ 6, ], [ 7, ], [ 8, ], [ 9, ], [ 10, ], ], 3) // => \r\n      //  [ \r\n      //    [ \r\n      //      [ [ 1 ], [ 2 ], [ 3 ] ],\r\n      //      [ [ 2 ], [ 3 ], [ 4 ] ],\r\n      //      [ [ 3 ], [ 4 ], [ 5 ] ],\r\n      //      [ [ 4 ], [ 5 ], [ 6 ] ],\r\n      //      [ [ 5 ], [ 6 ], [ 7 ] ],\r\n      //      [ [ 6 ], [ 7 ], [ 8 ] ], \r\n      //   ], //x_matrix\r\n      //   [ [ 4 ], [ 5 ], [ 6 ], [ 7 ], [ 8 ], [ 9 ] ] //y_matrix\r\n      // ]\r\n   * @param {Array<Array<number>} dataset - array of values\r\n   * @param {Number} look_back - number of values in each feature \r\n   * @return {[Array<Array<number>>,Array<number>]} returns x matrix and y matrix for model trainning\r\n   */\r\n  /* istanbul ignore next */\r\n  static createDataset(dataset=[], look_back = 1) { \r\n    const dataX = [];\r\n    const dataY = [];\r\n    for (let index in range(dataset.length - look_back - 1)) {\r\n      let i = parseInt(index);\r\n      let a = dataset.slice(i, i + look_back);\r\n      dataX.push(a);\r\n      dataY.push(dataset[ i + look_back ]);\r\n    }\r\n    return [dataX, dataY, ];\r\n  }\r\n  /**\r\n   * Reshape input to be [samples, time steps, features]\r\n   * @example\r\n   * LSTMTimeSeries.getTimeseriesShape([ \r\n      [ [ 1 ], [ 2 ], [ 3 ] ],\r\n      [ [ 2 ], [ 3 ], [ 4 ] ],\r\n      [ [ 3 ], [ 4 ], [ 5 ] ],\r\n      [ [ 4 ], [ 5 ], [ 6 ] ],\r\n      [ [ 5 ], [ 6 ], [ 7 ] ],\r\n      [ [ 6 ], [ 7 ], [ 8 ] ], \r\n    ]) //=> [6, 1, 3,]\r\n   * @param {Array<Array<number>} x_timeseries - dataset array of values\r\n   * @return {Array<Array<number>>} returns proper timeseries forecasting shape\r\n   */\r\n  static getTimeseriesShape(x_timeseries) {\r\n    const time_steps = this.settings.timeSteps;\r\n    const xShape = this.getInputShape(x_timeseries);\r\n    const _samples = xShape[ 0 ];\r\n    const _timeSteps = time_steps;\r\n    const _features = xShape[ 1 ];\r\n    const newShape = (this.settings.mulitpleTimeSteps || this.settings.stateful)\r\n      ? [_samples,  _features, _timeSteps, ]\r\n      : [ _samples, _timeSteps, _features, ];\r\n    // console.log({newShape})\r\n    return newShape;\r\n  }\r\n  /**\r\n   * Returns data for predicting values\r\n   * @param timeseries \r\n   * @param look_back \r\n   */\r\n  static getTimeseriesDataSet(timeseries, look_back) {\r\n    const lookBack = look_back || this.settings.lookBack;\r\n    const matrices = LSTMTimeSeries.createDataset.call(this, timeseries, lookBack);\r\n    const x_matrix = matrices[ 0 ];\r\n    const y_matrix = matrices[ 1 ];\r\n    // const timeseriesShape = LSTMTimeSeries.getTimeseriesShape.call(this,x_matrix);\r\n    const x_matrix_timeseries = BaseNeuralNetwork.reshape(x_matrix, [x_matrix.length, lookBack, ]);\r\n    const xShape = BaseNeuralNetwork.getInputShape(x_matrix_timeseries);\r\n    const yShape = BaseNeuralNetwork.getInputShape(y_matrix);\r\n    return {\r\n      yShape,\r\n      xShape,\r\n      y_matrix,\r\n      x_matrix:x_matrix_timeseries,\r\n    };\r\n  }\r\n  /**\r\n   * @param {{layers:Array<Object>,compile:Object,fit:Object}} options - neural network configuration and tensorflow model hyperparameters\r\n   * @param {{model:Object,tf:Object,}} properties - extra instance properties\r\n   */\r\n  constructor(options = {}, properties) {\r\n    const config = Object.assign({\r\n      layers: [],\r\n      type: 'simple',\r\n      stateful:false,\r\n      stacked: false,\r\n      mulitpleTimeSteps:false,\r\n      lookBack:1,\r\n      batchSize:1,\r\n      timeSteps:1,\r\n      learningRate:0.1,\r\n      compile: {\r\n        loss: 'meanSquaredError',\r\n        optimizer: 'adam',\r\n      },\r\n      fit: {\r\n        epochs: 100,\r\n        batchSize: 1,\r\n      },\r\n    }, options);\r\n    super(config, properties);\r\n    this.createDataset = LSTMTimeSeries.createDataset;\r\n    this.getTimeseriesDataSet = LSTMTimeSeries.getTimeseriesDataSet;\r\n    this.getTimeseriesShape = LSTMTimeSeries.getTimeseriesShape;\r\n    return this;\r\n  }\r\n  /**\r\n   * Adds dense layers to tensorflow classification model\r\n   * @override \r\n   * @param {Array<Array<number>>} x_matrix - independent variables\r\n   * @param {Array<Array<number>>} y_matrix - dependent variables\r\n   * @param {Array<Object>} layers - model dense layer parameters\r\n   * @param {Array<Array<number>>} x_test - validation data independent variables\r\n   * @param {Array<Array<number>>} y_test - validation data dependent variables\r\n   */\r\n  generateLayers(x_matrix, y_matrix, layers) {\r\n    const xShape = this.getInputShape(x_matrix);\r\n    const yShape = this.getInputShape(y_matrix);\r\n    this.yShape = yShape;\r\n    this.xShape = xShape;\r\n    // const sgdoptimizer = this.tf.train.sgd(this.settings.learningRate);\r\n    const lstmLayers = [];\r\n    const rnnLayers = [];\r\n    const denseLayers = [];\r\n    /* istanbul ignore next */\r\n    if (layers) {\r\n      if(layers.lstmLayers && layers.lstmLayers.length) lstmLayers.push(...layers.lstmLayers);\r\n      if(layers.rnnLayers && layers.rnnLayers.length) rnnLayers.push(...layers.rnnLayers);\r\n      if(layers.denseLayers && layers.denseLayers.length) denseLayers.push(...layers.denseLayers);\r\n    } else if (this.settings.stateful) {\r\n      const batchInputShape = [this.settings.fit.batchSize, this.settings.lookBack, 1, ];\r\n      rnnLayers.push({ units: 4, batchInputShape:batchInputShape,  returnSequences:true, });\r\n      rnnLayers.push({ units: 4, batchInputShape:batchInputShape,  });\r\n      denseLayers.push({ units: yShape[1], });\r\n    // } else if(this.settings.stacked) {\r\n    //   lstmLayers.push({ units: 4, inputShape: [ 1, this.settings.lookBack ], });\r\n    //   // model.add(LSTM(4, batch_input_shape=(batch_size, look_back, 1), stateful=True, return_sequences=True))\r\n    //   // model.add(LSTM(4, batch_input_shape=(batch_size, look_back, 1), stateful=True))\r\n    //   denseLayers.push({ units: yShape[1], });\r\n    } else {\r\n      const inputShape= [1, this.settings.lookBack, ];\r\n      // console.log('default timeseries', { inputShape, xShape, yShape ,  });\r\n      lstmLayers.push({ units:4, inputShape,  });\r\n      denseLayers.push({ units: yShape[1], });\r\n    }\r\n    // console.log('lstmLayers',lstmLayers)\r\n    // console.log('denseLayers',denseLayers)\r\n    if (lstmLayers.length) {\r\n      lstmLayers.forEach(layer => {\r\n        this.model.add(this.tf.layers.lstm(layer));\r\n      });\r\n    }\r\n    if (rnnLayers.length) {\r\n      /* istanbul ignore next */\r\n      rnnLayers.forEach(layer => {\r\n        this.model.add(this.tf.layers.simpleRNN(layer));\r\n      });\r\n    }\r\n    if (denseLayers.length) {\r\n      denseLayers.forEach(layer => {\r\n        this.model.add(this.tf.layers.dense(layer));\r\n      });\r\n    }\r\n    this.layers = {\r\n      lstmLayers,\r\n      rnnLayers,\r\n      denseLayers,\r\n    };\r\n    // this.settings.compile.optimizer = sgdoptimizer;\r\n  }\r\n  async train(x_timeseries, y_timeseries, layers, x_test, y_test) {\r\n    let yShape;\r\n    let x_matrix;\r\n    let y_matrix;\r\n    const look_back = this.settings.lookBack;\r\n    if (y_timeseries) {\r\n      x_matrix = x_timeseries;\r\n      y_matrix = y_timeseries;\r\n    } else {\r\n      const matrices = this.createDataset(x_timeseries, look_back);\r\n      x_matrix = matrices[ 0 ];\r\n      y_matrix = matrices[ 1 ];\r\n      yShape = this.getInputShape(y_matrix);\r\n    }\r\n    //_samples, _timeSteps, _features\r\n    const timeseriesShape = this.getTimeseriesShape(x_matrix);\r\n    const x_matrix_timeseries = BaseNeuralNetwork.reshape(x_matrix, timeseriesShape);\r\n    const xs = this.tf.tensor(x_matrix_timeseries, timeseriesShape);\r\n    const ys = this.tf.tensor(y_matrix, yShape);\r\n    this.xShape = timeseriesShape;\r\n    this.yShape = yShape;\r\n    this.model = this.tf.sequential();\r\n    this.generateLayers.call(this, x_matrix_timeseries, y_matrix, layers || this.layers, x_test, y_test);\r\n    this.model.compile(this.settings.compile);\r\n    if (this.settings.stateful) {\r\n      this.settings.fit.shuffle = false;\r\n    }\r\n    await this.model.fit(xs, ys, this.settings.fit);\r\n    // this.model.summary();\r\n    xs.dispose();\r\n    ys.dispose();\r\n    return this.model;\r\n  }\r\n  calculate(x_matrix) {\r\n    const timeseriesShape = this.getTimeseriesShape(x_matrix);\r\n    const input_matrix = BaseNeuralNetwork.reshape(x_matrix, timeseriesShape);\r\n    return super.calculate(input_matrix);\r\n  }\r\n  async predict(input_matrix, options) {\r\n    if (this.settings.stateful && input_matrix.length > 1) {\r\n      return Promise.all(input_matrix.map(input=>super.predict([input, ], options))) ;\r\n    } else {\r\n      return super.predict(input_matrix, options);\r\n    }\r\n  }\r\n}",
+    "static": true,
+    "longname": "/Users/yawjosephetse/Developer/github/repetere/ts-deeplearning/lib/lstm_time_series.mjs",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 24,
+    "kind": "class",
+    "name": "LSTMTimeSeries",
+    "memberof": "lib/lstm_time_series.mjs",
+    "static": true,
+    "longname": "lib/lstm_time_series.mjs~LSTMTimeSeries",
+    "access": "public",
+    "export": true,
+    "importPath": "@tensorscript/ts-deeplearning/lib/lstm_time_series.mjs",
+    "importStyle": "{LSTMTimeSeries}",
+    "description": "Long Short Term Memory Time Series with Tensorflow",
+    "lineNumber": 9,
+    "unknown": [
+      {
+        "tagName": "@class",
+        "tagValue": "LSTMTimeSeries"
+      }
+    ],
+    "interface": false,
+    "extends": [
+      "lib/deep_learning.js~BaseNeuralNetwork"
+    ],
+    "implements": [
+      "BaseNeuralNetwork"
+    ]
+  },
+  {
+    "__docId__": 25,
+    "kind": "method",
+    "name": "createDataset",
+    "memberof": "lib/lstm_time_series.mjs~LSTMTimeSeries",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "lib/lstm_time_series.mjs~LSTMTimeSeries.createDataset",
+    "access": "public",
+    "description": "Creates dataset data",
+    "examples": [
+      "LSTMTimeSeries.createDataset([ [ 1, ], [ 2, ], [ 3, ], [ 4, ], [ 5, ], [ 6, ], [ 7, ], [ 8, ], [ 9, ], [ 10, ], ], 3) // => \n//  [ \n//    [ \n//      [ [ 1 ], [ 2 ], [ 3 ] ],\n//      [ [ 2 ], [ 3 ], [ 4 ] ],\n//      [ [ 3 ], [ 4 ], [ 5 ] ],\n//      [ [ 4 ], [ 5 ], [ 6 ] ],\n//      [ [ 5 ], [ 6 ], [ 7 ] ],\n//      [ [ 6 ], [ 7 ], [ 8 ] ], \n//   ], //x_matrix\n//   [ [ 4 ], [ 5 ], [ 6 ], [ 7 ], [ 8 ], [ 9 ] ] //y_matrix\n// ]"
+    ],
+    "lineNumber": 30,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Array<Array<number>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "dataset",
+        "description": "array of values"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "look_back",
+        "description": "number of values in each feature"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "[Array<Array<number>>,Array<number>]"
+      ],
+      "spread": false,
+      "description": "returns x matrix and y matrix for model trainning"
+    }
+  },
+  {
+    "__docId__": 26,
+    "kind": "method",
+    "name": "getTimeseriesShape",
+    "memberof": "lib/lstm_time_series.mjs~LSTMTimeSeries",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "lib/lstm_time_series.mjs~LSTMTimeSeries.getTimeseriesShape",
+    "access": "public",
+    "description": "Reshape input to be [samples, time steps, features]",
+    "examples": [
+      "LSTMTimeSeries.getTimeseriesShape([ \n[ [ 1 ], [ 2 ], [ 3 ] ],\n[ [ 2 ], [ 3 ], [ 4 ] ],\n[ [ 3 ], [ 4 ], [ 5 ] ],\n[ [ 4 ], [ 5 ], [ 6 ] ],\n[ [ 5 ], [ 6 ], [ 7 ] ],\n[ [ 6 ], [ 7 ], [ 8 ] ], \n]) //=> [6, 1, 3,]"
+    ],
+    "lineNumber": 55,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Array<Array<number>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "x_timeseries",
+        "description": "dataset array of values"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Array<Array<number>>"
+      ],
+      "spread": false,
+      "description": "returns proper timeseries forecasting shape"
+    }
+  },
+  {
+    "__docId__": 27,
+    "kind": "method",
+    "name": "getTimeseriesDataSet",
+    "memberof": "lib/lstm_time_series.mjs~LSTMTimeSeries",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "lib/lstm_time_series.mjs~LSTMTimeSeries.getTimeseriesDataSet",
+    "access": "public",
+    "description": "Returns data for predicting values",
+    "lineNumber": 72,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "timeseries",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "look_back",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "__docId__": 28,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "lib/lstm_time_series.mjs~LSTMTimeSeries",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/lstm_time_series.mjs~LSTMTimeSeries#constructor",
+    "access": "public",
+    "description": "",
+    "lineNumber": 92,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "{layers:Array<Object>,compile:Object,fit:Object}"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options",
+        "description": "neural network configuration and tensorflow model hyperparameters"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "{model:Object,tf:Object,}"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "properties",
+        "description": "extra instance properties"
+      }
+    ]
+  },
+  {
+    "__docId__": 29,
+    "kind": "member",
+    "name": "createDataset",
+    "memberof": "lib/lstm_time_series.mjs~LSTMTimeSeries",
+    "static": false,
+    "longname": "lib/lstm_time_series.mjs~LSTMTimeSeries#createDataset",
+    "access": "public",
+    "description": null,
+    "lineNumber": 113,
+    "undocument": true
+  },
+  {
+    "__docId__": 30,
+    "kind": "member",
+    "name": "getTimeseriesDataSet",
+    "memberof": "lib/lstm_time_series.mjs~LSTMTimeSeries",
+    "static": false,
+    "longname": "lib/lstm_time_series.mjs~LSTMTimeSeries#getTimeseriesDataSet",
+    "access": "public",
+    "description": null,
+    "lineNumber": 114,
+    "undocument": true
+  },
+  {
+    "__docId__": 31,
+    "kind": "member",
+    "name": "getTimeseriesShape",
+    "memberof": "lib/lstm_time_series.mjs~LSTMTimeSeries",
+    "static": false,
+    "longname": "lib/lstm_time_series.mjs~LSTMTimeSeries#getTimeseriesShape",
+    "access": "public",
+    "description": null,
+    "lineNumber": 115,
+    "undocument": true
+  },
+  {
+    "__docId__": 32,
+    "kind": "method",
+    "name": "generateLayers",
+    "memberof": "lib/lstm_time_series.mjs~LSTMTimeSeries",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/lstm_time_series.mjs~LSTMTimeSeries#generateLayers",
+    "access": "public",
+    "description": "Adds dense layers to tensorflow classification model",
+    "lineNumber": 127,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Array<Array<number>>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "x_matrix",
+        "description": "independent variables"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Array<Array<number>>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "y_matrix",
+        "description": "dependent variables"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Array<Object>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "layers",
+        "description": "model dense layer parameters"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Array<Array<number>>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "x_test",
+        "description": "validation data independent variables"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Array<Array<number>>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "y_test",
+        "description": "validation data dependent variables"
+      }
+    ],
+    "override": true
+  },
+  {
+    "__docId__": 33,
+    "kind": "member",
+    "name": "yShape",
+    "memberof": "lib/lstm_time_series.mjs~LSTMTimeSeries",
+    "static": false,
+    "longname": "lib/lstm_time_series.mjs~LSTMTimeSeries#yShape",
+    "access": "public",
+    "description": null,
+    "lineNumber": 130,
+    "undocument": true
+  },
+  {
+    "__docId__": 34,
+    "kind": "member",
+    "name": "xShape",
+    "memberof": "lib/lstm_time_series.mjs~LSTMTimeSeries",
+    "static": false,
+    "longname": "lib/lstm_time_series.mjs~LSTMTimeSeries#xShape",
+    "access": "public",
+    "description": null,
+    "lineNumber": 131,
+    "undocument": true
+  },
+  {
+    "__docId__": 35,
+    "kind": "member",
+    "name": "layers",
+    "memberof": "lib/lstm_time_series.mjs~LSTMTimeSeries",
+    "static": false,
+    "longname": "lib/lstm_time_series.mjs~LSTMTimeSeries#layers",
+    "access": "public",
+    "description": null,
+    "lineNumber": 175,
+    "undocument": true
+  },
+  {
+    "__docId__": 36,
+    "kind": "method",
+    "name": "train",
+    "memberof": "lib/lstm_time_series.mjs~LSTMTimeSeries",
+    "generator": false,
+    "async": true,
+    "static": false,
+    "longname": "lib/lstm_time_series.mjs~LSTMTimeSeries#train",
+    "access": "public",
+    "description": null,
+    "lineNumber": 182,
+    "undocument": true
+  },
+  {
+    "__docId__": 39,
+    "kind": "member",
+    "name": "model",
+    "memberof": "lib/lstm_time_series.mjs~LSTMTimeSeries",
+    "static": false,
+    "longname": "lib/lstm_time_series.mjs~LSTMTimeSeries#model",
+    "access": "public",
+    "description": null,
+    "lineNumber": 203,
+    "undocument": true
+  },
+  {
+    "__docId__": 40,
+    "kind": "method",
+    "name": "calculate",
+    "memberof": "lib/lstm_time_series.mjs~LSTMTimeSeries",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/lstm_time_series.mjs~LSTMTimeSeries#calculate",
+    "access": "public",
+    "description": null,
+    "lineNumber": 215,
+    "undocument": true
+  },
+  {
+    "__docId__": 41,
+    "kind": "method",
+    "name": "predict",
+    "memberof": "lib/lstm_time_series.mjs~LSTMTimeSeries",
+    "generator": false,
+    "async": true,
+    "static": false,
+    "longname": "lib/lstm_time_series.mjs~LSTMTimeSeries#predict",
+    "access": "public",
+    "description": null,
+    "lineNumber": 220,
+    "undocument": true
+  },
+  {
+    "__docId__": 42,
+    "kind": "file",
     "name": "lib/model_interface.mjs",
     "content": "import tf from '@tensorflow/tfjs';\r\n\r\n/**\r\n * Base class for tensorscript models\r\n * @interface TensorScriptModelInterface\r\n * @property {Object} settings - tensorflow model hyperparameters\r\n * @property {Object} model - tensorflow model\r\n * @property {Object} tf - tensorflow / tensorflow-node / tensorflow-node-gpu\r\n * @property {Function} reshape - static reshape array function\r\n * @property {Function} getInputShape - static TensorScriptModelInterface\r\n */\r\nexport class TensorScriptModelInterface {\r\n  /**\r\n   * @param {Object} options - tensorflow model hyperparameters\r\n   * @param {Object} customTF - custom, overridale tensorflow / tensorflow-node / tensorflow-node-gpu\r\n   * @param {{model:Object,tf:Object,}} properties - extra instance properties\r\n   */\r\n  constructor(options = {}, properties = {}) {\r\n    /** @type {Object} */\r\n    this.settings = options;\r\n    /** @type {Object} */\r\n    this.model = properties.model;\r\n    /** @type {Object} */\r\n    this.tf = properties.tf || tf;\r\n    /** @type {Function} */\r\n    this.reshape = TensorScriptModelInterface.reshape;\r\n    /** @type {Function} */\r\n    this.getInputShape = TensorScriptModelInterface.getInputShape;\r\n    return this;\r\n  }\r\n  /**\r\n   * Reshapes an array\r\n   * @function\r\n   * @example \r\n   * const array = [ 0, 1, 1, 0, ];\r\n   * const shape = [2,2];\r\n   * TensorScriptModelInterface.reshape(array,shape) // => \r\n   * [\r\n   *   [ 0, 1, ],\r\n   *   [ 1, 0, ],\r\n   * ];\r\n   * @param {Array<number>} array - input array \r\n   * @param {Array<number>} shape - shape array \r\n   * @return {Array<Array<number>>} returns a matrix with the defined shape\r\n   */\r\n  /* istanbul ignore next */\r\n  static reshape(array, shape) {\r\n    const flatArray = flatten(array);\r\n   \r\n\r\n    function product (arr) {\r\n      return arr.reduce((prev, curr) => prev * curr);\r\n    }\r\n  \r\n    if (!Array.isArray(array) || !Array.isArray(shape)) {\r\n      throw new TypeError('Array expected');\r\n    }\r\n  \r\n    if (shape.length === 0) {\r\n      throw new DimensionError(0, product(size(array)), '!=');\r\n    }\r\n    let newArray;\r\n    let totalSize = 1;\r\n    const rows = shape[ 0 ];\r\n    for (let sizeIndex = 0; sizeIndex < shape.length; sizeIndex++) {\r\n      totalSize *= shape[sizeIndex];\r\n    }\r\n  \r\n    if (flatArray.length !== totalSize) {\r\n      throw new DimensionError(\r\n        product(shape),\r\n        product(size(array)),\r\n        '!='\r\n      );\r\n    }\r\n  \r\n    try {\r\n      newArray = _reshape(flatArray, shape);\r\n    } catch (e) {\r\n      if (e instanceof DimensionError) {\r\n        throw new DimensionError(\r\n          product(shape),\r\n          product(size(array)),\r\n          '!='\r\n        );\r\n      }\r\n      throw e;\r\n    }\r\n    if (newArray.length !== rows) throw new SyntaxError(`specified shape (${shape}) is compatible with input array or length (${array.length})`);\r\n\r\n    // console.log({ newArray ,});\r\n    return newArray;\r\n  }\r\n  /**\r\n   * Returns the shape of an input matrix\r\n   * @function\r\n   * @example \r\n   * const input = [\r\n   *   [ 0, 1, ],\r\n   *   [ 1, 0, ],\r\n   * ];\r\n   * TensorScriptModelInterface.getInputShape(input) // => [2,2]\r\n   * @see {https://stackoverflow.com/questions/10237615/get-size-of-dimensions-in-array}\r\n   * @param {Array<Array<number>>} matrix - input matrix \r\n   * @return {Array<number>} returns the shape of a matrix (e.g. [2,2])\r\n   */\r\n  static getInputShape(matrix=[]) {\r\n    if (Array.isArray(matrix) === false || !matrix[ 0 ] || !matrix[ 0 ].length || Array.isArray(matrix[ 0 ]) === false) throw new TypeError('input must be a matrix');\r\n    const dim = [];\r\n    const x_dimensions = matrix[ 0 ].length;\r\n    let vectors = matrix;\r\n    matrix.forEach(vector => {\r\n      if (vector.length !== x_dimensions) throw new SyntaxError('input must have the same length in each row');\r\n    });\r\n    for (;;) {\r\n      dim.push(vectors.length);\r\n      if (Array.isArray(vectors[0])) {\r\n        vectors = vectors[0];\r\n      } else {\r\n        break;\r\n      }\r\n    }\r\n    return dim;\r\n  }\r\n  /**\r\n   * Asynchronously trains tensorflow model, must be implemented by tensorscript class\r\n   * @abstract \r\n   * @param {Array<Array<number>>} x_matrix - independent variables\r\n   * @param {Array<Array<number>>} y_matrix - dependent variables\r\n   * @return {Object} returns trained tensorflow model \r\n   */\r\n  train(x_matrix, y_matrix) {\r\n    throw new ReferenceError('train method is not implemented');\r\n  }\r\n  /**\r\n   * Predicts new dependent variables\r\n   * @abstract \r\n   * @param {Array<Array<number>>|Array<number>} matrix - new test independent variables\r\n   * @return {{data: Promise}} returns tensorflow prediction \r\n   */\r\n  calculate(matrix) {\r\n    throw new ReferenceError('calculate method is not implemented');\r\n  }\r\n  /**\r\n   * Loads a saved tensoflow / keras model\r\n   * @param {Object} options - tensorflow load model options\r\n   * @return {Object} tensorflow model\r\n   */\r\n  async loadModel(options) {\r\n    this.model = await this.tf.loadModel(options);\r\n    return this.model;\r\n  }\r\n  /**\r\n   * Returns prediction values from tensorflow model\r\n   * @param {Array<Array<number>>|Array<number>} input_matrix - new test independent variables \r\n   * @param {Boolean} [options.json=true] - return object instead of typed array\r\n   * @param {Boolean} [options.probability=true] - return real values instead of integers\r\n   * @return {Array<number>|Array<Array<number>>} predicted model values\r\n   */\r\n  async predict(input_matrix, options = {}) {\r\n    if (!input_matrix || Array.isArray(input_matrix)===false) throw new Error('invalid input matrix');\r\n    const x_matrix = (Array.isArray(input_matrix[ 0 ]))\r\n      ? input_matrix\r\n      : [\r\n        input_matrix,\r\n      ];\r\n    const config = Object.assign({\r\n      json: true,\r\n      probability: true,\r\n    }, options);\r\n    return this.calculate(x_matrix)\r\n      .data()\r\n      .then(predictions => {\r\n        if (config.json === false) {\r\n          return predictions;\r\n        } else {\r\n          const shape = [x_matrix.length, this.yShape[ 1 ], ];\r\n          const predictionValues = (options.probability === false) ? Array.from(predictions).map(Math.round) : Array.from(predictions);\r\n          return this.reshape(predictionValues, shape);\r\n        }\r\n      })\r\n      .catch(e => {\r\n        throw e; \r\n      });\r\n  }\r\n}\r\n\r\n/**\r\n * Calculate the size of a multi dimensional array.\r\n * This function checks the size of the first entry, it does not validate\r\n * whether all dimensions match. (use function `validate` for that) (from math.js)\r\n * @param {Array} x\r\n * @see {https://github.com/josdejong/mathjs/blob/develop/src/utils/array.js}\r\n * @ignore\r\n * @return {Number[]} size\r\n */\r\n/* istanbul ignore next */\r\nexport function size (x) {\r\n  let s = [];\r\n\r\n  while (Array.isArray(x)) {\r\n    s.push(x.length);\r\n    x = x[0];\r\n  }\r\n\r\n  return s;\r\n}\r\n/**\r\n * Iteratively re-shape a multi dimensional array to fit the specified dimensions (from math.js)\r\n * @param {Array} array           Array to be reshaped\r\n * @param {Array.<number>} sizes  List of sizes for each dimension\r\n * @returns {Array}               Array whose data has been formatted to fit the\r\n *                                specified dimensions\r\n * @ignore\r\n * @see {https://github.com/josdejong/mathjs/blob/develop/src/utils/array.js}\r\n */\r\n/* istanbul ignore next */\r\nexport function _reshape(array, sizes) {\r\n  // testing if there are enough elements for the requested shape\r\n  var tmpArray = array;\r\n  var tmpArray2;\r\n  // for each dimensions starting by the last one and ignoring the first one\r\n  for (var sizeIndex = sizes.length - 1; sizeIndex > 0; sizeIndex--) {\r\n    var size = sizes[sizeIndex];\r\n    tmpArray2 = [];\r\n\r\n    // aggregate the elements of the current tmpArray in elements of the requested size\r\n    var length = tmpArray.length / size;\r\n    for (var i = 0; i < length; i++) {\r\n      tmpArray2.push(tmpArray.slice(i * size, (i + 1) * size));\r\n    }\r\n    // set it as the new tmpArray for the next loop turn or for return\r\n    tmpArray = tmpArray2;\r\n  }\r\n  return tmpArray;\r\n}\r\n\r\n/**\r\n * Create a range error with the message:\r\n *     'Dimension mismatch (<actual size> != <expected size>)' (from math.js)\r\n * @param {number | number[]} actual        The actual size\r\n * @param {number | number[]} expected      The expected size\r\n * @param {string} [relation='!=']          Optional relation between actual\r\n *                                          and expected size: '!=', '<', etc.\r\n * @extends RangeError\r\n * @ignore\r\n * @see {https://github.com/josdejong/mathjs/blob/develop/src/utils/array.js}\r\n */\r\n/* istanbul ignore next */\r\nexport class DimensionError extends RangeError {\r\n  constructor(actual, expected, relation) {\r\n    /* istanbul ignore next */\r\n    const message = 'Dimension mismatch (' + (Array.isArray(actual) ? ('[' + actual.join(', ') + ']') : actual) + ' ' + ('!=') + ' ' + (Array.isArray(expected) ? ('[' + expected.join(', ') + ']') : expected) +  ')';\r\n    super(message);\r\n  \r\n    this.actual = actual;\r\n    this.expected = expected;\r\n    this.relation = relation;\r\n    // this.stack = (new Error()).stack\r\n    this.message = message;\r\n    this.name = 'DimensionError';\r\n    this.isDimensionError = true;\r\n  }\r\n}\r\n\r\n/**\r\n * Flatten a multi dimensional array, put all elements in a one dimensional\r\n * array\r\n * @param {Array} array   A multi dimensional array\r\n * @ignore\r\n * @see {https://github.com/josdejong/mathjs/blob/develop/src/utils/array.js}\r\n * @return {Array}        The flattened array (1 dimensional)\r\n */\r\n/* istanbul ignore next */\r\nexport function flatten (array) {\r\n  /* istanbul ignore next */\r\n  if (!Array.isArray(array)) {\r\n    // if not an array, return as is\r\n    /* istanbul ignore next */\r\n    return array;\r\n  }\r\n  let flat = [];\r\n  \r\n  /* istanbul ignore next */\r\n  array.forEach(function callback (value) {\r\n    if (Array.isArray(value)) {\r\n      value.forEach(callback); // traverse through sub-arrays recursively\r\n    } else {\r\n      flat.push(value);\r\n    }\r\n  });\r\n\r\n  return flat;\r\n}",
     "static": true,
@@ -604,7 +996,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 24,
+    "__docId__": 43,
     "kind": "class",
     "name": "TensorScriptModelInterface",
     "memberof": "lib/model_interface.mjs",
@@ -671,7 +1063,7 @@
     "interface": false
   },
   {
-    "__docId__": 25,
+    "__docId__": 44,
     "kind": "constructor",
     "name": "constructor",
     "memberof": "lib/model_interface.mjs~TensorScriptModelInterface",
@@ -716,7 +1108,7 @@
     ]
   },
   {
-    "__docId__": 26,
+    "__docId__": 45,
     "kind": "member",
     "name": "settings",
     "memberof": "lib/model_interface.mjs~TensorScriptModelInterface",
@@ -735,7 +1127,7 @@
     }
   },
   {
-    "__docId__": 27,
+    "__docId__": 46,
     "kind": "member",
     "name": "model",
     "memberof": "lib/model_interface.mjs~TensorScriptModelInterface",
@@ -754,7 +1146,7 @@
     }
   },
   {
-    "__docId__": 28,
+    "__docId__": 47,
     "kind": "member",
     "name": "tf",
     "memberof": "lib/model_interface.mjs~TensorScriptModelInterface",
@@ -773,7 +1165,7 @@
     }
   },
   {
-    "__docId__": 29,
+    "__docId__": 48,
     "kind": "member",
     "name": "reshape",
     "memberof": "lib/model_interface.mjs~TensorScriptModelInterface",
@@ -792,7 +1184,7 @@
     }
   },
   {
-    "__docId__": 30,
+    "__docId__": 49,
     "kind": "member",
     "name": "getInputShape",
     "memberof": "lib/model_interface.mjs~TensorScriptModelInterface",
@@ -811,7 +1203,7 @@
     }
   },
   {
-    "__docId__": 31,
+    "__docId__": 50,
     "kind": "method",
     "name": "reshape",
     "memberof": "lib/model_interface.mjs~TensorScriptModelInterface",
@@ -863,7 +1255,7 @@
     }
   },
   {
-    "__docId__": 32,
+    "__docId__": 51,
     "kind": "method",
     "name": "getInputShape",
     "memberof": "lib/model_interface.mjs~TensorScriptModelInterface",
@@ -908,7 +1300,7 @@
     }
   },
   {
-    "__docId__": 33,
+    "__docId__": 52,
     "kind": "method",
     "name": "train",
     "memberof": "lib/model_interface.mjs~TensorScriptModelInterface",
@@ -952,7 +1344,7 @@
     "abstract": true
   },
   {
-    "__docId__": 34,
+    "__docId__": 53,
     "kind": "method",
     "name": "calculate",
     "memberof": "lib/model_interface.mjs~TensorScriptModelInterface",
@@ -986,7 +1378,7 @@
     "abstract": true
   },
   {
-    "__docId__": 35,
+    "__docId__": 54,
     "kind": "method",
     "name": "loadModel",
     "memberof": "lib/model_interface.mjs~TensorScriptModelInterface",
@@ -1019,7 +1411,7 @@
     }
   },
   {
-    "__docId__": 37,
+    "__docId__": 56,
     "kind": "method",
     "name": "predict",
     "memberof": "lib/model_interface.mjs~TensorScriptModelInterface",
@@ -1076,7 +1468,7 @@
     }
   },
   {
-    "__docId__": 38,
+    "__docId__": 57,
     "kind": "function",
     "name": "size",
     "memberof": "lib/model_interface.mjs",
@@ -1116,7 +1508,7 @@
     }
   },
   {
-    "__docId__": 39,
+    "__docId__": 58,
     "kind": "function",
     "name": "_reshape",
     "memberof": "lib/model_interface.mjs",
@@ -1172,7 +1564,7 @@
     }
   },
   {
-    "__docId__": 40,
+    "__docId__": 59,
     "kind": "class",
     "name": "DimensionError",
     "memberof": "lib/model_interface.mjs",
@@ -1228,7 +1620,7 @@
     ]
   },
   {
-    "__docId__": 41,
+    "__docId__": 60,
     "kind": "constructor",
     "name": "constructor",
     "memberof": "lib/model_interface.mjs~DimensionError",
@@ -1242,7 +1634,7 @@
     "undocument": true
   },
   {
-    "__docId__": 42,
+    "__docId__": 61,
     "kind": "member",
     "name": "actual",
     "memberof": "lib/model_interface.mjs~DimensionError",
@@ -1254,7 +1646,7 @@
     "undocument": true
   },
   {
-    "__docId__": 43,
+    "__docId__": 62,
     "kind": "member",
     "name": "expected",
     "memberof": "lib/model_interface.mjs~DimensionError",
@@ -1266,7 +1658,7 @@
     "undocument": true
   },
   {
-    "__docId__": 44,
+    "__docId__": 63,
     "kind": "member",
     "name": "relation",
     "memberof": "lib/model_interface.mjs~DimensionError",
@@ -1278,7 +1670,7 @@
     "undocument": true
   },
   {
-    "__docId__": 45,
+    "__docId__": 64,
     "kind": "member",
     "name": "message",
     "memberof": "lib/model_interface.mjs~DimensionError",
@@ -1290,7 +1682,7 @@
     "undocument": true
   },
   {
-    "__docId__": 46,
+    "__docId__": 65,
     "kind": "member",
     "name": "name",
     "memberof": "lib/model_interface.mjs~DimensionError",
@@ -1302,7 +1694,7 @@
     "undocument": true
   },
   {
-    "__docId__": 47,
+    "__docId__": 66,
     "kind": "member",
     "name": "isDimensionError",
     "memberof": "lib/model_interface.mjs~DimensionError",
@@ -1314,7 +1706,7 @@
     "undocument": true
   },
   {
-    "__docId__": 48,
+    "__docId__": 67,
     "kind": "function",
     "name": "flatten",
     "memberof": "lib/model_interface.mjs",
@@ -1354,10 +1746,10 @@
     }
   },
   {
-    "__docId__": 49,
+    "__docId__": 68,
     "kind": "file",
     "name": "lib/multiple_linear_regression.mjs",
-    "content": "import { BaseNeuralNetwork, } from './deep_learning';\r\n\r\n/**\r\n * Mulitple Linear Regression with Tensorflow\r\n * @class MultipleLinearRegression\r\n * @implements {BaseNeuralNetwork}\r\n */\r\nexport class MultipleLinearRegression extends BaseNeuralNetwork {\r\n  /**\r\n   * @param {{layers:Array<Object>,compile:Object,fit:Object}} options - neural network configuration and tensorflow model hyperparameters\r\n   * @param {{model:Object,tf:Object,}} properties - extra instance properties\r\n   */\r\n  constructor(options = {}, properties = {}) {\r\n    const config = Object.assign({\r\n      layers: [],\r\n      compile: {\r\n        loss: 'meanSquaredError',\r\n        optimizer: 'sgd',\r\n      },\r\n      fit: {\r\n        epochs: 500,\r\n        batchSize: 5,\r\n      },\r\n    }, options);\r\n    super(config, properties);\r\n    return this;\r\n  }\r\n  /**\r\n   * Adds dense layers to tensorflow regression model\r\n   * @override \r\n   * @param {Array<Array<number>>} x_matrix - independent variables\r\n   * @param {Array<Array<number>>} y_matrix - dependent variables\r\n   * @param {Array<Object>} layers - model dense layer parameters\r\n   */\r\n  generateLayers(x_matrix, y_matrix, layers) {\r\n    const xShape = this.getInputShape(x_matrix);\r\n    const yShape = this.getInputShape(y_matrix);\r\n    const denseLayers = [];\r\n    if (layers) {\r\n      denseLayers.push(...layers);\r\n    } else {\r\n      denseLayers.push({ units: yShape[1], inputShape: [xShape[1],], });\r\n    }\r\n    this.layers = denseLayers;\r\n    denseLayers.forEach(layer => {\r\n      this.model.add(this.tf.layers.dense(layer));\r\n    });\r\n  }\r\n}",
+    "content": "import { BaseNeuralNetwork, } from './deep_learning';\r\n\r\n/**\r\n * Mulitple Linear Regression with Tensorflow\r\n * @class MultipleLinearRegression\r\n * @implements {BaseNeuralNetwork}\r\n */\r\nexport class MultipleLinearRegression extends BaseNeuralNetwork {\r\n  /**\r\n   * @param {{layers:Array<Object>,compile:Object,fit:Object}} options - neural network configuration and tensorflow model hyperparameters\r\n   * @param {{model:Object,tf:Object,}} properties - extra instance properties\r\n   */\r\n  /* istanbul ignore next */\r\n  constructor(options = {}, properties = {}) {\r\n    const config = Object.assign({\r\n      layers: [],\r\n      compile: {\r\n        loss: 'meanSquaredError',\r\n        optimizer: 'sgd',\r\n      },\r\n      fit: {\r\n        epochs: 500,\r\n        batchSize: 5,\r\n      },\r\n    }, options);\r\n    super(config, properties);\r\n    return this;\r\n  }\r\n  /**\r\n   * Adds dense layers to tensorflow regression model\r\n   * @override \r\n   * @param {Array<Array<number>>} x_matrix - independent variables\r\n   * @param {Array<Array<number>>} y_matrix - dependent variables\r\n   * @param {Array<Object>} layers - model dense layer parameters\r\n   */\r\n  generateLayers(x_matrix, y_matrix, layers) {\r\n    const xShape = this.getInputShape(x_matrix);\r\n    const yShape = this.getInputShape(y_matrix);\r\n    const denseLayers = [];\r\n    if (layers) {\r\n      denseLayers.push(...layers);\r\n    } else {\r\n      denseLayers.push({ units: yShape[1], inputShape: [xShape[1],], });\r\n    }\r\n    this.layers = denseLayers;\r\n    denseLayers.forEach(layer => {\r\n      this.model.add(this.tf.layers.dense(layer));\r\n    });\r\n  }\r\n}",
     "static": true,
     "longname": "/Users/yawjosephetse/Developer/github/repetere/ts-deeplearning/lib/multiple_linear_regression.mjs",
     "access": "public",
@@ -1365,7 +1757,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 50,
+    "__docId__": 69,
     "kind": "class",
     "name": "MultipleLinearRegression",
     "memberof": "lib/multiple_linear_regression.mjs",
@@ -1392,7 +1784,7 @@
     ]
   },
   {
-    "__docId__": 51,
+    "__docId__": 70,
     "kind": "constructor",
     "name": "constructor",
     "memberof": "lib/multiple_linear_regression.mjs~MultipleLinearRegression",
@@ -1402,7 +1794,7 @@
     "longname": "lib/multiple_linear_regression.mjs~MultipleLinearRegression#constructor",
     "access": "public",
     "description": "",
-    "lineNumber": 13,
+    "lineNumber": 14,
     "params": [
       {
         "nullable": null,
@@ -1427,7 +1819,7 @@
     ]
   },
   {
-    "__docId__": 52,
+    "__docId__": 71,
     "kind": "method",
     "name": "generateLayers",
     "memberof": "lib/multiple_linear_regression.mjs~MultipleLinearRegression",
@@ -1437,7 +1829,7 @@
     "longname": "lib/multiple_linear_regression.mjs~MultipleLinearRegression#generateLayers",
     "access": "public",
     "description": "Adds dense layers to tensorflow regression model",
-    "lineNumber": 35,
+    "lineNumber": 36,
     "params": [
       {
         "nullable": null,
@@ -1473,7 +1865,7 @@
     "override": true
   },
   {
-    "__docId__": 53,
+    "__docId__": 72,
     "kind": "member",
     "name": "layers",
     "memberof": "lib/multiple_linear_regression.mjs~MultipleLinearRegression",
@@ -1481,11 +1873,11 @@
     "longname": "lib/multiple_linear_regression.mjs~MultipleLinearRegression#layers",
     "access": "public",
     "description": null,
-    "lineNumber": 44,
+    "lineNumber": 45,
     "undocument": true
   },
   {
-    "__docId__": 54,
+    "__docId__": 73,
     "kind": "file",
     "name": "lib/regression.mjs",
     "content": "import { BaseNeuralNetwork, } from './deep_learning';\r\n\r\n/**\r\n * Deep Learning Regression with Tensorflow\r\n * @class DeepLearningRegression\r\n * @implements {BaseNeuralNetwork}\r\n */\r\nexport class DeepLearningRegression extends BaseNeuralNetwork {\r\n  /**\r\n   * @param {{layers:Array<Object>,compile:Object,fit:Object,layerPreference:String}} options - neural network configuration and tensorflow model hyperparameters\r\n   * @param {{model:Object,tf:Object,}} properties - extra instance properties\r\n   */\r\n  constructor(options = {}, properties) {\r\n    const config = Object.assign({\r\n      layers: [],\r\n      layerPreference:'deep',\r\n      compile: {\r\n        loss: 'meanSquaredError',\r\n        optimizer: 'adam',\r\n      },\r\n      fit: {\r\n        epochs: 100,\r\n        batchSize: 5,\r\n      },\r\n    }, options);\r\n    super(config, properties);\r\n    return this;\r\n  }\r\n  /**\r\n   * Adds dense layers to tensorflow regression model\r\n   * @override \r\n   * @param {Array<Array<number>>} x_matrix - independent variables\r\n   * @param {Array<Array<number>>} y_matrix - dependent variables\r\n   * @param {Array<Object>} layers - model dense layer parameters\r\n   */\r\n  generateLayers(x_matrix, y_matrix, layers) {\r\n    const xShape = this.getInputShape(x_matrix);\r\n    const yShape = this.getInputShape(y_matrix);\r\n    const denseLayers = [];\r\n    if (layers) {\r\n      denseLayers.push(...layers);\r\n    } else if(this.settings.layerPreference==='deep') {\r\n      denseLayers.push({ units: xShape[ 1 ], inputShape: [xShape[1],], kernelInitializer: 'randomNormal', activation: 'relu', });\r\n      denseLayers.push({ units: parseInt(Math.ceil(xShape[ 1 ] / 2), 10), kernelInitializer: 'randomNormal', activation: 'relu', });\r\n      denseLayers.push({ units: yShape[ 1 ], kernelInitializer: 'randomNormal', });\r\n    } else {\r\n      denseLayers.push({ units: (xShape[ 1 ] * 2), inputShape: [xShape[1],], kernelInitializer: 'randomNormal', activation: 'relu', });\r\n      denseLayers.push({ units: yShape[ 1 ], kernelInitializer: 'randomNormal', });\r\n    }\r\n    this.layers = denseLayers;\r\n    denseLayers.forEach(layer => {\r\n      this.model.add(this.tf.layers.dense(layer));\r\n    });\r\n  }\r\n}",
@@ -1496,7 +1888,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 55,
+    "__docId__": 74,
     "kind": "class",
     "name": "DeepLearningRegression",
     "memberof": "lib/regression.mjs",
@@ -1523,7 +1915,7 @@
     ]
   },
   {
-    "__docId__": 56,
+    "__docId__": 75,
     "kind": "constructor",
     "name": "constructor",
     "memberof": "lib/regression.mjs~DeepLearningRegression",
@@ -1558,7 +1950,7 @@
     ]
   },
   {
-    "__docId__": 57,
+    "__docId__": 76,
     "kind": "method",
     "name": "generateLayers",
     "memberof": "lib/regression.mjs~DeepLearningRegression",
@@ -1604,7 +1996,7 @@
     "override": true
   },
   {
-    "__docId__": 58,
+    "__docId__": 77,
     "kind": "member",
     "name": "layers",
     "memberof": "lib/regression.mjs~DeepLearningRegression",

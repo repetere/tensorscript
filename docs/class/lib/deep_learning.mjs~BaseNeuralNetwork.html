@@ -32,6 +32,7 @@
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/classification.mjs~DeepLearningClassification.html">DeepLearningClassification</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/deep_learning.mjs~BaseNeuralNetwork.html">BaseNeuralNetwork</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/logistic_regression.mjs~LogisticRegression.html">LogisticRegression</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/lstm_time_series.mjs~LSTMTimeSeries.html">LSTMTimeSeries</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/model_interface.mjs~TensorScriptModelInterface.html">TensorScriptModelInterface</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/multiple_linear_regression.mjs~MultipleLinearRegression.html">MultipleLinearRegression</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/regression.mjs~DeepLearningRegression.html">DeepLearningRegression</a></span></span></li>
@@ -61,7 +62,7 @@
   
   <div class="flat-list" data-ice="implements"><h4>Implements:</h4><ul><li><span><a href="class/lib/model_interface.mjs~TensorScriptModelInterface.html">TensorScriptModelInterface</a></span></li></ul></div>
   
-  <div class="flat-list" data-ice="directImplemented"><h4>Direct Implemented:</h4><ul><li><span><a href="class/lib/classification.mjs~DeepLearningClassification.html">DeepLearningClassification</a></span></li>, <li><span><a href="class/lib/regression.mjs~DeepLearningRegression.html">DeepLearningRegression</a></span></li>, <li><span><a href="class/lib/logistic_regression.mjs~LogisticRegression.html">LogisticRegression</a></span></li>, <li><span><a href="class/lib/multiple_linear_regression.mjs~MultipleLinearRegression.html">MultipleLinearRegression</a></span></li></ul></div>
+  <div class="flat-list" data-ice="directImplemented"><h4>Direct Implemented:</h4><ul><li><span><a href="class/lib/classification.mjs~DeepLearningClassification.html">DeepLearningClassification</a></span></li>, <li><span><a href="class/lib/regression.mjs~DeepLearningRegression.html">DeepLearningRegression</a></span></li>, <li><span><a href="class/lib/lstm_time_series.mjs~LSTMTimeSeries.html">LSTMTimeSeries</a></span></li>, <li><span><a href="class/lib/logistic_regression.mjs~LogisticRegression.html">LogisticRegression</a></span></li>, <li><span><a href="class/lib/multiple_linear_regression.mjs~MultipleLinearRegression.html">MultipleLinearRegression</a></span></li></ul></div>
   
 
   
@@ -225,7 +226,7 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/lib/deep_learning.mjs~BaseNeuralNetwork.html#instance-method-calculate">calculate</a></span></span><span class="code" data-ice="signature">(matrix: <span>Array</span>&lt;<span>Array</span>&lt;<span>number&gt;</span>&gt;|<span>Array&lt;number</span>&gt;): {data: <span>Promise</span>}</span>
+          <span class="code" data-ice="name"><span><a href="class/lib/deep_learning.mjs~BaseNeuralNetwork.html#instance-method-calculate">calculate</a></span></span><span class="code" data-ice="signature">(matrix: <span>Array</span>&lt;<span>Array</span>&lt;<span>number&gt;</span>&gt;|<span>Array&lt;number</span>&gt;, options: <span>Object</span>): {data: <span>Promise</span>}</span>
         </p>
       </div>
       <div>
@@ -518,11 +519,11 @@
     
     
     
-    <span class="code" data-ice="name">calculate</span><span class="code" data-ice="signature">(matrix: <span>Array</span>&lt;<span>Array</span>&lt;<span>number&gt;</span>&gt;|<span>Array&lt;number</span>&gt;): {data: <span>Promise</span>}</span>
+    <span class="code" data-ice="name">calculate</span><span class="code" data-ice="signature">(matrix: <span>Array</span>&lt;<span>Array</span>&lt;<span>number&gt;</span>&gt;|<span>Array&lt;number</span>&gt;, options: <span>Object</span>): {data: <span>Promise</span>}</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/lib/deep_learning.mjs.html#lineNumber69">source</a></span></span>
+      <span data-ice="source"><span><a href="file/lib/deep_learning.mjs.html#lineNumber70">source</a></span></span>
     </span>
   </h3>
 
@@ -547,6 +548,13 @@
       <td data-ice="type" class="code"><span>Array</span>&lt;<span>Array</span>&lt;<span>number&gt;</span>&gt;|<span>Array&lt;number</span>&gt;</td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>new test independent variables</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">options</td>
+      <td data-ice="type" class="code"><span>Object</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>model prediction options</p>
 </td>
     </tr>
 </tbody>

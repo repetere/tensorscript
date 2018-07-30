@@ -18,6 +18,12 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
+    "@tensorscript/ts-deeplearning/lib/lstm_time_series.mjs~lstmtimeseries",
+    "class/lib/lstm_time_series.mjs~LSTMTimeSeries.html",
+    "<span>LSTMTimeSeries</span> <span class=\"search-result-import-path\">@tensorscript/ts-deeplearning/lib/lstm_time_series.mjs</span>",
+    "class"
+  ],
+  [
     "@tensorscript/ts-deeplearning/lib/logistic_regression.mjs~logisticregression",
     "class/lib/logistic_regression.mjs~LogisticRegression.html",
     "<span>LogisticRegression</span> <span class=\"search-result-import-path\">@tensorscript/ts-deeplearning/lib/logistic_regression.mjs</span>",
@@ -154,6 +160,102 @@ window.esdocSearchIndex = [
     "class/lib/logistic_regression.mjs~LogisticRegression.html#instance-member-yShape",
     "lib/logistic_regression.mjs~LogisticRegression#yShape",
     "member"
+  ],
+  [
+    "lib/lstm_time_series.mjs",
+    "file/lib/lstm_time_series.mjs.html",
+    "lib/lstm_time_series.mjs",
+    "file"
+  ],
+  [
+    "lib/lstm_time_series.mjs~lstmtimeseries#calculate",
+    "class/lib/lstm_time_series.mjs~LSTMTimeSeries.html#instance-method-calculate",
+    "lib/lstm_time_series.mjs~LSTMTimeSeries#calculate",
+    "method"
+  ],
+  [
+    "lib/lstm_time_series.mjs~lstmtimeseries#constructor",
+    "class/lib/lstm_time_series.mjs~LSTMTimeSeries.html#instance-constructor-constructor",
+    "lib/lstm_time_series.mjs~LSTMTimeSeries#constructor",
+    "method"
+  ],
+  [
+    "lib/lstm_time_series.mjs~lstmtimeseries#createdataset",
+    "class/lib/lstm_time_series.mjs~LSTMTimeSeries.html#instance-member-createDataset",
+    "lib/lstm_time_series.mjs~LSTMTimeSeries#createDataset",
+    "member"
+  ],
+  [
+    "lib/lstm_time_series.mjs~lstmtimeseries#generatelayers",
+    "class/lib/lstm_time_series.mjs~LSTMTimeSeries.html#instance-method-generateLayers",
+    "lib/lstm_time_series.mjs~LSTMTimeSeries#generateLayers",
+    "method"
+  ],
+  [
+    "lib/lstm_time_series.mjs~lstmtimeseries#gettimeseriesdataset",
+    "class/lib/lstm_time_series.mjs~LSTMTimeSeries.html#instance-member-getTimeseriesDataSet",
+    "lib/lstm_time_series.mjs~LSTMTimeSeries#getTimeseriesDataSet",
+    "member"
+  ],
+  [
+    "lib/lstm_time_series.mjs~lstmtimeseries#gettimeseriesshape",
+    "class/lib/lstm_time_series.mjs~LSTMTimeSeries.html#instance-member-getTimeseriesShape",
+    "lib/lstm_time_series.mjs~LSTMTimeSeries#getTimeseriesShape",
+    "member"
+  ],
+  [
+    "lib/lstm_time_series.mjs~lstmtimeseries#layers",
+    "class/lib/lstm_time_series.mjs~LSTMTimeSeries.html#instance-member-layers",
+    "lib/lstm_time_series.mjs~LSTMTimeSeries#layers",
+    "member"
+  ],
+  [
+    "lib/lstm_time_series.mjs~lstmtimeseries#model",
+    "class/lib/lstm_time_series.mjs~LSTMTimeSeries.html#instance-member-model",
+    "lib/lstm_time_series.mjs~LSTMTimeSeries#model",
+    "member"
+  ],
+  [
+    "lib/lstm_time_series.mjs~lstmtimeseries#predict",
+    "class/lib/lstm_time_series.mjs~LSTMTimeSeries.html#instance-method-predict",
+    "lib/lstm_time_series.mjs~LSTMTimeSeries#predict",
+    "method"
+  ],
+  [
+    "lib/lstm_time_series.mjs~lstmtimeseries#train",
+    "class/lib/lstm_time_series.mjs~LSTMTimeSeries.html#instance-method-train",
+    "lib/lstm_time_series.mjs~LSTMTimeSeries#train",
+    "method"
+  ],
+  [
+    "lib/lstm_time_series.mjs~lstmtimeseries#xshape",
+    "class/lib/lstm_time_series.mjs~LSTMTimeSeries.html#instance-member-xShape",
+    "lib/lstm_time_series.mjs~LSTMTimeSeries#xShape",
+    "member"
+  ],
+  [
+    "lib/lstm_time_series.mjs~lstmtimeseries#yshape",
+    "class/lib/lstm_time_series.mjs~LSTMTimeSeries.html#instance-member-yShape",
+    "lib/lstm_time_series.mjs~LSTMTimeSeries#yShape",
+    "member"
+  ],
+  [
+    "lib/lstm_time_series.mjs~lstmtimeseries.createdataset",
+    "class/lib/lstm_time_series.mjs~LSTMTimeSeries.html#static-method-createDataset",
+    "lib/lstm_time_series.mjs~LSTMTimeSeries.createDataset",
+    "method"
+  ],
+  [
+    "lib/lstm_time_series.mjs~lstmtimeseries.gettimeseriesdataset",
+    "class/lib/lstm_time_series.mjs~LSTMTimeSeries.html#static-method-getTimeseriesDataSet",
+    "lib/lstm_time_series.mjs~LSTMTimeSeries.getTimeseriesDataSet",
+    "method"
+  ],
+  [
+    "lib/lstm_time_series.mjs~lstmtimeseries.gettimeseriesshape",
+    "class/lib/lstm_time_series.mjs~LSTMTimeSeries.html#static-method-getTimeseriesShape",
+    "lib/lstm_time_series.mjs~LSTMTimeSeries.getTimeseriesShape",
+    "method"
   ],
   [
     "lib/model_interface.mjs",

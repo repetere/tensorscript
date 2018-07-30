@@ -56,13 +56,14 @@ Asynchronously trains tensorflow model
 | x_text | Array<Array<number>> |  | validation data independent variables |
 | y_text | Array<Array<number>> |  | validation data dependent variables |
 
-### `calculate(matrix: Array<Array<number>>|Array<number>): {data: Promise}`
+### `calculate(matrix: Array<Array<number>>|Array<number>, options: Object): {data: Promise}`
 
 Predicts new dependent variables
 
 | Name | Type | Attribute | Description |
 | --- | --- | --- | --- |
 | matrix | Array<Array<number>>|Array<number> |  | new test independent variables |
+| options | Object |  | model prediction options |
 
 ## `LogisticRegression`
 
@@ -87,6 +88,79 @@ Adds dense layers to tensorflow classification model
 | layers | Array<Object> |  | model dense layer parameters |
 | x_test | Array<Array<number>> |  | validation data independent variables |
 | y_test | Array<Array<number>> |  | validation data dependent variables |
+
+## `LSTMTimeSeries`
+
+Long Short Term Memory Time Series with Tensorflow
+
+### `constructor(options: {layers:Array<Object>,compile:Object,fit:Object}, properties: {model:Object,tf:Object,})`
+
+### `createDataset: *`
+
+### `getTimeseriesDataSet: *`
+
+### `getTimeseriesShape: *`
+
+### `yShape: *`
+
+### `xShape: *`
+
+### `layers: *`
+
+### `model: *`
+
+### `createDataset(dataset: Array<Array<number>, look_back: Number): [Array<Array<number>>,Array<number>]`
+
+Creates dataset data
+
+| Name | Type | Attribute | Description |
+| --- | --- | --- | --- |
+| dataset | Array<Array<number> |  | array of values |
+| look_back | Number |  | number of values in each feature |
+
+### `getTimeseriesShape(x_timeseries: Array<Array<number>): Array<Array<number>>`
+
+Reshape input to be [samples, time steps, features]
+
+| Name | Type | Attribute | Description |
+| --- | --- | --- | --- |
+| x_timeseries | Array<Array<number> |  | dataset array of values |
+
+### `getTimeseriesDataSet(timeseries: *, look_back: *)`
+
+Returns data for predicting values
+
+| Name | Type | Attribute | Description |
+| --- | --- | --- | --- |
+| timeseries | * |  |
+| look_back | * |  |
+
+### `generateLayers(x_matrix: Array<Array<number>>, y_matrix: Array<Array<number>>, layers: Array<Object>, x_test: Array<Array<number>>, y_test: Array<Array<number>>)`
+
+Adds dense layers to tensorflow classification model
+
+| Name | Type | Attribute | Description |
+| --- | --- | --- | --- |
+| x_matrix | Array<Array<number>> |  | independent variables |
+| y_matrix | Array<Array<number>> |  | dependent variables |
+| layers | Array<Object> |  | model dense layer parameters |
+| x_test | Array<Array<number>> |  | validation data independent variables |
+| y_test | Array<Array<number>> |  | validation data dependent variables |
+
+### `train()`
+
+| Name | Type | Attribute | Description |
+| --- | --- | --- | --- |
+
+### `calculate()`
+
+| Name | Type | Attribute | Description |
+| --- | --- | --- | --- |
+
+### `predict()`
+
+| Name | Type | Attribute | Description |
+| --- | --- | --- | --- |
 
 ## `TensorScriptModelInterface`
 

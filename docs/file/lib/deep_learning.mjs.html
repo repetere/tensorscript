@@ -32,6 +32,7 @@
   <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/classification.mjs~DeepLearningClassification.html">DeepLearningClassification</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/deep_learning.mjs~BaseNeuralNetwork.html">BaseNeuralNetwork</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/logistic_regression.mjs~LogisticRegression.html">LogisticRegression</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/lstm_time_series.mjs~LSTMTimeSeries.html">LSTMTimeSeries</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/model_interface.mjs~TensorScriptModelInterface.html">TensorScriptModelInterface</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/multiple_linear_regression.mjs~MultipleLinearRegression.html">MultipleLinearRegression</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/regression.mjs~DeepLearningRegression.html">DeepLearningRegression</a></span></span></li>
@@ -106,9 +107,10 @@ export class BaseNeuralNetwork extends TensorScriptModelInterface {
    * Predicts new dependent variables
    * @override
    * @param {Array&lt;Array&lt;number&gt;&gt;|Array&lt;number&gt;} matrix - new test independent variables
+   * @param {Object} options - model prediction options
    * @return {{data: Promise}} returns tensorflow prediction 
    */
-  calculate(input_matrix) {
+  calculate(input_matrix, options) {
     if (!input_matrix || Array.isArray(input_matrix)===false) throw new Error(&apos;invalid input matrix&apos;);
     const predictionInput = (Array.isArray(input_matrix[ 0 ]))
       ? input_matrix
@@ -116,7 +118,7 @@ export class BaseNeuralNetwork extends TensorScriptModelInterface {
         input_matrix,
       ];
     const predictionTensor = this.tf.tensor(predictionInput);
-    const prediction = this.model.predict(predictionTensor);
+    const prediction = this.model.predict(predictionTensor, options);
     predictionTensor.dispose();
     return prediction;
   }
