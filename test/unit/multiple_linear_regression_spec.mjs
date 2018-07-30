@@ -30,7 +30,7 @@ function scaleColumnMap(columnName) {
   };
 }
 describe('MultipleLinearRegression', function () {
-  this.timeout(10000);
+  this.timeout(20000);
   before(async function () {
     housingDataCSV = await ms.csv.loadCSV('./test/mock/data/portland_housing_data.csv');
     /*
@@ -59,7 +59,12 @@ describe('MultipleLinearRegression', function () {
       ] 
       y_vector = [ 399900, 329900]
     */
-    trainedMLR = new MultipleLinearRegression();
+    trainedMLR = new MultipleLinearRegression({
+      fit: {
+        epochs: 100,
+        batchSize: 5,
+      },
+    });
     trainedMLRModel = await trainedMLR.train(x_matrix, y_matrix);
     input_x = [
       [
