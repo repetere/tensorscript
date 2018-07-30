@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">lib/lstm_time_series.mjs | @tensorscript/ts-deeplearning</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="Deep Learning Classification, Clustering and Regression with Tensorflow"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="@tensorscript/ts-deeplearning"><meta property="twitter:description" content="Deep Learning Classification, Clustering and Regression with Tensorflow"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/repetere/ts-deeplearning"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/classification.mjs~DeepLearningClassification.html">DeepLearningClassification</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/deep_learning.mjs~BaseNeuralNetwork.html">BaseNeuralNetwork</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/logistic_regression.mjs~LogisticRegression.html">LogisticRegression</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/lstm_time_series.mjs~LSTMTimeSeries.html">LSTMTimeSeries</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/model_interface.mjs~TensorScriptModelInterface.html">TensorScriptModelInterface</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/multiple_linear_regression.mjs~MultipleLinearRegression.html">MultipleLinearRegression</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/regression.mjs~DeepLearningRegression.html">DeepLearningRegression</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">lib/lstm_time_series.mjs</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import { BaseNeuralNetwork, } from &apos;./deep_learning&apos;;
+import range from &apos;lodash.range&apos;;
+
+/**
+ * Long Short Term Memory Time Series with Tensorflow
+ * @class LSTMTimeSeries
+ * @implements {BaseNeuralNetwork}
+ */
+export class LSTMTimeSeries extends BaseNeuralNetwork {
+  /**
+   * Creates dataset data
+   * @example
+   * LSTMTimeSeries.createDataset([ [ 1, ], [ 2, ], [ 3, ], [ 4, ], [ 5, ], [ 6, ], [ 7, ], [ 8, ], [ 9, ], [ 10, ], ], 3) // =&gt; 
+      //  [ 
+      //    [ 
+      //      [ [ 1 ], [ 2 ], [ 3 ] ],
+      //      [ [ 2 ], [ 3 ], [ 4 ] ],
+      //      [ [ 3 ], [ 4 ], [ 5 ] ],
+      //      [ [ 4 ], [ 5 ], [ 6 ] ],
+      //      [ [ 5 ], [ 6 ], [ 7 ] ],
+      //      [ [ 6 ], [ 7 ], [ 8 ] ], 
+      //   ], //x_matrix
+      //   [ [ 4 ], [ 5 ], [ 6 ], [ 7 ], [ 8 ], [ 9 ] ] //y_matrix
+      // ]
+   * @param {Array&lt;Array&lt;number&gt;} dataset - array of values
+   * @param {Number} look_back - number of values in each feature 
+   * @return {[Array&lt;Array&lt;number&gt;&gt;,Array&lt;number&gt;]} returns x matrix and y matrix for model trainning
+   */
+  /* istanbul ignore next */
+  static createDataset(dataset=[], look_back = 1) { 
+    const dataX = [];
+    const dataY = [];
+    for (let index in range(dataset.length - look_back - 1)) {
+      let i = parseInt(index);
+      let a = dataset.slice(i, i + look_back);
+      dataX.push(a);
+      dataY.push(dataset[ i + look_back ]);
+    }
+    return [dataX, dataY, ];
+  }
+  /**
+   * Reshape input to be [samples, time steps, features]
+   * @example
+   * LSTMTimeSeries.getTimeseriesShape([ 
+      [ [ 1 ], [ 2 ], [ 3 ] ],
+      [ [ 2 ], [ 3 ], [ 4 ] ],
+      [ [ 3 ], [ 4 ], [ 5 ] ],
+      [ [ 4 ], [ 5 ], [ 6 ] ],
+      [ [ 5 ], [ 6 ], [ 7 ] ],
+      [ [ 6 ], [ 7 ], [ 8 ] ], 
+    ]) //=&gt; [6, 1, 3,]
+   * @param {Array&lt;Array&lt;number&gt;} x_timeseries - dataset array of values
+   * @return {Array&lt;Array&lt;number&gt;&gt;} returns proper timeseries forecasting shape
+   */
+  static getTimeseriesShape(x_timeseries) {
+    const time_steps = this.settings.timeSteps;
+    const xShape = this.getInputShape(x_timeseries);
+    const _samples = xShape[ 0 ];
+    const _timeSteps = time_steps;
+    const _features = xShape[ 1 ];
+    const newShape = (this.settings.mulitpleTimeSteps || this.settings.stateful)
+      ? [_samples,  _features, _timeSteps, ]
+      : [ _samples, _timeSteps, _features, ];
+    // console.log({newShape})
+    return newShape;
+  }
+  /**
+   * Returns data for predicting values
+   * @param timeseries 
+   * @param look_back 
+   */
+  static getTimeseriesDataSet(timeseries, look_back) {
+    const lookBack = look_back || this.settings.lookBack;
+    const matrices = LSTMTimeSeries.createDataset.call(this, timeseries, lookBack);
+    const x_matrix = matrices[ 0 ];
+    const y_matrix = matrices[ 1 ];
+    // const timeseriesShape = LSTMTimeSeries.getTimeseriesShape.call(this,x_matrix);
+    const x_matrix_timeseries = BaseNeuralNetwork.reshape(x_matrix, [x_matrix.length, lookBack, ]);
+    const xShape = BaseNeuralNetwork.getInputShape(x_matrix_timeseries);
+    const yShape = BaseNeuralNetwork.getInputShape(y_matrix);
+    return {
+      yShape,
+      xShape,
+      y_matrix,
+      x_matrix:x_matrix_timeseries,
+    };
+  }
+  /**
+   * @param {{layers:Array&lt;Object&gt;,compile:Object,fit:Object}} options - neural network configuration and tensorflow model hyperparameters
+   * @param {{model:Object,tf:Object,}} properties - extra instance properties
+   */
+  constructor(options = {}, properties) {
+    const config = Object.assign({
+      layers: [],
+      type: &apos;simple&apos;,
+      stateful:false,
+      stacked: false,
+      mulitpleTimeSteps:false,
+      lookBack:1,
+      batchSize:1,
+      timeSteps:1,
+      learningRate:0.1,
+      compile: {
+        loss: &apos;meanSquaredError&apos;,
+        optimizer: &apos;adam&apos;,
+      },
+      fit: {
+        epochs: 100,
+        batchSize: 1,
+      },
+    }, options);
+    super(config, properties);
+    this.createDataset = LSTMTimeSeries.createDataset;
+    this.getTimeseriesDataSet = LSTMTimeSeries.getTimeseriesDataSet;
+    this.getTimeseriesShape = LSTMTimeSeries.getTimeseriesShape;
+    return this;
+  }
+  /**
+   * Adds dense layers to tensorflow classification model
+   * @override 
+   * @param {Array&lt;Array&lt;number&gt;&gt;} x_matrix - independent variables
+   * @param {Array&lt;Array&lt;number&gt;&gt;} y_matrix - dependent variables
+   * @param {Array&lt;Object&gt;} layers - model dense layer parameters
+   * @param {Array&lt;Array&lt;number&gt;&gt;} x_test - validation data independent variables
+   * @param {Array&lt;Array&lt;number&gt;&gt;} y_test - validation data dependent variables
+   */
+  generateLayers(x_matrix, y_matrix, layers) {
+    const xShape = this.getInputShape(x_matrix);
+    const yShape = this.getInputShape(y_matrix);
+    this.yShape = yShape;
+    this.xShape = xShape;
+    // const sgdoptimizer = this.tf.train.sgd(this.settings.learningRate);
+    const lstmLayers = [];
+    const rnnLayers = [];
+    const denseLayers = [];
+    /* istanbul ignore next */
+    if (layers) {
+      if(layers.lstmLayers &amp;&amp; layers.lstmLayers.length) lstmLayers.push(...layers.lstmLayers);
+      if(layers.rnnLayers &amp;&amp; layers.rnnLayers.length) rnnLayers.push(...layers.rnnLayers);
+      if(layers.denseLayers &amp;&amp; layers.denseLayers.length) denseLayers.push(...layers.denseLayers);
+    } else if (this.settings.stateful) {
+      const batchInputShape = [this.settings.fit.batchSize, this.settings.lookBack, 1, ];
+      rnnLayers.push({ units: 4, batchInputShape:batchInputShape,  returnSequences:true, });
+      rnnLayers.push({ units: 4, batchInputShape:batchInputShape,  });
+      denseLayers.push({ units: yShape[1], });
+    // } else if(this.settings.stacked) {
+    //   lstmLayers.push({ units: 4, inputShape: [ 1, this.settings.lookBack ], });
+    //   // model.add(LSTM(4, batch_input_shape=(batch_size, look_back, 1), stateful=True, return_sequences=True))
+    //   // model.add(LSTM(4, batch_input_shape=(batch_size, look_back, 1), stateful=True))
+    //   denseLayers.push({ units: yShape[1], });
+    } else {
+      const inputShape= [1, this.settings.lookBack, ];
+      // console.log(&apos;default timeseries&apos;, { inputShape, xShape, yShape ,  });
+      lstmLayers.push({ units:4, inputShape,  });
+      denseLayers.push({ units: yShape[1], });
+    }
+    // console.log(&apos;lstmLayers&apos;,lstmLayers)
+    // console.log(&apos;denseLayers&apos;,denseLayers)
+    if (lstmLayers.length) {
+      lstmLayers.forEach(layer =&gt; {
+        this.model.add(this.tf.layers.lstm(layer));
+      });
+    }
+    if (rnnLayers.length) {
+      /* istanbul ignore next */
+      rnnLayers.forEach(layer =&gt; {
+        this.model.add(this.tf.layers.simpleRNN(layer));
+      });
+    }
+    if (denseLayers.length) {
+      denseLayers.forEach(layer =&gt; {
+        this.model.add(this.tf.layers.dense(layer));
+      });
+    }
+    this.layers = {
+      lstmLayers,
+      rnnLayers,
+      denseLayers,
+    };
+    // this.settings.compile.optimizer = sgdoptimizer;
+  }
+  async train(x_timeseries, y_timeseries, layers, x_test, y_test) {
+    let yShape;
+    let x_matrix;
+    let y_matrix;
+    const look_back = this.settings.lookBack;
+    if (y_timeseries) {
+      x_matrix = x_timeseries;
+      y_matrix = y_timeseries;
+    } else {
+      const matrices = this.createDataset(x_timeseries, look_back);
+      x_matrix = matrices[ 0 ];
+      y_matrix = matrices[ 1 ];
+      yShape = this.getInputShape(y_matrix);
+    }
+    //_samples, _timeSteps, _features
+    const timeseriesShape = this.getTimeseriesShape(x_matrix);
+    const x_matrix_timeseries = BaseNeuralNetwork.reshape(x_matrix, timeseriesShape);
+    const xs = this.tf.tensor(x_matrix_timeseries, timeseriesShape);
+    const ys = this.tf.tensor(y_matrix, yShape);
+    this.xShape = timeseriesShape;
+    this.yShape = yShape;
+    this.model = this.tf.sequential();
+    this.generateLayers.call(this, x_matrix_timeseries, y_matrix, layers || this.layers, x_test, y_test);
+    this.model.compile(this.settings.compile);
+    if (this.settings.stateful) {
+      this.settings.fit.shuffle = false;
+    }
+    await this.model.fit(xs, ys, this.settings.fit);
+    // this.model.summary();
+    xs.dispose();
+    ys.dispose();
+    return this.model;
+  }
+  calculate(x_matrix) {
+    const timeseriesShape = this.getTimeseriesShape(x_matrix);
+    const input_matrix = BaseNeuralNetwork.reshape(x_matrix, timeseriesShape);
+    return super.calculate(input_matrix);
+  }
+  async predict(input_matrix, options) {
+    if (this.settings.stateful &amp;&amp; input_matrix.length &gt; 1) {
+      return Promise.all(input_matrix.map(input=&gt;super.predict([input, ], options))) ;
+    } else {
+      return super.predict(input_matrix, options);
+    }
+  }
+}</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
