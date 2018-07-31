@@ -9,8 +9,25 @@
     {
       "name": "esdoc-standard-plugin",
       "option":{
-        "typeInference": {"enable": false},
-        "lint": {"enable": false}
+        "typeInference": {
+          "enable": false
+        },
+        "lint": {
+          "enable": false
+        },
+        "manual": {
+          "index": "./manual/index.md",
+          "asset": "./manual/asset",
+          "files": [
+            "./manual/overview.md",
+            "./manual/installation.md",
+            "./manual/usage.md",
+            "./manual/tutorial.md",
+            "./manual/configuration.md",
+            "./manual/example.md",
+            "./CHANGELOG.md"
+          ]
+        }
       }
     },
     {

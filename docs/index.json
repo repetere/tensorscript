@@ -2014,5 +2014,76 @@
     "name": "./README.md",
     "static": true,
     "access": "public"
+  },
+  {
+    "kind": "manualIndex",
+    "content": "home",
+    "longname": "/Users/yawjosephetse/Developer/github/repetere/ts-deeplearning/manual/index.md",
+    "name": "./manual/index.md",
+    "static": true,
+    "access": "public"
+  },
+  {
+    "kind": "manualAsset",
+    "longname": "/Users/yawjosephetse/Developer/github/repetere/ts-deeplearning/manual/asset",
+    "name": "./manual/asset",
+    "static": true,
+    "access": "public"
+  },
+  {
+    "kind": "manual",
+    "longname": "/Users/yawjosephetse/Developer/github/repetere/ts-deeplearning/manual/overview.md",
+    "name": "./manual/overview.md",
+    "content": "overview",
+    "static": true,
+    "access": "public"
+  },
+  {
+    "kind": "manual",
+    "longname": "/Users/yawjosephetse/Developer/github/repetere/ts-deeplearning/manual/installation.md",
+    "name": "./manual/installation.md",
+    "content": "usage stuff",
+    "static": true,
+    "access": "public"
+  },
+  {
+    "kind": "manual",
+    "longname": "/Users/yawjosephetse/Developer/github/repetere/ts-deeplearning/manual/usage.md",
+    "name": "./manual/usage.md",
+    "content": "usage stuff",
+    "static": true,
+    "access": "public"
+  },
+  {
+    "kind": "manual",
+    "longname": "/Users/yawjosephetse/Developer/github/repetere/ts-deeplearning/manual/tutorial.md",
+    "name": "./manual/tutorial.md",
+    "content": "tuts",
+    "static": true,
+    "access": "public"
+  },
+  {
+    "kind": "manual",
+    "longname": "/Users/yawjosephetse/Developer/github/repetere/ts-deeplearning/manual/configuration.md",
+    "name": "./manual/configuration.md",
+    "content": "configs",
+    "static": true,
+    "access": "public"
+  },
+  {
+    "kind": "manual",
+    "longname": "/Users/yawjosephetse/Developer/github/repetere/ts-deeplearning/manual/example.md",
+    "name": "./manual/example.md",
+    "content": "exs",
+    "static": true,
+    "access": "public"
+  },
+  {
+    "kind": "manual",
+    "longname": "/Users/yawjosephetse/Developer/github/repetere/ts-deeplearning/CHANGELOG.md",
+    "name": "./CHANGELOG.md",
+    "content": "changes exs",
+    "static": true,
+    "access": "public"
   }
 ]
