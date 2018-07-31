@@ -1,6 +1,6 @@
 {
   "name": "tensorscript",
-  "version": "1.0.0",
+  "version": "0.9.0",
   "description": "Deep Learning Classification, LSTM Time Series, Regression and Multi-Layered Perceptrons with Tensorflow",
   "main": "index.mjs",
   "scripts": {
