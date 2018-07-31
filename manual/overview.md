@@ -10,7 +10,7 @@ All of the model configuration is managed during creating an instance of the cla
 
 You can also pass the Tensorflow reference to be used, as a configuration property if you want to use the compiled C++ or GPU via CUDA versions on the `tf` property;
 
-* `this.settings.compile` is passed to `tensorflow.model.compile` and contains the configuration for optimiziers ([`read more`](https://js.tensorflow.org/api/latest/#tf.Model.compile)).
+* `this.settings.compile` is passed to `tensorflow.model.compile` and contains the configuration for optimizers ([`read more`](https://js.tensorflow.org/api/latest/#tf.Model.compile)).
 * `this.settings.fit` is passed to `tensorflow.model.fit` and contains the configuration for model fitting ([`read more`](https://js.tensorflow.org/api/latest/#tf.Sequential.fit))
 
 ### Model constructor example
@@ -35,13 +35,13 @@ const MLR = new MultipleLinearRegression({
 
 Each constructor takes two parameters `settings` and `properties`. As in the example above, *settings* are used to configure tensorflow objects and properties are used to configure tensorscript (like which version of tensorflow to use).
 
-## Trainning
+## Training
 
 All tensorflow models train asynchronously, therefore all tensorscript model train functions are all asynchronous. Always pass dependent and independent variables as matrix inputs.
 
-Timeseries models can be trained with only one input matrix.
+Time series models can be trained with only one input matrix.
 
-### Trainning example
+### Training example
 
 ```javascript
 
@@ -57,7 +57,7 @@ async function main(){
 
 ## Predicting
 
-All prediction inputs must be the same shape as trainning inputs. TensorScript provides an asynchronous predict method that converts tensor values to javascript objects. If you want the tensor from tensorflow, use the calculate method instead.
+All prediction inputs must be the same shape as training inputs. TensorScript provides an asynchronous predict method that converts tensor values to javascript objects. If you want the tensor from tensorflow, use the calculate method instead.
 
 ### Predicting example
 
