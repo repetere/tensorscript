@@ -15,6 +15,14 @@
         "lint": {
           "enable": false
         },
+        "brand": {
+          "title": "TensorScript",
+          "description": "Deep Learning Classification, Clustering, Time Series, Regression and Multi-Layered Perceptrons with Tensorflow",
+          "repository": "https://github.com/repetere/tensorscript",
+          "site": "https://repetere.github.io/tensorscript",
+          "author": "https://github.com/repetere",
+          "image": "https://repetere.ai/favicon.png"
+        },
         "manual": {
           "index": "./manual/index.md",
           "asset": "./manual/asset",
@@ -27,6 +35,12 @@
             "./manual/example.md",
             "./CHANGELOG.md"
           ]
+        },
+        "test": {
+          "source": "./test/",
+          "interfaces": ["describe", "it", "context", "suite", "test"],
+          "includes": ["(spec|Spec|test|Test)\\.mjs$"],
+          "excludes": ["\\.config\\.js$"]
         }
       }
     },

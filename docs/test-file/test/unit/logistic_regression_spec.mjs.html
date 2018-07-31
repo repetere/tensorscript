@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">test/unit/logistic_regression_spec.mjs | TensorScript</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="Deep Learning Classification, Clustering, Time Series, Regression and Multi-Layered Perceptrons with Tensorflow"><meta property="og:type" content="website"><meta property="og:url" content="https://repetere.github.io/tensorscript"><meta property="og:site_name" content="TensorScript"><meta property="og:title" content="TensorScript"><meta property="og:image" content="https://repetere.ai/favicon.png"><meta property="og:description" content="Deep Learning Classification, Clustering, Time Series, Regression and Multi-Layered Perceptrons with Tensorflow"><meta property="og:author" content="https://github.com/repetere"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="TensorScript"><meta property="twitter:description" content="Deep Learning Classification, Clustering, Time Series, Regression and Multi-Layered Perceptrons with Tensorflow"><meta property="twitter:image" content="https://repetere.ai/favicon.png"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  <a href="./manual/index.html" data-ice="manualHeaderLink">Manual</a>
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  <a href="test.html" data-ice="testLink">Test</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/repetere/tensorscript"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/classification.mjs~DeepLearningClassification.html">DeepLearningClassification</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/deep_learning.mjs~BaseNeuralNetwork.html">BaseNeuralNetwork</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/logistic_regression.mjs~LogisticRegression.html">LogisticRegression</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/lstm_time_series.mjs~LSTMTimeSeries.html">LSTMTimeSeries</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/model_interface.mjs~TensorScriptModelInterface.html">TensorScriptModelInterface</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/multiple_linear_regression.mjs~MultipleLinearRegression.html">MultipleLinearRegression</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/regression.mjs~DeepLearningRegression.html">DeepLearningRegression</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">test/unit/logistic_regression_spec.mjs</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import chai from &apos;chai&apos;;
+// import sinon from &apos;sinon&apos;;
+import ms from &apos;modelscript&apos;;
+import sinonChai from &apos;sinon-chai&apos;;
+import chaiAsPromised from &apos;chai-as-promised&apos;;
+import &apos;babel-polyfill&apos;;
+import { LogisticRegression, } from &apos;../../index.mjs&apos;;
+
+const expect = chai.expect;
+const independentVariables = [
+  &apos;Age&apos;,
+  &apos;EstimatedSalary&apos;,
+];
+const dependentVariables = [
+  &apos;Purchased&apos;,
+];
+let CSVData;
+let DataSet;
+let x_matrix;
+let y_matrix;
+let nnLR;
+let nnLRClass;
+let nnLRReg;
+let nnLRModel;
+let nnLRClassModel;
+let nnLRRegModel;
+const encodedAnswers = {
+  &apos;yes&apos;: [1,],
+  &apos;no&apos;: [0,],
+};
+const fit = {
+  epochs: 10,
+  batchSize: 5,
+};
+const input_x = [
+  [-0.062482849427819266, 0.30083326827486173, ], //0
+  [0.7960601198093905, -1.1069168538010206, ], //1
+  [0.7960601198093905, 0.12486450301537644, ], //0
+  [0.4144854668150751, -0.49102617539282206, ], //0
+  [0.3190918035664962, 0.5061301610775946, ], //1
+];
+chai.use(sinonChai);
+chai.use(chaiAsPromised);
+function scaleColumnMap(columnName) {
+  return {
+    name: columnName,
+    options: {
+      strategy: &apos;scale&apos;,
+      scaleOptions: {
+        strategy:&apos;standard&apos;,
+      },
+    },
+  };
+}
+describe(&apos;LogisticRegression&apos;, function () {
+  this.timeout(120000);
+  before(async function () {
+    CSVData = await ms.csv.loadCSV(&apos;./test/mock/data/social_network_ads.csv&apos;);
+    DataSet = new ms.DataSet(CSVData);
+    const scaledData = DataSet.fitColumns({
+      columns: independentVariables.map(scaleColumnMap),
+      returnData:true,
+    });
+    /*
+    scaledData = [ 
+      { &apos;User ID&apos;: 15624510,
+         Gender: &apos;Male&apos;,
+         Age: -1.7795687879022388,
+         EstimatedSalary: -1.4881825118632386,
+         Purchased: 0 },
+      { &apos;User ID&apos;: 15810944,
+         Gender: &apos;Male&apos;,
+         Age: -0.253270175924977,
+         EstimatedSalary: -1.458854384319991,
+         Purchased: 0 },
+      ...
+    ];
+    */
+    x_matrix = DataSet.columnMatrix(independentVariables); 
+    y_matrix = DataSet.columnMatrix(dependentVariables);
+    /*
+    x_matrix = [
+      [ -1.7795687879022388, -1.4881825118632386 ],
+      [ -0.253270175924977, -1.458854384319991 ],
+      ...
+    ]; 
+    y_matrix = [
+      [ 0 ],
+      [ 0 ],
+      ...
+    ] 
+    */
+    // console.log({ x_matrix, y_matrix, });
+
+    nnLR = new LogisticRegression({ fit,  });
+    nnLRClass = new LogisticRegression({ type: &apos;class&apos;, fit, });
+    nnLRReg = new LogisticRegression({ type: &apos;l1l2&apos;, fit, });
+    const models = await Promise.all([
+      nnLR.train(x_matrix, y_matrix),
+      nnLRClass.train(x_matrix, y_matrix),
+      nnLRReg.train(x_matrix, y_matrix),
+    ]);
+    nnLRModel = models[ 0 ];
+    nnLRClassModel = models[ 1 ];
+    nnLRRegModel = models[ 2 ];
+  });
+  describe(&apos;constructor&apos;, () =&gt; {
+    it(&apos;should export a named module class&apos;, () =&gt; {
+      const NN = new LogisticRegression();
+      const NNConfigured = new LogisticRegression({ test: &apos;prop&apos;, });
+      expect(LogisticRegression).to.be.a(&apos;function&apos;);
+      expect(NN).to.be.instanceOf(LogisticRegression);
+      expect(NNConfigured.settings.test).to.eql(&apos;prop&apos;);
+    });
+  });
+  describe(&apos;generateLayers&apos;, () =&gt; {
+    it(&apos;should generate a classification network&apos;, async () =&gt; {
+      const predictions = await nnLR.predict(input_x);
+      const answers = await nnLR.predict(input_x, {
+        probability:false,
+      });
+      const shape = nnLR.getInputShape(predictions);
+     
+      expect(predictions).to.have.lengthOf(input_x.length);
+      expect(nnLR.layers).to.have.lengthOf(1);
+      expect(shape).to.eql([5, 1, ]);
+      // expect(answers[ 0 ]).to.eql(encodedAnswers[ &apos;Iris-setosa&apos; ]);
+      return true;
+    });
+    it(&apos;should generate a network from layers&apos;, async () =&gt; { 
+      const nnLRCustom = new LogisticRegression({ type:&apos;custom&apos;, fit, });
+      await nnLRCustom.train(x_matrix, y_matrix, nnLR.layers);
+      expect(nnLRCustom.layers).to.have.lengthOf(1);
+    });
+    // it(&apos;should validate trainning data&apos;, async () =&gt; { 
+    //   const nnLRCustom = new LogisticRegression({ type:&apos;custom&apos;, fit, });
+    //   await nnLRCustom.train(x_matrix, y_matrix, nnLR.layers, x_matrix, y_matrix);
+    //   expect(nnLRCustom.layers).to.have.lengthOf(1);
+    // });
+  });
+});</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

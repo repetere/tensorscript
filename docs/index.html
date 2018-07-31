@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl">
-  <title data-ice="title">Home | @tensorscript/ts-deeplearning</title>
+  <title data-ice="title">Home | TensorScript</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
   <script src="script/manual.js"></script>
-<meta name="description" content="Deep Learning Classification, Clustering and Regression with Tensorflow"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="@tensorscript/ts-deeplearning"><meta property="twitter:description" content="Deep Learning Classification, Clustering and Regression with Tensorflow"></head>
+<meta name="description" content="Deep Learning Classification, Clustering, Time Series, Regression and Multi-Layered Perceptrons with Tensorflow"><meta property="og:type" content="website"><meta property="og:url" content="https://repetere.github.io/tensorscript"><meta property="og:site_name" content="TensorScript"><meta property="og:title" content="TensorScript"><meta property="og:image" content="https://repetere.ai/favicon.png"><meta property="og:description" content="Deep Learning Classification, Clustering, Time Series, Regression and Multi-Layered Perceptrons with Tensorflow"><meta property="og:author" content="https://github.com/repetere"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="TensorScript"><meta property="twitter:description" content="Deep Learning Classification, Clustering, Time Series, Regression and Multi-Layered Perceptrons with Tensorflow"><meta property="twitter:image" content="https://repetere.ai/favicon.png"></head>
 <body class="layout-container" data-ice="rootContainer">
 
 <header>
@@ -16,7 +16,7 @@
   <a href="./manual/index.html" data-ice="manualHeaderLink">Manual</a>
   <a href="identifiers.html">Reference</a>
   <a href="source.html">Source</a>
-  
+  <a href="test.html" data-ice="testLink">Test</a>
   <div class="search-box">
   <span>
     <img src="./image/search.png">
@@ -24,7 +24,7 @@
   </span>
     <ul class="search-result"></ul>
   </div>
-<a style="position:relative; top:3px;" href="https://github.com/repetere/ts-deeplearning"><img width="20px" src="./image/github.png"></a></header>
+<a style="position:relative; top:3px;" href="https://github.com/repetere/tensorscript"><img width="20px" src="./image/github.png"></a></header>
 
 <nav class="navigation" data-ice="nav"><div>
   <ul>
@@ -40,12 +40,12 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="-tensorscript-ts-deeplearning">@tensorscript/ts-deeplearning</h1><p><a href="https://coveralls.io/github/repetere/ts-deeplearning?branch=master"><img src="https://coveralls.io/repos/github/repetere/ts-deeplearning/badge.svg?branch=master" alt="Coverage Status"></a> <a href="https://travis-ci.org/repetere/ts-deeplearning"><img src="https://travis-ci.org/repetere/ts-deeplearning.svg?branch=master" alt="Build Status"></a></p>
-<p>Deep Learning Classification and Regression with Tensorflow (Clustering coming soon)</p>
-<h3 id="-a-href--https---github-com-repetere-ts-deeplearning-blob-master-docs-api-md--full-documentation--a-"><a href="https://github.com/repetere/ts-deeplearning/blob/master/docs/API.md">Full Documentation</a></h3><h3 id="installation">Installation</h3><pre><code class="lang-sh"><code class="source-code prettyprint">$ npm i @tensorscript/ts-deeplearning</code>
+<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="tensorscript">TensorScript</h1><p><a href="https://coveralls.io/github/repetere/tensorscript?branch=master"><img src="https://coveralls.io/repos/github/repetere/tensorscript/badge.svg?branch=master" alt="Coverage Status"></a> <a href="https://travis-ci.org/repetere/tensorscript"><img src="https://travis-ci.org/repetere/tensorscript.svg?branch=master" alt="Build Status"></a></p>
+<p>Deep Learning Classification, LSTM Time Series, Regression and Multi-Layered Perceptrons with Tensorflow</p>
+<h3 id="-a-href--https---github-com-repetere-tensorscript-blob-master-docs-api-md--full-documentation--a-"><a href="https://github.com/repetere/tensorscript/blob/master/docs/API.md">Full Documentation</a></h3><h3 id="installation">Installation</h3><pre><code class="lang-sh"><code class="source-code prettyprint">$ npm i tensorscript</code>
 </code></pre>
 <h3 id="usage">Usage</h3><h4 id="classification">Classification</h4><p>Test against the <a href="https://archive.ics.uci.edu/ml/datasets/Iris">Iris Flower Data Set</a></p>
-<pre><code class="lang-javascript"><code class="source-code prettyprint">import { DeepLearningClassification, } from &apos;@tensorscript/ts-deeplearning&apos;;
+<pre><code class="lang-javascript"><code class="source-code prettyprint">import { DeepLearningClassification, } from &apos;tensorscript&apos;;
 import ms from &apos;modelscript&apos;;
 
 async function main(){
@@ -145,7 +145,7 @@ main();
 </code>
 </code></pre>
 <h4 id="regression">Regression</h4><p>Test against the <a href="https://machinelearningmastery.com/regression-tutorial-keras-deep-learning-library-python/">Boston Housing Data Set</a></p>
-<pre><code class="lang-javascript"><code class="source-code prettyprint">import { DeepLearningRegression, } from &apos;@tensorscript/ts-deeplearning&apos;;
+<pre><code class="lang-javascript"><code class="source-code prettyprint">import { DeepLearningRegression, } from &apos;tensorscript&apos;;
 import ms from &apos;modelscript&apos;;
 
 function scaleColumnMap(columnName) {
@@ -221,7 +221,7 @@ async function main(){
 main();</code>
 </code></pre>
 <h4 id="multiple-linear-regression">Multiple Linear Regression</h4><p>Test against the <a href="http://openclassroom.stanford.edu/MainFolder/DocumentPage.php?course=MachineLearning&amp;doc=exercises/ex3/ex3.html">Portland housing price dataset</a></p>
-<pre><code class="lang-javascript"><code class="source-code prettyprint">import { MultipleLinearRegression, } from &apos;@tensorscript/ts-deeplearning&apos;;
+<pre><code class="lang-javascript"><code class="source-code prettyprint">import { MultipleLinearRegression, } from &apos;tensorscript&apos;;
 import ms from &apos;modelscript&apos;;
 
 function scaleColumnMap(columnName) {
@@ -285,7 +285,7 @@ async function main(){
 main();</code>
 </code></pre>
 <h4 id="logistic-regression">Logistic Regression</h4><p>Test against the Social Media Ads</p>
-<pre><code class="lang-javascript"><code class="source-code prettyprint">import { LogisticRegression, } from &apos;@tensorscript/ts-deeplearning&apos;;
+<pre><code class="lang-javascript"><code class="source-code prettyprint">import { LogisticRegression, } from &apos;tensorscript&apos;;
 import ms from &apos;modelscript&apos;;
 
 function scaleColumnMap(columnName) {

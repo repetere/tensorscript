@@ -29,6 +29,7 @@ function scaleColumnMap(columnName) {
     },
   };
 }
+/** @test {MultipleLinearRegression} */
 describe('MultipleLinearRegression', function () {
   this.timeout(20000);
   before(async function () {
@@ -78,6 +79,7 @@ describe('MultipleLinearRegression', function () {
     ];
     return true;
   });
+  /** @test {MultipleLinearRegression#constructor} */
   describe('constructor', () => {
     it('should export a named module class', () => {
       const MLR = new MultipleLinearRegression({
@@ -92,6 +94,7 @@ describe('MultipleLinearRegression', function () {
       expect(MLRConfigured.settings.test).to.eql('prop');
     });
   });
+  /** @test {MultipleLinearRegression#generateLayers} */
   describe('generateLayers', () => {
     it('should generate a classification network', async () => {
       const predictions = await trainedMLR.predict(input_x);

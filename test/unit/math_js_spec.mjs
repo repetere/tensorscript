@@ -7,8 +7,8 @@ const array = {
   flatten,
 };
 const reshape = array.reshape;
-
 describe('util.array', function () {
+  /** @test {../../lib/model_interface.mjs~size} */
   describe('size', function () {
     it('should calculate the size of a scalar', function () {
       assert.deepEqual(size(2), []);
@@ -45,7 +45,7 @@ describe('util.array', function () {
       assert.deepEqual(size([[1, 2, ], [3, 4, 5, ], ]), [2, 2, ]);
     });
   });
-
+  /** @test {../../lib/model_interface.mjs~reshape} */
   describe('reshape', function () {
     it('should reshape a 1 dimensional array into a 2 dimensional array', function () {
       const a = [1, 2, 3, 4, 5, 6, 7, 8, ];
@@ -156,7 +156,7 @@ describe('util.array', function () {
       }, /Array expected/);
     });
   });
-
+  /** @test {../../lib/model_interface.mjs~flatten} */
   describe('flatten', function () {
     it('should flatten a scalar', function () {
       assert.deepEqual(array.flatten(1), 1);

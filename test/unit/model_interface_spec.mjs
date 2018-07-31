@@ -8,7 +8,9 @@ const expect = chai.expect;
 chai.use(sinonChai);
 chai.use(chaiAsPromised);
 
+/** @test {TensorScriptModelInterface} */
 describe('TensorScriptModelInterface', () => {
+  /** @test {TensorScriptModelInterface#constructor} */
   describe('constructor', () => {
     it('should export a named module class', () => {
       const TSM = new TensorScriptModelInterface();
@@ -18,6 +20,7 @@ describe('TensorScriptModelInterface', () => {
       expect(TSMConfigured.settings.test).to.eql('prop');
     });
   });
+  /** @test {TensorScriptModelInterface#reshape} */
   describe('reshape', () => {
     it('should export a static method', () => {
       expect(TensorScriptModelInterface.reshape).to.be.a('function');
@@ -44,6 +47,7 @@ describe('TensorScriptModelInterface', () => {
       // console.log({ result });
     });
   });
+  /** @test {TensorScriptModelInterface#getInputShape} */
   describe('getInputShape', () => {
     it('should export a static method', () => {
       expect(TensorScriptModelInterface.getInputShape).to.be.a('function');
@@ -93,6 +97,7 @@ describe('TensorScriptModelInterface', () => {
       expect(TensorScriptModelInterface.getInputShape.bind()).to.throw(/must be a matrix/);
     });
   });
+  /** @test {TensorScriptModelInterface#train} */
   describe('train', () => {
     it('should throw an error if train method is not implemented', () => {
       class MLR extends TensorScriptModelInterface{
@@ -108,6 +113,7 @@ describe('TensorScriptModelInterface', () => {
       expect(TSMMLR.train.bind(null)).to.be.ok;
     });
   });
+  /** @test {TensorScriptModelInterface#calculate} */
   describe('calculate', () => {
     it('should throw an error if calculate method is not implemented', () => {
       class MLR extends TensorScriptModelInterface{
@@ -123,6 +129,7 @@ describe('TensorScriptModelInterface', () => {
       expect(TSMMLR.calculate.bind(null)).to.be.ok;
     });
   });
+  /** @test {TensorScriptModelInterface#predict} */
   describe('predict', () => {
     class MLR extends TensorScriptModelInterface{
       calculate(x) {
@@ -170,6 +177,7 @@ describe('TensorScriptModelInterface', () => {
       });
     });
   });
+  /** @test {TensorScriptModelInterface#loadModel} */
   describe('loadModel', () => {
     it('should call tensorflow load model and store it', async function () {
       const TSM = new TensorScriptModelInterface({}, {

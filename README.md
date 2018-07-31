@@ -1,14 +1,14 @@
-# @tensorscript/ts-deeplearning
+# TensorScript
 
-[![Coverage Status](https://coveralls.io/repos/github/repetere/ts-deeplearning/badge.svg?branch=master)](https://coveralls.io/github/repetere/ts-deeplearning?branch=master) [![Build Status](https://travis-ci.org/repetere/ts-deeplearning.svg?branch=master)](https://travis-ci.org/repetere/ts-deeplearning)
+[![Coverage Status](https://coveralls.io/repos/github/repetere/tensorscript/badge.svg?branch=master)](https://coveralls.io/github/repetere/tensorscript?branch=master) [![Build Status](https://travis-ci.org/repetere/tensorscript.svg?branch=master)](https://travis-ci.org/repetere/tensorscript)
 
-Deep Learning Classification and Regression with Tensorflow (Clustering coming soon)
-### [Full Documentation](<https://github.com/repetere/ts-deeplearning/blob/master/docs/API.md>)
+Deep Learning Classification, LSTM Time Series, Regression and Multi-Layered Perceptrons with Tensorflow
+### [Full Documentation](<https://github.com/repetere/tensorscript/blob/master/docs/API.md>)
 
 ### Installation
 
 ```sh
-$ npm i @tensorscript/ts-deeplearning
+$ npm i tensorscript
 ```
 
 ### Usage
@@ -18,7 +18,7 @@ $ npm i @tensorscript/ts-deeplearning
 Test against the [Iris Flower Data Set](https://archive.ics.uci.edu/ml/datasets/Iris)
 
 ```javascript
-import { DeepLearningClassification, } from '@tensorscript/ts-deeplearning';
+import { DeepLearningClassification, } from 'tensorscript';
 import ms from 'modelscript';
 
 async function main(){
@@ -123,7 +123,7 @@ main();
 Test against the [Boston Housing Data Set](https://machinelearningmastery.com/regression-tutorial-keras-deep-learning-library-python/)
 
 ```javascript
-import { DeepLearningRegression, } from '@tensorscript/ts-deeplearning';
+import { DeepLearningRegression, } from 'tensorscript';
 import ms from 'modelscript';
 
 function scaleColumnMap(columnName) {
@@ -204,7 +204,7 @@ main();
 Test against the [Portland housing price dataset](http://openclassroom.stanford.edu/MainFolder/DocumentPage.php?course=MachineLearning&doc=exercises/ex3/ex3.html)
 
 ```javascript
-import { MultipleLinearRegression, } from '@tensorscript/ts-deeplearning';
+import { MultipleLinearRegression, } from 'tensorscript';
 import ms from 'modelscript';
 
 function scaleColumnMap(columnName) {
@@ -273,7 +273,7 @@ main();
 Test against the Social Media Ads
 
 ```javascript
-import { LogisticRegression, } from '@tensorscript/ts-deeplearning';
+import { LogisticRegression, } from 'tensorscript';
 import ms from 'modelscript';
 
 function scaleColumnMap(columnName) {

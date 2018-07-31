@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">test/unit/model_interface_spec.mjs | TensorScript</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="Deep Learning Classification, Clustering, Time Series, Regression and Multi-Layered Perceptrons with Tensorflow"><meta property="og:type" content="website"><meta property="og:url" content="https://repetere.github.io/tensorscript"><meta property="og:site_name" content="TensorScript"><meta property="og:title" content="TensorScript"><meta property="og:image" content="https://repetere.ai/favicon.png"><meta property="og:description" content="Deep Learning Classification, Clustering, Time Series, Regression and Multi-Layered Perceptrons with Tensorflow"><meta property="og:author" content="https://github.com/repetere"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="TensorScript"><meta property="twitter:description" content="Deep Learning Classification, Clustering, Time Series, Regression and Multi-Layered Perceptrons with Tensorflow"><meta property="twitter:image" content="https://repetere.ai/favicon.png"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  <a href="./manual/index.html" data-ice="manualHeaderLink">Manual</a>
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  <a href="test.html" data-ice="testLink">Test</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/repetere/tensorscript"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/classification.mjs~DeepLearningClassification.html">DeepLearningClassification</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/deep_learning.mjs~BaseNeuralNetwork.html">BaseNeuralNetwork</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/logistic_regression.mjs~LogisticRegression.html">LogisticRegression</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/lstm_time_series.mjs~LSTMTimeSeries.html">LSTMTimeSeries</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/model_interface.mjs~TensorScriptModelInterface.html">TensorScriptModelInterface</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/multiple_linear_regression.mjs~MultipleLinearRegression.html">MultipleLinearRegression</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/regression.mjs~DeepLearningRegression.html">DeepLearningRegression</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">test/unit/model_interface_spec.mjs</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import chai from &apos;chai&apos;;
+// import sinon from &apos;sinon&apos;;
+import sinonChai from &apos;sinon-chai&apos;;
+import chaiAsPromised from &apos;chai-as-promised&apos;;
+import &apos;babel-polyfill&apos;;
+import { TensorScriptModelInterface, } from &apos;../../index.mjs&apos;;
+const expect = chai.expect;
+chai.use(sinonChai);
+chai.use(chaiAsPromised);
+
+/** @test {TensorScriptModelInterface} */
+describe(&apos;TensorScriptModelInterface&apos;, () =&gt; {
+  /** @test {TensorScriptModelInterface#constructor} */
+  describe(&apos;constructor&apos;, () =&gt; {
+    it(&apos;should export a named module class&apos;, () =&gt; {
+      const TSM = new TensorScriptModelInterface();
+      const TSMConfigured = new TensorScriptModelInterface({ test: &apos;prop&apos;, });
+      expect(TensorScriptModelInterface).to.be.a(&apos;function&apos;);
+      expect(TSM).to.be.instanceOf(TensorScriptModelInterface);
+      expect(TSMConfigured.settings.test).to.eql(&apos;prop&apos;);
+    });
+  });
+  /** @test {TensorScriptModelInterface#reshape} */
+  describe(&apos;reshape&apos;, () =&gt; {
+    it(&apos;should export a static method&apos;, () =&gt; {
+      expect(TensorScriptModelInterface.reshape).to.be.a(&apos;function&apos;);
+    });
+    it(&apos;should reshape an array into a matrix&apos;, () =&gt; {
+      const array = [1, 0, 0, 1, ];
+      const shape = [2, 2, ];
+      const matrix = [
+        [1, 0,],
+        [0, 1,],
+      ];
+      const result = TensorScriptModelInterface.reshape(array, shape);
+      expect(result).to.eql(matrix);
+      // expect(TensorScriptModelInterface.reshape.bind(null, array, [1, 2, ])).to.throw(/specified shape/);
+    });
+    it(&apos;should reshape multiple dimensions&apos;, () =&gt; {
+      const array = [ 1, 1, 0, 1, 1, 0, ];
+      const shape = [ 2, 3, 1, ];
+      const matrix = [
+        [ [1], [1], [0], ],
+        [ [1], [1], [0], ],
+      ];
+      const result = TensorScriptModelInterface.reshape(array, shape);
+      // console.log({ result });
+    });
+  });
+  /** @test {TensorScriptModelInterface#getInputShape} */
+  describe(&apos;getInputShape&apos;, () =&gt; {
+    it(&apos;should export a static method&apos;, () =&gt; {
+      expect(TensorScriptModelInterface.getInputShape).to.be.a(&apos;function&apos;);
+    });
+    it(&apos;should return the shape of a matrix&apos;, () =&gt; {
+      const matrix = [
+        [1, 0,],
+        [0, 1,],
+      ];
+      const matrix2 = [
+        [1, 0,],
+        [1, 0,],
+        [1, 0,],
+        [1, 0,],
+        [1, 0,],
+        [1, 0,],
+        [0, 1,],
+      ];
+      const matrix3 = [
+        [1, 0, 4, 5,],
+        [1, 0, 4, 5,],
+        [1, 0, 4, 5,],
+        [1, 0, 4, 5,],
+        [1, 0, 4, 5,],
+      ];
+      const matrix4 = [
+        [1, 0, 4, 5,],
+        [1, 0, 4,],
+        [1, 0, 4, 5,],
+      ];
+      const matrix5 = [
+        [[1, ], [1, ], [0, ], ],
+        [[1, ], [1, ], [0, ], ],
+        [[1, ], [1, ], [0, ], ],
+        [[1, ], [1, ], [0, ], ],
+        [[1, ], [1, ], [0, ], ],
+        [[1, ], [1, ], [0, ], ],
+      ];
+      TensorScriptModelInterface.getInputShape(matrix5);
+      expect(TensorScriptModelInterface.getInputShape(matrix)).to.eql([2, 2,]);
+      expect(TensorScriptModelInterface.getInputShape(matrix2)).to.eql([7, 2,]);
+      expect(TensorScriptModelInterface.getInputShape(matrix3)).to.eql([5, 4,]);
+      expect(TensorScriptModelInterface.getInputShape.bind(null, matrix4)).to.throw(/input must have the same length in each row/);
+      expect(TensorScriptModelInterface.getInputShape(matrix5)).to.eql([6, 3,1]);
+    });
+    it(&apos;should throw an error if input is not a matrix&apos;, () =&gt; {
+      expect(TensorScriptModelInterface.getInputShape.bind()).to.throw(/must be a matrix/);
+    });
+  });
+  /** @test {TensorScriptModelInterface#train} */
+  describe(&apos;train&apos;, () =&gt; {
+    it(&apos;should throw an error if train method is not implemented&apos;, () =&gt; {
+      class MLR extends TensorScriptModelInterface{
+        train(x, y) {
+          return true;
+        }
+      }
+      const TSM = new TensorScriptModelInterface();
+      const TSMMLR = new MLR();
+      expect(TSM.train).to.be.a(&apos;function&apos;);
+      expect(TSM.train.bind(null)).to.throw(&apos;train method is not implemented&apos;);
+      expect(TSMMLR.train).to.be.a(&apos;function&apos;);
+      expect(TSMMLR.train.bind(null)).to.be.ok;
+    });
+  });
+  /** @test {TensorScriptModelInterface#calculate} */
+  describe(&apos;calculate&apos;, () =&gt; {
+    it(&apos;should throw an error if calculate method is not implemented&apos;, () =&gt; {
+      class MLR extends TensorScriptModelInterface{
+        calculate(x, y) {
+          return true;
+        }
+      }
+      const TSM = new TensorScriptModelInterface();
+      const TSMMLR = new MLR();
+      expect(TSM.calculate).to.be.a(&apos;function&apos;);
+      expect(TSM.calculate.bind(null)).to.throw(&apos;calculate method is not implemented&apos;);
+      expect(TSMMLR.calculate).to.be.a(&apos;function&apos;);
+      expect(TSMMLR.calculate.bind(null)).to.be.ok;
+    });
+  });
+  /** @test {TensorScriptModelInterface#predict} */
+  describe(&apos;predict&apos;, () =&gt; {
+    class MLR extends TensorScriptModelInterface{
+      calculate(x) {
+        this.yShape = [100, 2,];
+        return {
+          data: () =&gt; new Promise((resolve) =&gt; {
+            const predictions = new Float32Array([21.41, 31.74, 41.01, 51.53,]);
+            resolve(predictions);
+          }),
+        };
+      }
+    }
+    it(&apos;should throw an error if input is invalid&apos;, async function () {
+      const TSMMLR = new MLR();
+      try {
+        const predictPromise = await TSMMLR.predict();
+        expect(predictPromise).to.not.exist;
+      } catch (e) {
+        expect(e).to.be.an(&apos;error&apos;);
+        expect(e).to.match(/invalid input matrix/);
+      }
+      try {
+        const predictPromiseCatch = await TSMMLR.predict([1,]);
+        expect(predictPromiseCatch).to.not.exist;
+      } catch (e2) {
+        expect(e2).to.be.an(&apos;error&apos;);
+        expect(e2).to.match(/Dimension mismatch/);
+      }
+    });
+    it(&apos;should return preductions&apos;, async function () {
+      const TSMMLR = new MLR();
+      const input = [
+        [1, 2, ],
+        [1, 2, ],
+      ];
+      const predictions = await TSMMLR.predict(input);
+      const predictionsRounded = await TSMMLR.predict(input, { probability:false, });
+      const predictionsRaw = await TSMMLR.predict(input, { json: false, });
+      expect(predictions).to.have.lengthOf(2);
+      expect(predictionsRaw).to.be.a(&apos;Float32Array&apos;);
+      predictionsRounded.forEach(predRow =&gt; {
+        predRow.forEach(pred =&gt; {
+          expect(Number.isInteger(pred)).to.be.true;
+        });
+      });
+    });
+  });
+  /** @test {TensorScriptModelInterface#loadModel} */
+  describe(&apos;loadModel&apos;, () =&gt; {
+    it(&apos;should call tensorflow load model and store it&apos;, async function () {
+      const TSM = new TensorScriptModelInterface({}, {
+        tf: {
+          loadModel: () =&gt; new Promise((resolve, reject) =&gt; resolve(true)),
+        },
+      });
+      const loadedModel = await TSM.loadModel();
+      expect(loadedModel).to.be.true;
+    });
+  });
+});</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
