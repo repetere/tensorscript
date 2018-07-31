@@ -2735,7 +2735,7 @@
     "kind": "manual",
     "longname": "/Users/yawjosephetse/Developer/github/repetere/tensorscript/CHANGELOG.md",
     "name": "./CHANGELOG.md",
-    "content": "changes exs",
+    "content": "# Changelog\r\n\r\n## 1.0.0 (2018-07-30)\r\n\r\n- **Feat**\r\n  - First Initial Release\r\n- **Fix**\r\n  - N/A\r\n- **Chore**\r\n  - Allow for multistep future forecasts in multivariate timeseries.\r\n  - Add basic clustering example.\r\n",
     "static": true,
     "access": "public"
   },
