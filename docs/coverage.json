@@ -1,7 +1,7 @@
 {
-  "coverage": "58.82%",
-  "expectCount": 68,
-  "actualCount": 40,
+  "coverage": "57.3%",
+  "expectCount": 89,
+  "actualCount": 51,
   "files": {
     "lib/classification.mjs": {
       "expectCount": 6,
@@ -28,6 +28,22 @@
         41,
         42,
         56
+      ]
+    },
+    "lib/lstm_multivariate_time_series.mjs": {
+      "expectCount": 21,
+      "actualCount": 11,
+      "undocumentLines": [
+        279,
+        280,
+        281,
+        282,
+        283,
+        284,
+        299,
+        300,
+        328,
+        375
       ]
     },
     "lib/lstm_time_series.mjs": {

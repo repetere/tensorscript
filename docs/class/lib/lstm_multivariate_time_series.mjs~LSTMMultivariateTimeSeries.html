@@ -1,0 +1,2356 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">LSTMMultivariateTimeSeries | TensorScript</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="Deep Learning Classification, Clustering, Time Series, Regression and Multi-Layered Perceptrons with Tensorflow"><meta property="og:type" content="website"><meta property="og:url" content="https://repetere.github.io/tensorscript"><meta property="og:site_name" content="TensorScript"><meta property="og:title" content="TensorScript"><meta property="og:image" content="https://repetere.ai/favicon.png"><meta property="og:description" content="Deep Learning Classification, Clustering, Time Series, Regression and Multi-Layered Perceptrons with Tensorflow"><meta property="og:author" content="https://github.com/repetere"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="TensorScript"><meta property="twitter:description" content="Deep Learning Classification, Clustering, Time Series, Regression and Multi-Layered Perceptrons with Tensorflow"><meta property="twitter:image" content="https://repetere.ai/favicon.png"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  <a href="./manual/index.html" data-ice="manualHeaderLink">Manual</a>
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  <a href="test.html" data-ice="testLink">Test</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/repetere/tensorscript"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/classification.mjs~DeepLearningClassification.html">DeepLearningClassification</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/deep_learning.mjs~BaseNeuralNetwork.html">BaseNeuralNetwork</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/logistic_regression.mjs~LogisticRegression.html">LogisticRegression</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries.html">LSTMMultivariateTimeSeries</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/lstm_time_series.mjs~LSTMTimeSeries.html">LSTMTimeSeries</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/model_interface.mjs~TensorScriptModelInterface.html">TensorScriptModelInterface</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/multiple_linear_regression.mjs~MultipleLinearRegression.html">MultipleLinearRegression</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/regression.mjs~DeepLearningRegression.html">DeepLearningRegression</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><div class="header-notice">
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {LSTMMultivariateTimeSeries} from &apos;<span><a href="file/lib/lstm_multivariate_time_series.mjs.html#lineNumber9">tensorscript/lib/lstm_multivariate_time_series.mjs</a></span>&apos;</code></pre></div>
+  <span data-ice="access">public</span>
+  <span data-ice="kind">class</span>
+  
+  
+  
+  <span data-ice="source">| <span><a href="file/lib/lstm_multivariate_time_series.mjs.html#lineNumber9">source</a></span></span>
+</div>
+
+<div class="self-detail detail">
+  <h1 data-ice="name">LSTMMultivariateTimeSeries</h1>
+
+  
+
+  
+  
+  <div class="flat-list" data-ice="extendsChain"><h4>Extends:</h4><div><span>lib/deep_learning.js~BaseNeuralNetwork</span> &#x2192; <span><a href="class/lib/lstm_time_series.mjs~LSTMTimeSeries.html">LSTMTimeSeries</a></span> &#x2192; LSTMMultivariateTimeSeries</div></div>
+  
+  
+  
+  <div class="flat-list" data-ice="indirectImplements"><h4>Indirect Implements:</h4><ul><li><span><a href="class/lib/deep_learning.mjs~BaseNeuralNetwork.html">BaseNeuralNetwork</a></span></li></ul></div>
+  
+  
+
+  
+  
+  <div class="description" data-ice="description"><p>Long Short Term Memory Multivariate Time Series with Tensorflow</p>
+</div>
+  
+
+  
+
+  
+
+  
+
+  
+</div>
+
+
+<div data-ice="staticMethodSummary"><h2>Static Method Summary</h2><table class="summary" data-ice="summary">
+  <thead><tr><td data-ice="title" colspan="3">Static Public Methods</td></tr></thead>
+  <tbody>
+  
+  <tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      <span data-ice="static">static</span>
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries.html#static-method-createDataset">createDataset</a></span></span><span class="code" data-ice="signature">(dataset: <span>Array</span>&lt;<span>Array&lt;number</span>&gt;, look_back: <span>Number</span>): <span>[Array&lt;Array&lt;number&gt;&gt;,Array&lt;number&gt;]</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Creates dataset data</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      <span data-ice="static">static</span>
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries.html#static-method-drop">drop</a></span></span><span class="code" data-ice="signature">(data: <span>Array</span>&lt;<span>Array</span>&lt;<span>number</span>&gt;&gt;, columns: <span>Array</span>&lt;<span>number</span>&gt;): <span>Array</span>&lt;<span>Array</span>&lt;<span>number</span>&gt;&gt;</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Drops columns by array index</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      <span data-ice="static">static</span>
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries.html#static-method-getDropableColumns">getDropableColumns</a></span></span><span class="code" data-ice="signature">(features: <span>number</span>, n_in: <span>number</span>, n_out: <span>number</span>): <span>Array</span>&lt;<span>number</span>&gt;</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Calculates which columns to drop by index</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      <span data-ice="static">static</span>
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries.html#static-method-getTimeseriesDataSet">getTimeseriesDataSet</a></span></span><span class="code" data-ice="signature">(timeseries: <span>*</span>, look_back: <span>*</span>)</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Returns data for predicting values</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      <span data-ice="static">static</span>
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries.html#static-method-getTimeseriesShape">getTimeseriesShape</a></span></span><span class="code" data-ice="signature">(x_timeseries: <span>Array</span>&lt;<span>Array&lt;number</span>&gt;): <span>Array</span>&lt;<span>Array</span>&lt;<span>number</span>&gt;&gt;</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Reshape input to be [samples, time steps, features]</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      <span data-ice="static">static</span>
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries.html#static-method-seriesToSupervised">seriesToSupervised</a></span></span><span class="code" data-ice="signature">(data: <span>Array</span>&lt;<span>Array</span>&lt;<span>number</span>&gt;&gt;, n_in: <span>number</span>, n_out: <span>number</span>): <span>Array</span>&lt;<span>Array</span>&lt;<span>number</span>&gt;&gt;</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Converts data set to supervised labels for forecasting, the first column must be the dependent variable</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+</tbody>
+</table>
+</div>
+<div data-ice="constructorSummary"><h2>Constructor Summary</h2><table class="summary" data-ice="summary">
+  <thead><tr><td data-ice="title" colspan="3">Public Constructor</td></tr></thead>
+  <tbody>
+  
+  <tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries.html#instance-constructor-constructor">constructor</a></span></span><span class="code" data-ice="signature">(options: {layers: <span>Array</span>&lt;<span>Object</span>&gt;, compile: <span>Object</span>, fit: <span>Object</span>}, properties: *)</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+</tbody>
+</table>
+</div>
+<div data-ice="memberSummary"><h2>Member Summary</h2><table class="summary" data-ice="summary">
+  <thead><tr><td data-ice="title" colspan="3">Public Members</td></tr></thead>
+  <tbody>
+  
+  <tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries.html#instance-member-createDataset">createDataset</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries.html#instance-member-drop">drop</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries.html#instance-member-getDropableColumns">getDropableColumns</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries.html#instance-member-getTimeseriesDataSet">getTimeseriesDataSet</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries.html#instance-member-getTimeseriesShape">getTimeseriesShape</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries.html#instance-member-layers">layers</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries.html#instance-member-model">model</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries.html#instance-member-seriesToSupervised">seriesToSupervised</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries.html#instance-member-xShape">xShape</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries.html#instance-member-yShape">yShape</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+</tbody>
+</table>
+</div>
+<div data-ice="methodSummary"><h2>Method Summary</h2><table class="summary" data-ice="summary">
+  <thead><tr><td data-ice="title" colspan="3">Public Methods</td></tr></thead>
+  <tbody>
+  
+  <tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries.html#instance-method-generateLayers">generateLayers</a></span></span><span class="code" data-ice="signature">(x_matrix: <span>Array</span>&lt;<span>Array</span>&lt;<span>number</span>&gt;&gt;, y_matrix: <span>Array</span>&lt;<span>Array</span>&lt;<span>number</span>&gt;&gt;, layers: <span>Array</span>&lt;<span>Object</span>&gt;, x_test: <span>Array</span>&lt;<span>Array</span>&lt;<span>number</span>&gt;&gt;, y_test: <span>Array</span>&lt;<span>Array</span>&lt;<span>number</span>&gt;&gt;)</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Adds dense layers to tensorflow classification model</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          <span data-ice="async">async</span>
+          
+          <span class="code" data-ice="name"><span><a href="class/lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries.html#instance-method-train">train</a></span></span><span class="code" data-ice="signature">(x_timeseries: <span>*</span>, y_timeseries: <span>*</span>, layers: <span>*</span>, x_test: <span>*</span>, y_test: <span>*</span>)</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+</tbody>
+</table>
+</div>
+
+<div class="inherited-summary" data-ice="inheritedSummary"><h2>Inherited Summary</h2><table class="summary" data-ice="summary">
+  <thead><tr><td data-ice="title" colspan="3"><span class="toggle closed"></span> From class <span><a href="class/lib/lstm_time_series.mjs~LSTMTimeSeries.html">LSTMTimeSeries</a></span></td></tr></thead>
+  <tbody>
+  
+  <tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      <span data-ice="static">static</span>
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/lib/lstm_time_series.mjs~LSTMTimeSeries.html#static-method-createDataset">createDataset</a></span></span><span class="code" data-ice="signature">(dataset: <span>Array</span>&lt;<span>Array&lt;number</span>&gt;, look_back: <span>Number</span>): <span>[Array&lt;Array&lt;number&gt;&gt;,Array&lt;number&gt;]</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Creates dataset data</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      <span data-ice="static">static</span>
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/lib/lstm_time_series.mjs~LSTMTimeSeries.html#static-method-getTimeseriesDataSet">getTimeseriesDataSet</a></span></span><span class="code" data-ice="signature">(timeseries: <span>*</span>, look_back: <span>*</span>)</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Returns data for predicting values</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      <span data-ice="static">static</span>
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/lib/lstm_time_series.mjs~LSTMTimeSeries.html#static-method-getTimeseriesShape">getTimeseriesShape</a></span></span><span class="code" data-ice="signature">(x_timeseries: <span>Array</span>&lt;<span>Array&lt;number</span>&gt;): <span>Array</span>&lt;<span>Array</span>&lt;<span>number</span>&gt;&gt;</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Reshape input to be [samples, time steps, features]</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/lib/lstm_time_series.mjs~LSTMTimeSeries.html#instance-member-createDataset">createDataset</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/lib/lstm_time_series.mjs~LSTMTimeSeries.html#instance-member-getTimeseriesDataSet">getTimeseriesDataSet</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/lib/lstm_time_series.mjs~LSTMTimeSeries.html#instance-member-getTimeseriesShape">getTimeseriesShape</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/lib/lstm_time_series.mjs~LSTMTimeSeries.html#instance-member-layers">layers</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/lib/lstm_time_series.mjs~LSTMTimeSeries.html#instance-member-model">model</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/lib/lstm_time_series.mjs~LSTMTimeSeries.html#instance-member-xShape">xShape</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/lib/lstm_time_series.mjs~LSTMTimeSeries.html#instance-member-yShape">yShape</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/lib/lstm_time_series.mjs~LSTMTimeSeries.html#instance-method-calculate">calculate</a></span></span><span class="code" data-ice="signature">()</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/lib/lstm_time_series.mjs~LSTMTimeSeries.html#instance-method-generateLayers">generateLayers</a></span></span><span class="code" data-ice="signature">(x_matrix: <span>Array</span>&lt;<span>Array</span>&lt;<span>number</span>&gt;&gt;, y_matrix: <span>Array</span>&lt;<span>Array</span>&lt;<span>number</span>&gt;&gt;, layers: <span>Array</span>&lt;<span>Object</span>&gt;, x_test: <span>Array</span>&lt;<span>Array</span>&lt;<span>number</span>&gt;&gt;, y_test: <span>Array</span>&lt;<span>Array</span>&lt;<span>number</span>&gt;&gt;)</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Adds dense layers to tensorflow classification model</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          <span data-ice="async">async</span>
+          
+          <span class="code" data-ice="name"><span><a href="class/lib/lstm_time_series.mjs~LSTMTimeSeries.html#instance-method-predict">predict</a></span></span><span class="code" data-ice="signature">()</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          <span data-ice="async">async</span>
+          
+          <span class="code" data-ice="name"><span><a href="class/lib/lstm_time_series.mjs~LSTMTimeSeries.html#instance-method-train">train</a></span></span><span class="code" data-ice="signature">()</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+</tbody>
+</table>
+</div>
+
+
+<div data-ice="staticMethodDetails"><h2 data-ice="title">Static Public Methods</h2>
+
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="static-method-createDataset">
+    <span class="access" data-ice="access">public</span>
+    <span data-ice="static">static</span>
+    
+    
+    
+    
+    <span class="code" data-ice="name">createDataset</span><span class="code" data-ice="signature">(dataset: <span>Array</span>&lt;<span>Array&lt;number</span>&gt;, look_back: <span>Number</span>): <span>[Array&lt;Array&lt;number&gt;&gt;,Array&lt;number&gt;]</span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/lib/lstm_multivariate_time_series.mjs.html#lineNumber47">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Creates dataset data</p>
+</div>
+
+  <div data-ice="override"><h4>Override:</h4><span><a href="class/lib/lstm_time_series.mjs~LSTMTimeSeries.html#static-method-createDataset">LSTMTimeSeries#createDataset</a></span></div>
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">dataset</td>
+      <td data-ice="type" class="code"><span>Array</span>&lt;<span>Array&lt;number</span>&gt;</td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>array of values</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">look_back</td>
+      <td data-ice="type" class="code"><span>Number</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>number of values in each feature</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span>[Array&lt;Array&lt;number&gt;&gt;,Array&lt;number&gt;]</span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>returns x matrix and y matrix for model trainning</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="example">
+    <h4>Example:</h4>
+    
+  <div class="example-doc" data-ice="exampleDoc">
+      
+      <pre class="prettyprint source-code"><code data-ice="exampleCode">const ds = [
+[10, 20, 30, 40, 50, 60, 70, 80, 90,],
+[11, 21, 31, 41, 51, 61, 71, 81, 91,],
+[12, 22, 32, 42, 52, 62, 72, 82, 92,],
+[13, 23, 33, 43, 53, 63, 73, 83, 93,],
+[14, 24, 34, 44, 54, 64, 74, 84, 94,],
+[15, 25, 35, 45, 55, 65, 75, 85, 95,],
+[16, 26, 36, 46, 56, 66, 76, 86, 96,],
+[17, 27, 37, 47, 57, 67, 77, 87, 97,],
+[18, 28, 38, 48, 58, 68, 78, 88, 98,],
+[19, 29, 39, 49, 59, 69, 79, 89, 99,],
+];
+LSTMMultivariateTimeSeries.createDataset(ds,1) // =&gt; 
+//  [ 
+//   [ 
+//    [ 20, 30, 40, 50, 60, 70, 80, 90 ],
+//    [ 21, 31, 41, 51, 61, 71, 81, 91 ],
+//    [ 22, 32, 42, 52, 62, 72, 82, 92 ],
+//    [ 23, 33, 43, 53, 63, 73, 83, 93 ],
+//    [ 24, 34, 44, 54, 64, 74, 84, 94 ],
+//    [ 25, 35, 45, 55, 65, 75, 85, 95 ],
+//    [ 26, 36, 46, 56, 66, 76, 86, 96 ],
+//    [ 27, 37, 47, 57, 67, 77, 87, 97 ],
+//    [ 28, 38, 48, 58, 68, 78, 88, 98 ]    
+//   ], //x_matrix
+//   [ 11, 12, 13, 14, 15, 16, 17, 18, 19 ], //y_matrix
+//   8 //features
+// ]</code></pre>
+    </div>
+</div>
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="static-method-drop">
+    <span class="access" data-ice="access">public</span>
+    <span data-ice="static">static</span>
+    
+    
+    
+    
+    <span class="code" data-ice="name">drop</span><span class="code" data-ice="signature">(data: <span>Array</span>&lt;<span>Array</span>&lt;<span>number</span>&gt;&gt;, columns: <span>Array</span>&lt;<span>number</span>&gt;): <span>Array</span>&lt;<span>Array</span>&lt;<span>number</span>&gt;&gt;</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/lib/lstm_multivariate_time_series.mjs.html#lineNumber99">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Drops columns by array index</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">data</td>
+      <td data-ice="type" class="code"><span>Array</span>&lt;<span>Array</span>&lt;<span>number</span>&gt;&gt;</td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>data set to drop columns</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">columns</td>
+      <td data-ice="type" class="code"><span>Array</span>&lt;<span>number</span>&gt;</td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>array of column indexes</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span>Array</span>&lt;<span>Array</span>&lt;<span>number</span>&gt;&gt;</td>
+          <td class="return-desc" data-ice="returnDescription"><p>matrix with dropped columns</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="example">
+    <h4>Example:</h4>
+    
+  <div class="example-doc" data-ice="exampleDoc">
+      
+      <pre class="prettyprint source-code"><code data-ice="exampleCode">const data = [ [ 10, 20, 30, 40, 50, 60, 70, 80, 90, 11, 21, 31, 41, 51, 61, 71, 81, 91 ],
+[ 11, 21, 31, 41, 51, 61, 71, 81, 91, 12, 22, 32, 42, 52, 62, 72, 82, 92 ],
+[ 12, 22, 32, 42, 52, 62, 72, 82, 92, 13, 23, 33, 43, 53, 63, 73, 83, 93 ],
+[ 13, 23, 33, 43, 53, 63, 73, 83, 93, 14, 24, 34, 44, 54, 64, 74, 84, 94 ],
+[ 14, 24, 34, 44, 54, 64, 74, 84, 94, 15, 25, 35, 45, 55, 65, 75, 85, 95 ],
+[ 15, 25, 35, 45, 55, 65, 75, 85, 95, 16, 26, 36, 46, 56, 66, 76, 86, 96 ],
+[ 16, 26, 36, 46, 56, 66, 76, 86, 96, 17, 27, 37, 47, 57, 67, 77, 87, 97 ],
+[ 17, 27, 37, 47, 57, 67, 77, 87, 97, 18, 28, 38, 48, 58, 68, 78, 88, 98 ],
+[ 18, 28, 38, 48, 58, 68, 78, 88, 98, 19, 29, 39, 49, 59, 69, 79, 89, 99 ] ];
+const n_in = 1; //lookbacks
+const n_out = 1;
+const dropColumns = getDropableColumns(8, n_in, n_out); // =&gt;[ 10, 11, 12, 13, 14, 15, 16, 17 ]
+const newdata = drop(data,dropColumns); //=&gt; [ 
+// [ 10, 20, 30, 40, 50, 60, 70, 80, 90, 11 ],
+// [ 11, 21, 31, 41, 51, 61, 71, 81, 91, 12 ],
+// [ 12, 22, 32, 42, 52, 62, 72, 82, 92, 13 ],
+// [ 13, 23, 33, 43, 53, 63, 73, 83, 93, 14 ],
+// [ 14, 24, 34, 44, 54, 64, 74, 84, 94, 15 ],
+// [ 15, 25, 35, 45, 55, 65, 75, 85, 95, 16 ],
+// [ 16, 26, 36, 46, 56, 66, 76, 86, 96, 17 ],
+// [ 17, 27, 37, 47, 57, 67, 77, 87, 97, 18 ],
+// [ 18, 28, 38, 48, 58, 68, 78, 88, 98, 19 ] 
+//]</code></pre>
+    </div>
+</div>
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="static-method-getDropableColumns">
+    <span class="access" data-ice="access">public</span>
+    <span data-ice="static">static</span>
+    
+    
+    
+    
+    <span class="code" data-ice="name">getDropableColumns</span><span class="code" data-ice="signature">(features: <span>number</span>, n_in: <span>number</span>, n_out: <span>number</span>): <span>Array</span>&lt;<span>number</span>&gt;</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/lib/lstm_multivariate_time_series.mjs.html#lineNumber195">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Calculates which columns to drop by index</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">features</td>
+      <td data-ice="type" class="code"><span>number</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>number of independent variables</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">n_in</td>
+      <td data-ice="type" class="code"><span>number</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>look backs</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">n_out</td>
+      <td data-ice="type" class="code"><span>number</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>future iterations (currently only 1 supported)</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span>Array</span>&lt;<span>number</span>&gt;</td>
+          <td class="return-desc" data-ice="returnDescription"><p>array indexes to drop</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="example">
+    <h4>Example:</h4>
+    
+  <div class="example-doc" data-ice="exampleDoc">
+      
+      <pre class="prettyprint source-code"><code data-ice="exampleCode">const ds = [
+[10, 20, 30, 40, 50, 60, 70, 80, 90,],
+[11, 21, 31, 41, 51, 61, 71, 81, 91,],
+[12, 22, 32, 42, 52, 62, 72, 82, 92,],
+[13, 23, 33, 43, 53, 63, 73, 83, 93,],
+[14, 24, 34, 44, 54, 64, 74, 84, 94,],
+[15, 25, 35, 45, 55, 65, 75, 85, 95,],
+[16, 26, 36, 46, 56, 66, 76, 86, 96,],
+[17, 27, 37, 47, 57, 67, 77, 87, 97,],
+[18, 28, 38, 48, 58, 68, 78, 88, 98,],
+[19, 29, 39, 49, 59, 69, 79, 89, 99,],
+];
+const n_in = 1; //lookbacks
+const n_out = 1;
+const dropped = getDropableColumns(8, n_in, n_out); //=&gt; [ 10, 11, 12, 13, 14, 15, 16, 17 ]</code></pre>
+    </div>
+</div>
+
+  
+
+  
+  <div data-ice="todo"><h4>TODO:</h4><ul><li><span>support multiple iterations in the future, also only one output variable supported in column features * lookbacks -1</span></li></ul></div>
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="static-method-getTimeseriesDataSet">
+    <span class="access" data-ice="access">public</span>
+    <span data-ice="static">static</span>
+    
+    
+    
+    
+    <span class="code" data-ice="name">getTimeseriesDataSet</span><span class="code" data-ice="signature">(timeseries: <span>*</span>, look_back: <span>*</span>)</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/lib/lstm_multivariate_time_series.mjs.html#lineNumber235">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Returns data for predicting values</p>
+</div>
+
+  <div data-ice="override"><h4>Override:</h4><span><a href="class/lib/lstm_time_series.mjs~LSTMTimeSeries.html#static-method-getTimeseriesDataSet">LSTMTimeSeries#getTimeseriesDataSet</a></span></div>
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">timeseries</td>
+      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"></td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">look_back</td>
+      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"></td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="static-method-getTimeseriesShape">
+    <span class="access" data-ice="access">public</span>
+    <span data-ice="static">static</span>
+    
+    
+    
+    
+    <span class="code" data-ice="name">getTimeseriesShape</span><span class="code" data-ice="signature">(x_timeseries: <span>Array</span>&lt;<span>Array&lt;number</span>&gt;): <span>Array</span>&lt;<span>Array</span>&lt;<span>number</span>&gt;&gt;</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/lib/lstm_multivariate_time_series.mjs.html#lineNumber217">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Reshape input to be [samples, time steps, features]</p>
+</div>
+
+  <div data-ice="override"><h4>Override:</h4><span><a href="class/lib/lstm_time_series.mjs~LSTMTimeSeries.html#static-method-getTimeseriesShape">LSTMTimeSeries#getTimeseriesShape</a></span></div>
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">x_timeseries</td>
+      <td data-ice="type" class="code"><span>Array</span>&lt;<span>Array&lt;number</span>&gt;</td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>dataset array of values</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span>Array</span>&lt;<span>Array</span>&lt;<span>number</span>&gt;&gt;</td>
+          <td class="return-desc" data-ice="returnDescription"><p>returns proper timeseries forecasting shape</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="example">
+    <h4>Example:</h4>
+    
+  <div class="example-doc" data-ice="exampleDoc">
+      
+      <pre class="prettyprint source-code"></pre>
+    </div>
+</div>
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="static-method-seriesToSupervised">
+    <span class="access" data-ice="access">public</span>
+    <span data-ice="static">static</span>
+    
+    
+    
+    
+    <span class="code" data-ice="name">seriesToSupervised</span><span class="code" data-ice="signature">(data: <span>Array</span>&lt;<span>Array</span>&lt;<span>number</span>&gt;&gt;, n_in: <span>number</span>, n_out: <span>number</span>): <span>Array</span>&lt;<span>Array</span>&lt;<span>number</span>&gt;&gt;</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/lib/lstm_multivariate_time_series.mjs.html#lineNumber145">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Converts data set to supervised labels for forecasting, the first column must be the dependent variable</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">data</td>
+      <td data-ice="type" class="code"><span>Array</span>&lt;<span>Array</span>&lt;<span>number</span>&gt;&gt;</td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>data set</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">n_in</td>
+      <td data-ice="type" class="code"><span>number</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>look backs</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">n_out</td>
+      <td data-ice="type" class="code"><span>number</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>future iterations (only 1 supported)</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span>Array</span>&lt;<span>Array</span>&lt;<span>number</span>&gt;&gt;</td>
+          <td class="return-desc" data-ice="returnDescription"><p>multivariate dataset for time series</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  <div data-ice="example">
+    <h4>Example:</h4>
+    
+  <div class="example-doc" data-ice="exampleDoc">
+      
+      <pre class="prettyprint source-code"><code data-ice="exampleCode">const ds = [
+[10, 20, 30, 40, 50, 60, 70, 80, 90,],
+[11, 21, 31, 41, 51, 61, 71, 81, 91,],
+[12, 22, 32, 42, 52, 62, 72, 82, 92,],
+[13, 23, 33, 43, 53, 63, 73, 83, 93,],
+[14, 24, 34, 44, 54, 64, 74, 84, 94,],
+[15, 25, 35, 45, 55, 65, 75, 85, 95,],
+[16, 26, 36, 46, 56, 66, 76, 86, 96,],
+[17, 27, 37, 47, 57, 67, 77, 87, 97,],
+[18, 28, 38, 48, 58, 68, 78, 88, 98,],
+[19, 29, 39, 49, 59, 69, 79, 89, 99,],
+]; 
+const n_in = 1; //lookbacks
+const n_out = 1;
+const series = seriesToSupervised(ds, n_in, n_out); //=&gt; [ 
+// [ 10, 20, 30, 40, 50, 60, 70, 80, 90, 11, 21, 31, 41, 51, 61, 71, 81, 91 ],
+// [ 11, 21, 31, 41, 51, 61, 71, 81, 91, 12, 22, 32, 42, 52, 62, 72, 82, 92 ],
+// [ 12, 22, 32, 42, 52, 62, 72, 82, 92, 13, 23, 33, 43, 53, 63, 73, 83, 93 ],
+// [ 13, 23, 33, 43, 53, 63, 73, 83, 93, 14, 24, 34, 44, 54, 64, 74, 84, 94 ],
+// [ 14, 24, 34, 44, 54, 64, 74, 84, 94, 15, 25, 35, 45, 55, 65, 75, 85, 95 ],
+// [ 15, 25, 35, 45, 55, 65, 75, 85, 95, 16, 26, 36, 46, 56, 66, 76, 86, 96 ],
+// [ 16, 26, 36, 46, 56, 66, 76, 86, 96, 17, 27, 37, 47, 57, 67, 77, 87, 97 ],
+// [ 17, 27, 37, 47, 57, 67, 77, 87, 97, 18, 28, 38, 48, 58, 68, 78, 88, 98 ],
+// [ 18, 28, 38, 48, 58, 68, 78, 88, 98, 19, 29, 39, 49, 59, 69, 79, 89, 99 ] 
+//];</code></pre>
+    </div>
+</div>
+
+  
+
+  
+  <div data-ice="todo"><h4>TODO:</h4><ul><li><span>support multiple future iterations</span></li></ul></div>
+</div>
+</div>
+<div data-ice="constructorDetails"><h2 data-ice="title">Public Constructors</h2>
+
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-constructor-constructor">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">constructor</span><span class="code" data-ice="signature">(options: {layers: <span>Array</span>&lt;<span>Object</span>&gt;, compile: <span>Object</span>, fit: <span>Object</span>}, properties: *)</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/lib/lstm_multivariate_time_series.mjs.html#lineNumber259">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  
+
+  <div data-ice="override"><h4>Override:</h4><span><a href="class/lib/lstm_time_series.mjs~LSTMTimeSeries.html#instance-constructor-constructor">LSTMTimeSeries#constructor</a></span></div>
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">options</td>
+      <td data-ice="type" class="code">{layers: <span>Array</span>&lt;<span>Object</span>&gt;, compile: <span>Object</span>, fit: <span>Object</span>}</td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>neural network configuration and tensorflow model hyperparameters</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">properties</td>
+      <td data-ice="type" class="code">*</td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>extra instance properties</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+</div>
+<div data-ice="memberDetails"><h2 data-ice="title">Public Members</h2>
+
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-member-createDataset">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">createDataset</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/lib/lstm_multivariate_time_series.mjs.html#lineNumber279">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Creates dataset data</p>
+</div>
+
+  <div data-ice="override"><h4>Override:</h4><span><a href="class/lib/lstm_time_series.mjs~LSTMTimeSeries.html#static-method-createDataset">LSTMTimeSeries#createDataset</a></span></div>
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-member-drop">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">drop</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/lib/lstm_multivariate_time_series.mjs.html#lineNumber282">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-member-getDropableColumns">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">getDropableColumns</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/lib/lstm_multivariate_time_series.mjs.html#lineNumber281">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-member-getTimeseriesDataSet">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">getTimeseriesDataSet</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/lib/lstm_multivariate_time_series.mjs.html#lineNumber284">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Returns data for predicting values</p>
+</div>
+
+  <div data-ice="override"><h4>Override:</h4><span><a href="class/lib/lstm_time_series.mjs~LSTMTimeSeries.html#static-method-getTimeseriesDataSet">LSTMTimeSeries#getTimeseriesDataSet</a></span></div>
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-member-getTimeseriesShape">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">getTimeseriesShape</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/lib/lstm_multivariate_time_series.mjs.html#lineNumber283">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Reshape input to be [samples, time steps, features]</p>
+</div>
+
+  <div data-ice="override"><h4>Override:</h4><span><a href="class/lib/lstm_time_series.mjs~LSTMTimeSeries.html#static-method-getTimeseriesShape">LSTMTimeSeries#getTimeseriesShape</a></span></div>
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-member-layers">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">layers</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/lib/lstm_multivariate_time_series.mjs.html#lineNumber328">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  
+
+  <div data-ice="override"><h4>Override:</h4><span><a href="class/lib/lstm_time_series.mjs~LSTMTimeSeries.html#instance-member-layers">LSTMTimeSeries#layers</a></span></div>
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-member-model">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">model</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/lib/lstm_multivariate_time_series.mjs.html#lineNumber375">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  
+
+  <div data-ice="override"><h4>Override:</h4><span><a href="class/lib/lstm_time_series.mjs~LSTMTimeSeries.html#instance-member-model">LSTMTimeSeries#model</a></span></div>
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-member-seriesToSupervised">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">seriesToSupervised</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/lib/lstm_multivariate_time_series.mjs.html#lineNumber280">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-member-xShape">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">xShape</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/lib/lstm_multivariate_time_series.mjs.html#lineNumber300">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  
+
+  <div data-ice="override"><h4>Override:</h4><span><a href="class/lib/lstm_time_series.mjs~LSTMTimeSeries.html#instance-member-xShape">LSTMTimeSeries#xShape</a></span></div>
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-member-yShape">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">yShape</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/lib/lstm_multivariate_time_series.mjs.html#lineNumber299">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  
+
+  <div data-ice="override"><h4>Override:</h4><span><a href="class/lib/lstm_time_series.mjs~LSTMTimeSeries.html#instance-member-yShape">LSTMTimeSeries#yShape</a></span></div>
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+</div>
+<div data-ice="methodDetails"><h2 data-ice="title">Public Methods</h2>
+
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-generateLayers">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">generateLayers</span><span class="code" data-ice="signature">(x_matrix: <span>Array</span>&lt;<span>Array</span>&lt;<span>number</span>&gt;&gt;, y_matrix: <span>Array</span>&lt;<span>Array</span>&lt;<span>number</span>&gt;&gt;, layers: <span>Array</span>&lt;<span>Object</span>&gt;, x_test: <span>Array</span>&lt;<span>Array</span>&lt;<span>number</span>&gt;&gt;, y_test: <span>Array</span>&lt;<span>Array</span>&lt;<span>number</span>&gt;&gt;)</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/lib/lstm_multivariate_time_series.mjs.html#lineNumber296">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Adds dense layers to tensorflow classification model</p>
+</div>
+
+  <div data-ice="override"><h4>Override:</h4><span><a href="class/lib/lstm_time_series.mjs~LSTMTimeSeries.html#instance-method-generateLayers">LSTMTimeSeries#generateLayers</a></span></div>
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">x_matrix</td>
+      <td data-ice="type" class="code"><span>Array</span>&lt;<span>Array</span>&lt;<span>number</span>&gt;&gt;</td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>independent variables</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">y_matrix</td>
+      <td data-ice="type" class="code"><span>Array</span>&lt;<span>Array</span>&lt;<span>number</span>&gt;&gt;</td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>dependent variables</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">layers</td>
+      <td data-ice="type" class="code"><span>Array</span>&lt;<span>Object</span>&gt;</td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>model dense layer parameters</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">x_test</td>
+      <td data-ice="type" class="code"><span>Array</span>&lt;<span>Array</span>&lt;<span>number</span>&gt;&gt;</td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>validation data independent variables</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">y_test</td>
+      <td data-ice="type" class="code"><span>Array</span>&lt;<span>Array</span>&lt;<span>number</span>&gt;&gt;</td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>validation data dependent variables</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-train">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    <span data-ice="async">async</span>
+    
+    <span class="code" data-ice="name">train</span><span class="code" data-ice="signature">(x_timeseries: <span>*</span>, y_timeseries: <span>*</span>, layers: <span>*</span>, x_test: <span>*</span>, y_test: <span>*</span>)</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/lib/lstm_multivariate_time_series.mjs.html#lineNumber342">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  
+
+  <div data-ice="override"><h4>Override:</h4><span><a href="class/lib/lstm_time_series.mjs~LSTMTimeSeries.html#instance-method-train">LSTMTimeSeries#train</a></span></div>
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">x_timeseries</td>
+      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"></td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">y_timeseries</td>
+      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"></td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">layers</td>
+      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"></td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">x_test</td>
+      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"></td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">y_test</td>
+      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"></td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+</div>
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

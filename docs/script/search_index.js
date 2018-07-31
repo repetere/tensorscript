@@ -18,6 +18,12 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
+    "tensorscript/lib/lstm_multivariate_time_series.mjs~lstmmultivariatetimeseries",
+    "class/lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries.html",
+    "<span>LSTMMultivariateTimeSeries</span> <span class=\"search-result-import-path\">tensorscript/lib/lstm_multivariate_time_series.mjs</span>",
+    "class"
+  ],
+  [
     "tensorscript/lib/lstm_time_series.mjs~lstmtimeseries",
     "class/lib/lstm_time_series.mjs~LSTMTimeSeries.html",
     "<span>LSTMTimeSeries</span> <span class=\"search-result-import-path\">tensorscript/lib/lstm_time_series.mjs</span>",
@@ -181,109 +187,265 @@ window.esdocSearchIndex = [
   ],
   [
     "",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber92",
+    "LSTMMultivariateTimeSeries",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber338",
+    "LSTMMultivariateTimeSeries async predict",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber345",
+    "LSTMMultivariateTimeSeries async predict should allow for stateless predictions with multiple step time windows",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber339",
+    "LSTMMultivariateTimeSeries async predict should allow for stateless predictions with one step time windows",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber351",
+    "LSTMMultivariateTimeSeries async predict should make single predictions",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber359",
+    "LSTMMultivariateTimeSeries async train",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber360",
+    "LSTMMultivariateTimeSeries async train should train a model with supplied test data",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber329",
+    "LSTMMultivariateTimeSeries constructor",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber330",
+    "LSTMMultivariateTimeSeries constructor should export a named module class",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber380",
+    "LSTMMultivariateTimeSeries generateLayers",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber405",
+    "LSTMMultivariateTimeSeries generateLayers should generate a network from layers",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber282",
+    "LSTMMultivariateTimeSeries static createDataset",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber284",
+    "LSTMMultivariateTimeSeries static createDataset should return timeseries datasets",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber196",
+    "LSTMMultivariateTimeSeries static drop",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber197",
+    "LSTMMultivariateTimeSeries static drop should drop matrix columns",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber215",
+    "LSTMMultivariateTimeSeries static getDropableColumns",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber222",
+    "LSTMMultivariateTimeSeries static getDropableColumns should calculate dropable columns",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber239",
+    "LSTMMultivariateTimeSeries static getDropableColumns should throw an error if more that one future iteration",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber314",
+    "LSTMMultivariateTimeSeries static getTimeseriesDataSet",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber316",
+    "LSTMMultivariateTimeSeries static getTimeseriesDataSet should return timeseries data",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber294",
+    "LSTMMultivariateTimeSeries static getTimeseriesShape",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber297",
+    "LSTMMultivariateTimeSeries static getTimeseriesShape should calculate timeseries shape",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber243",
+    "LSTMMultivariateTimeSeries static seriesToSupervised",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber257",
+    "LSTMMultivariateTimeSeries static seriesToSupervised should generate supervised series",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber275",
+    "LSTMMultivariateTimeSeries static seriesToSupervised should throw an error if more that one future iteration",
+    "test"
+  ],
+  [
+    "",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber278",
+    "LSTMMultivariateTimeSeries static seriesToSupervised should throw an error if no dependent variable supplied",
+    "test"
+  ],
+  [
+    "",
     "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber84",
     "LSTMTimeSeries",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber234",
+    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber236",
     "LSTMTimeSeries async predict",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber241",
+    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber243",
     "LSTMTimeSeries async predict should allow for stateless predictions with multiple step time windows",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber235",
+    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber237",
     "LSTMTimeSeries async predict should allow for stateless predictions with one step time windows",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber255",
+    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber257",
     "LSTMTimeSeries async predict should make single predictions",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber247",
+    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber249",
     "LSTMTimeSeries async predict should make stateful predictions",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber263",
+    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber265",
     "LSTMTimeSeries async train",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber264",
+    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber266",
     "LSTMTimeSeries async train should train a model with supplied test data",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber225",
+    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber227",
     "LSTMTimeSeries constructor",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber226",
+    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber228",
     "LSTMTimeSeries constructor should export a named module class",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber279",
+    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber281",
     "LSTMTimeSeries generateLayers",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber304",
+    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber306",
     "LSTMTimeSeries generateLayers should generate a network from layers",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber168",
+    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber170",
     "LSTMTimeSeries static createDataset",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber170",
+    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber172",
     "LSTMTimeSeries static createDataset should return timeseries datasets",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber208",
+    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber210",
     "LSTMTimeSeries static getTimeseriesDataSet",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber210",
+    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber212",
     "LSTMTimeSeries static getTimeseriesDataSet should return timeseries data",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber179",
+    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber181",
     "LSTMTimeSeries static getTimeseriesShape",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber181",
+    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber183",
     "LSTMTimeSeries static getTimeseriesShape should calculate timeseries shape",
     "test"
   ],
@@ -600,6 +762,126 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
+    "lib/lstm_multivariate_time_series.mjs",
+    "file/lib/lstm_multivariate_time_series.mjs.html",
+    "lib/lstm_multivariate_time_series.mjs",
+    "file"
+  ],
+  [
+    "lib/lstm_multivariate_time_series.mjs~lstmmultivariatetimeseries#constructor",
+    "class/lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries.html#instance-constructor-constructor",
+    "lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries#constructor",
+    "method"
+  ],
+  [
+    "lib/lstm_multivariate_time_series.mjs~lstmmultivariatetimeseries#createdataset",
+    "class/lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries.html#instance-member-createDataset",
+    "lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries#createDataset",
+    "member"
+  ],
+  [
+    "lib/lstm_multivariate_time_series.mjs~lstmmultivariatetimeseries#drop",
+    "class/lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries.html#instance-member-drop",
+    "lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries#drop",
+    "member"
+  ],
+  [
+    "lib/lstm_multivariate_time_series.mjs~lstmmultivariatetimeseries#generatelayers",
+    "class/lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries.html#instance-method-generateLayers",
+    "lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries#generateLayers",
+    "method"
+  ],
+  [
+    "lib/lstm_multivariate_time_series.mjs~lstmmultivariatetimeseries#getdropablecolumns",
+    "class/lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries.html#instance-member-getDropableColumns",
+    "lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries#getDropableColumns",
+    "member"
+  ],
+  [
+    "lib/lstm_multivariate_time_series.mjs~lstmmultivariatetimeseries#gettimeseriesdataset",
+    "class/lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries.html#instance-member-getTimeseriesDataSet",
+    "lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries#getTimeseriesDataSet",
+    "member"
+  ],
+  [
+    "lib/lstm_multivariate_time_series.mjs~lstmmultivariatetimeseries#gettimeseriesshape",
+    "class/lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries.html#instance-member-getTimeseriesShape",
+    "lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries#getTimeseriesShape",
+    "member"
+  ],
+  [
+    "lib/lstm_multivariate_time_series.mjs~lstmmultivariatetimeseries#layers",
+    "class/lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries.html#instance-member-layers",
+    "lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries#layers",
+    "member"
+  ],
+  [
+    "lib/lstm_multivariate_time_series.mjs~lstmmultivariatetimeseries#model",
+    "class/lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries.html#instance-member-model",
+    "lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries#model",
+    "member"
+  ],
+  [
+    "lib/lstm_multivariate_time_series.mjs~lstmmultivariatetimeseries#seriestosupervised",
+    "class/lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries.html#instance-member-seriesToSupervised",
+    "lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries#seriesToSupervised",
+    "member"
+  ],
+  [
+    "lib/lstm_multivariate_time_series.mjs~lstmmultivariatetimeseries#train",
+    "class/lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries.html#instance-method-train",
+    "lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries#train",
+    "method"
+  ],
+  [
+    "lib/lstm_multivariate_time_series.mjs~lstmmultivariatetimeseries#xshape",
+    "class/lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries.html#instance-member-xShape",
+    "lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries#xShape",
+    "member"
+  ],
+  [
+    "lib/lstm_multivariate_time_series.mjs~lstmmultivariatetimeseries#yshape",
+    "class/lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries.html#instance-member-yShape",
+    "lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries#yShape",
+    "member"
+  ],
+  [
+    "lib/lstm_multivariate_time_series.mjs~lstmmultivariatetimeseries.createdataset",
+    "class/lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries.html#static-method-createDataset",
+    "lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries.createDataset",
+    "method"
+  ],
+  [
+    "lib/lstm_multivariate_time_series.mjs~lstmmultivariatetimeseries.drop",
+    "class/lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries.html#static-method-drop",
+    "lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries.drop",
+    "method"
+  ],
+  [
+    "lib/lstm_multivariate_time_series.mjs~lstmmultivariatetimeseries.getdropablecolumns",
+    "class/lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries.html#static-method-getDropableColumns",
+    "lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries.getDropableColumns",
+    "method"
+  ],
+  [
+    "lib/lstm_multivariate_time_series.mjs~lstmmultivariatetimeseries.gettimeseriesdataset",
+    "class/lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries.html#static-method-getTimeseriesDataSet",
+    "lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries.getTimeseriesDataSet",
+    "method"
+  ],
+  [
+    "lib/lstm_multivariate_time_series.mjs~lstmmultivariatetimeseries.gettimeseriesshape",
+    "class/lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries.html#static-method-getTimeseriesShape",
+    "lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries.getTimeseriesShape",
+    "method"
+  ],
+  [
+    "lib/lstm_multivariate_time_series.mjs~lstmmultivariatetimeseries.seriestosupervised",
+    "class/lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries.html#static-method-seriesToSupervised",
+    "lib/lstm_multivariate_time_series.mjs~LSTMMultivariateTimeSeries.seriesToSupervised",
+    "method"
+  ],
+  [
     "lib/lstm_time_series.mjs",
     "file/lib/lstm_time_series.mjs.html",
     "lib/lstm_time_series.mjs",
@@ -837,6 +1119,12 @@ window.esdocSearchIndex = [
     "test/unit/logistic_regression_spec.mjs",
     "test-file/test/unit/logistic_regression_spec.mjs.html",
     "test/unit/logistic_regression_spec.mjs",
+    "testFile"
+  ],
+  [
+    "test/unit/lstm_multivariate_time_series_spec.mjs",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html",
+    "test/unit/lstm_multivariate_time_series_spec.mjs",
     "testFile"
   ],
   [
