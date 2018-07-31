@@ -72,59 +72,7 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><div class="github-markdown" data-ice="content"><h1 id="overview">Overview</h1><p>All of the model building classes are structured similarly to ml.js models. Each model has three shared components regardless if it&apos;s a regression, classification or time series model.</p>
-<p>This library was built to quickly implement <a href="https://js.tensorflow.org">Tensorflow</a> and <a href="https://js.tensorflow.org/tutorials/import-keras.html">Keras</a> models in JavaScript.</p>
-<h2 id="configuration">Configuration</h2><p>All of the model configuration is managed during creating an instance of the class. All models have <code>fit</code> and <code>compile</code> properties that are assigned to the instance <code>settings</code> property.</p>
-<p>You can also pass the Tensorflow reference to be used, as a configuration property if you want to use the compiled C++ or GPU via CUDA versions on the <code>tf</code> property;</p>
-<ul>
-<li><code>this.settings.compile</code> is passed to <code>tensorflow.model.compile</code> and contains the configuration for optimiziers (<a href="https://js.tensorflow.org/api/latest/#tf.Model.compile"><code>read more</code></a>).</li>
-<li><code>this.settings.fit</code> is passed to <code>tensorflow.model.fit</code> and contains the configuration for model fitting (<a href="https://js.tensorflow.org/api/latest/#tf.Sequential.fit"><code>read more</code></a>)</li>
-</ul>
-<h3 id="model-constructor-example">Model constructor example</h3><pre><code class="lang-javascript"><code class="source-code prettyprint">import { MultipleLinearRegression, } from &apos;tensorscript&apos;;
-import tf from &apos;@tensorflow/tfjs-node-gpu&apos;;
-
-const MLR = new MultipleLinearRegression({
-  fit:{
-    epochs:500,
-    batchSize:5,
-  },
-  compile:{
-    loss: &apos;meanSquaredError&apos;,
-    optimizer: &apos;adam&apos;,
-  },
-},{
-  tf,
-});</code>
-</code></pre>
-<p>Each constructor takes two parameters <code>settings</code> and <code>properties</code>. As in the example above, <em>settings</em> are used to configure tensorflow objects and properties are used to configure tensorscript (like which version of tensorflow to use).</p>
-<h2 id="trainning">Trainning</h2><p>All tensorflow models train asynchronously, therefore all tensorscript model train functions are all asynchronous. Always pass dependent and independent variables as matrix inputs.</p>
-<p>Timeseries models can be trained with only one input matrix.</p>
-<h3 id="trainning-example">Trainning example</h3><pre><code class="lang-javascript"><code class="source-code prettyprint">
-import { MultipleLinearRegression, } from &apos;tensorscript&apos;;
-
-async function main(){
-  const MLR = new MultipleLinearRegression();
-  const x = [ [1], [2] ];
-  const y = [ [3], [4] ];
-  await MLR.train(x,y);
-}</code>
-</code></pre>
-<h2 id="predicting">Predicting</h2><p>All prediction inputs must be the same shape as trainning inputs. TensorScript provides an asynchronous predict method that converts tensor values to javascript objects. If you want the tensor from tensorflow, use the calculate method instead.</p>
-<h3 id="predicting-example">Predicting example</h3><pre><code class="lang-javascript"><code class="source-code prettyprint">import { MultipleLinearRegression, } from &apos;tensorscript&apos;;
-
-async function main(){
-  const MLR = new MultipleLinearRegression();
-  const x = [ [1], [2] ];
-  const y = [ [3], [4] ];
-  await MLR.train(x,y);
-
-  await MLR.predict([[3]]) //=&gt; [[5]];
-  const tensorPrediction = await MLR.calculate([[3]]) //=&gt; [[5]];
-  tensorPrediction.data()
-    .then(tensors=&gt; /*Typed Array*/)
-}</code>
-</code></pre>
-<h2 id="examples">Examples</h2><p>For more examples on how to do feature scaling and more, check out the <em><a href="https://github.com/repetere/tensorscript/tree/master/manual/examples">Examples folder</a></em>.</p>
+<div class="content" data-ice="content"><div class="github-markdown" data-ice="content"><h1 id="tutorial">tutorial</h1><p>this is the overview</p>
 </div>
 </div>
 

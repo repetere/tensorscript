@@ -28,11 +28,8 @@
           "asset": "./manual/asset",
           "files": [
             "./manual/overview.md",
-            "./manual/installation.md",
             "./manual/usage.md",
-            "./manual/tutorial.md",
-            "./manual/configuration.md",
-            "./manual/example.md",
+            "./manual/faq.md",
             "./CHANGELOG.md"
           ]
         },

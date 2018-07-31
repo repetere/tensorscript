@@ -31,13 +31,14 @@
 <div data-ice="manual">
     <ul class="manual-toc">
       
-    <li data-ice="manualNav" class="indent-h1" data-link="manual/overview.html"><a href="manual/overview.html" data-ice="link">overview</a></li>
-</ul>
-  </div>
-<div data-ice="manual">
-    <ul class="manual-toc">
-      
-    <li data-ice="manualNav" class="indent-h1" data-link="manual/installation.html"><a href="manual/installation.html" data-ice="link">install</a></li>
+    <li data-ice="manualNav" class="indent-h1" data-link="manual/overview.html"><a href="manual/overview.html" data-ice="link">Overview</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/overview.html"><a href="manual/overview.html#configuration" data-ice="link">Configuration</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/overview.html"><a href="manual/overview.html#model-constructor-example" data-ice="link">Model constructor example</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/overview.html"><a href="manual/overview.html#trainning" data-ice="link">Trainning</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/overview.html"><a href="manual/overview.html#trainning-example" data-ice="link">Trainning example</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/overview.html"><a href="manual/overview.html#predicting" data-ice="link">Predicting</a></li>
+<li data-ice="manualNav" class="indent-h3" data-link="manual/overview.html"><a href="manual/overview.html#predicting-example" data-ice="link">Predicting example</a></li>
+<li data-ice="manualNav" class="indent-h2" data-link="manual/overview.html"><a href="manual/overview.html#examples" data-ice="link">Examples</a></li>
 </ul>
   </div>
 <div data-ice="manual">
@@ -60,19 +61,7 @@
 <div data-ice="manual">
     <ul class="manual-toc">
       
-    <li data-ice="manualNav" class="indent-h1" data-link="manual/tutorial.html"><a href="manual/tutorial.html" data-ice="link">tutorial</a></li>
-</ul>
-  </div>
-<div data-ice="manual">
-    <ul class="manual-toc">
-      
-    <li data-ice="manualNav" class="indent-h1" data-link="manual/configuration.html"><a href="manual/configuration.html" data-ice="link">config</a></li>
-</ul>
-  </div>
-<div data-ice="manual">
-    <ul class="manual-toc">
-      
-    <li data-ice="manualNav" class="indent-h1" data-link="manual/example.html"><a href="manual/example.html" data-ice="link">example</a></li>
+    <li data-ice="manualNav" class="indent-h1" data-link="manual/faq.html"><a href="manual/faq.html" data-ice="link">tutorial</a></li>
 </ul>
   </div>
 <div data-ice="manual">
@@ -86,23 +75,23 @@
 <div class="content" data-ice="content"><div class="github-markdown">
   <div class="manual-user-index" data-ice="manualUserIndex"><h1 id="tensorscript---machine-learing-and-neural-networks-with-tensorflow">TensorScript - Machine Learing and Neural Networks with Tensorflow</h1><p><a href="https://coveralls.io/github/repetere/tensorscript?branch=master"><img src="https://coveralls.io/repos/github/repetere/tensorscript/badge.svg?branch=master" alt="Coverage Status"></a> <a href="https://travis-ci.org/repetere/tensorscript"><img src="https://travis-ci.org/repetere/tensorscript.svg?branch=master" alt="Build Status"></a></p>
 <h2 id="introduction">Introduction</h2><p>This library is a compilation of model building modules with a consistent API for quickly implementing Tensorflow at edge(browser) or any JavaScript environment (Node JS / GPU).</p>
-<h2 id="list-of-tensorflow-models">List of Tensorflow models</h2><h3 id="classification">Classification</h3><ul>
-<li>Deep Learning Classification: <a href="https://repetere.github.io/tensorscript/manual/usage-classification.html"><code>DeepLearningClassification</code></a></li>
-<li>Logistic Regression: <a href="https://repetere.github.io/tensorscript/manual/usage-classification.html"><code>LogisticRegression</code></a></li>
+<h3 id="-a-href--https---repetere-github-io-tensorscript-manual-overview-html--read-the-manual--a-"><a href="https://repetere.github.io/tensorscript/manual/overview.html">Read the manual</a></h3><h2 id="list-of-tensorflow-models">List of Tensorflow models</h2><h3 id="classification">Classification</h3><ul>
+<li>Deep Learning Classification: <a href="https://repetere.github.io/tensorscript/manual/usage.html#classification"><code>DeepLearningClassification</code></a></li>
+<li>Logistic Regression: <a href="https://repetere.github.io/tensorscript/manual/usage.html#classification"><code>LogisticRegression</code></a></li>
 </ul>
 <h3 id="regression">Regression</h3><ul>
-<li>Deep Learning Regression: <a href="https://repetere.github.io/tensorscript/manual/usage-regression.html"><code>DeepLearningRegression</code></a></li>
-<li>Multivariate Linear Regression: <a href="https://repetere.github.io/tensorscript/manual/usage-regression.html"><code>MultipleLinearRegression</code></a></li>
+<li>Deep Learning Regression: <a href="https://repetere.github.io/tensorscript/manual/usage.html#regression"><code>DeepLearningRegression</code></a></li>
+<li>Multivariate Linear Regression: <a href="https://repetere.github.io/tensorscript/manual/usage.html#regression"><code>MultipleLinearRegression</code></a></li>
 </ul>
 <h3 id="artificial-neural-networks--ann-">Artificial neural networks (ANN)</h3><ul>
-<li>Multi-Layered Perceptrons: <a href="https://repetere.github.io/tensorscript/manual/usage-baseneuralnetwork.html"><code>BaseNeuralNetwork</code></a></li>
+<li>Multi-Layered Perceptrons: <a href="https://repetere.github.io/tensorscript/manual/usage.html#neural-networks"><code>BaseNeuralNetwork</code></a></li>
 </ul>
 <h3 id="lstm-time-series">LSTM Time Series</h3><ul>
-<li>Long Short Term Memory Time Series: <a href="https://repetere.github.io/tensorscript/manual/usage-timeseries.html"><code>LSTMTimeSeries</code></a> (Matrix class)</li>
-<li>Long Short Term Memory Multivariate Time Series: <a href="https://repetere.github.io/tensorscript/manual/usage-timeseries.html"><code>LSTMMultivariateTimeSeries</code></a></li>
+<li>Long Short Term Memory Time Series: <a href="https://repetere.github.io/tensorscript/manual/usage.html#timeseries"><code>LSTMTimeSeries</code></a></li>
+<li>Long Short Term Memory Multivariate Time Series: <a href="https://repetere.github.io/tensorscript/manual/usage.html#timeseries"><code>LSTMMultivariateTimeSeries</code></a></li>
 </ul>
-<h2 id="basic-usage">Basic Usage</h2><p>Tensorscript is and ECMA Script module designed to be used in an <code>ES2015+</code> environment, if you need compiled modules for older versions of node use <code>require(&apos;tensorscript/legacy/&apos;)</code></p>
-<p>Please read more on tensorflow configuration options, specifying epochs, and using custom layers in configuration.</p>
+<h2 id="basic-usage">Basic Usage</h2><p>Tensorscript is and ECMA Script module designed to be used in an <code>ES2015+</code> environment, if you need compiled modules for older versions of node use the compiled modules in the legacy folder.</p>
+<p>Please read more on tensorflow configuration options, specifying epochs, and using custom layers in <a href="https://repetere.github.io/tensorscript/manual/overview.html#configuration">configuration</a>.</p>
 <h3 id="regression-examples">Regression Examples</h3><pre><code class="lang-javascript"><code class="source-code prettyprint">import { MultipleLinearRegression, DeepLearningRegression, } from &apos;tensorscript&apos;;
 import ms from &apos;modelscript&apos;;
 
@@ -236,14 +225,48 @@ $ npm i --python=/usr/bin/python</code>
     
   <div class="manual-card-wrap" data-ice="cards">
       <div class="manual-card">
-        <div data-ice="card"><h1>overview</h1><p>this is the overview</p></div>
+        <div data-ice="card"><h1>Overview</h1><p>All of the model building classes are structured similarly to ml.js models. Each model has three shared components regardless if it&apos;s a regression, classification or time series model.</p><p>This library was built to quickly implement <a href="https://js.tensorflow.org">Tensorflow</a> and <a href="https://js.tensorflow.org/tutorials/import-keras.html">Keras</a> models in JavaScript.</p><h2>Configuration</h2><p>All of the model configuration is managed during creating an instance of the class. All models have <code>fit</code> and <code>compile</code> properties that are assigned to the instance <code>settings</code> property.</p><p>You can also pass the Tensorflow reference to be used, as a configuration property if you want to use the compiled C++ or GPU via CUDA versions on the <code>tf</code> property;</p><ul>
+<li><code>this.settings.compile</code> is passed to <code>tensorflow.model.compile</code> and contains the configuration for optimiziers (<a href="https://js.tensorflow.org/api/latest/#tf.Model.compile"><code>read more</code></a>).</li>
+<li><code>this.settings.fit</code> is passed to <code>tensorflow.model.fit</code> and contains the configuration for model fitting (<a href="https://js.tensorflow.org/api/latest/#tf.Sequential.fit"><code>read more</code></a>)</li>
+</ul><h3>Model constructor example</h3><pre><code class="lang-javascript"><code class="source-code prettyprint">import { MultipleLinearRegression, } from &apos;tensorscript&apos;;
+import tf from &apos;@tensorflow/tfjs-node-gpu&apos;;
+
+const MLR = new MultipleLinearRegression({
+  fit:{
+    epochs:500,
+    batchSize:5,
+  },
+  compile:{
+    loss: &apos;meanSquaredError&apos;,
+    optimizer: &apos;adam&apos;,
+  },
+},{
+  tf,
+});</code>
+</code></pre><p>Each constructor takes two parameters <code>settings</code> and <code>properties</code>. As in the example above, <em>settings</em> are used to configure tensorflow objects and properties are used to configure tensorscript (like which version of tensorflow to use).</p><h2>Trainning</h2><p>All tensorflow models train asynchronously, therefore all tensorscript model train functions are all asynchronous. Always pass dependent and independent variables as matrix inputs.</p><p>Timeseries models can be trained with only one input matrix.</p><h3>Trainning example</h3><pre><code class="lang-javascript"><code class="source-code prettyprint">
+import { MultipleLinearRegression, } from &apos;tensorscript&apos;;
+
+async function main(){
+  const MLR = new MultipleLinearRegression();
+  const x = [ [1], [2] ];
+  const y = [ [3], [4] ];
+  await MLR.train(x,y);
+}</code>
+</code></pre><h2>Predicting</h2><p>All prediction inputs must be the same shape as trainning inputs. TensorScript provides an asynchronous predict method that converts tensor values to javascript objects. If you want the tensor from tensorflow, use the calculate method instead.</p><h3>Predicting example</h3><pre><code class="lang-javascript"><code class="source-code prettyprint">import { MultipleLinearRegression, } from &apos;tensorscript&apos;;
+
+async function main(){
+  const MLR = new MultipleLinearRegression();
+  const x = [ [1], [2] ];
+  const y = [ [3], [4] ];
+  await MLR.train(x,y);
+
+  await MLR.predict([[3]]) //=&gt; [[5]];
+  const tensorPrediction = await MLR.calculate([[3]]) //=&gt; [[5]];
+  tensorPrediction.data()
+    .then(tensors=&gt; /*Typed Array*/)
+}</code>
+</code></pre><h2>Examples</h2><p>For more examples on how to do feature scaling and more, check out the <em><a href="https://github.com/repetere/tensorscript/tree/master/manual/examples">Examples folder</a></em>.</p></div>
         <a data-ice="link" href="manual/overview.html"></a>
-      </div>
-    </div>
-<div class="manual-card-wrap" data-ice="cards">
-      <div class="manual-card">
-        <div data-ice="card"><h1>install</h1><p>this is the overview</p></div>
-        <a data-ice="link" href="manual/installation.html"></a>
       </div>
     </div>
 <div class="manual-card-wrap" data-ice="cards">
@@ -566,19 +589,7 @@ $ npm i --python=/usr/bin/python</code>
 <div class="manual-card-wrap" data-ice="cards">
       <div class="manual-card">
         <div data-ice="card"><h1>tutorial</h1><p>this is the overview</p></div>
-        <a data-ice="link" href="manual/tutorial.html"></a>
-      </div>
-    </div>
-<div class="manual-card-wrap" data-ice="cards">
-      <div class="manual-card">
-        <div data-ice="card"><h1>config</h1><p>this is the overview</p></div>
-        <a data-ice="link" href="manual/configuration.html"></a>
-      </div>
-    </div>
-<div class="manual-card-wrap" data-ice="cards">
-      <div class="manual-card">
-        <div data-ice="card"><h1>example</h1><p>this is the overview</p></div>
-        <a data-ice="link" href="manual/example.html"></a>
+        <a data-ice="link" href="manual/faq.html"></a>
       </div>
     </div>
 </div>
