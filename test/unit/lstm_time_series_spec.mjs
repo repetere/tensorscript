@@ -84,6 +84,7 @@ async function getModelAccuracy(preddata){
 describe('LSTMTimeSeries', function () {
   this.timeout(120000);
   before(async function () {
+    this.timeout(120000);
     /*
     csvData = [ 
       { Month: '1949-01', Passengers: 112 },
@@ -164,6 +165,7 @@ describe('LSTMTimeSeries', function () {
         modelname: 'TSTSStatefulONE',
       },
     ];
+    return true;
   });
   describe('static createDataset', () => {
     const lookback = 3;
@@ -306,6 +308,7 @@ describe('LSTMTimeSeries', function () {
       console.log('TSTSONE.layers', TSTSONE.layers);
       await LSTMTS.train(x_matrix, y_matrix, TSTSONE.layers);
       expect(LSTMTS.layers).to.be.a('object');
+      return true;
     });
   });
 });
