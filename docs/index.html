@@ -41,49 +41,49 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="tensorscript">TensorScript</h1><p><a href="https://coveralls.io/github/repetere/tensorscript?branch=master"><img src="https://coveralls.io/repos/github/repetere/tensorscript/badge.svg?branch=master" alt="Coverage Status"></a> <a href="https://travis-ci.org/repetere/tensorscript"><img src="https://travis-ci.org/repetere/tensorscript.svg?branch=master" alt="Build Status"></a></p>
-<p>Deep Learning Classification, LSTM Time Series, Regression and Multi-Layered Perceptrons with Tensorflow</p>
-<h3 id="-a-href--https---github-com-repetere-tensorscript-blob-master-docs-api-md--full-documentation--a-"><a href="https://github.com/repetere/tensorscript/blob/master/docs/API.md">Full Documentation</a></h3><h3 id="installation">Installation</h3><pre><code class="lang-sh"><code class="source-code prettyprint">$ npm i tensorscript</code>
-</code></pre>
-<h3 id="usage">Usage</h3><h4 id="classification">Classification</h4><p>Test against the <a href="https://archive.ics.uci.edu/ml/datasets/Iris">Iris Flower Data Set</a></p>
-<pre><code class="lang-javascript"><code class="source-code prettyprint">import { DeepLearningClassification, } from &apos;tensorscript&apos;;
+<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="tensorscript---machine-learing-and-neural-networks-with-tensorflow">TensorScript - Machine Learing and Neural Networks with Tensorflow</h1><p><a href="https://coveralls.io/github/repetere/tensorscript?branch=master"><img src="https://coveralls.io/repos/github/repetere/tensorscript/badge.svg?branch=master" alt="Coverage Status"></a> <a href="https://travis-ci.org/repetere/tensorscript"><img src="https://travis-ci.org/repetere/tensorscript.svg?branch=master" alt="Build Status"></a></p>
+<h2 id="introduction">Introduction</h2><p>This library is a compilation of model building modules with a consistent API for quickly implementing Tensorflow at edge(browser) or any JavaScript environment (Node JS / GPU).</p>
+<h2 id="list-of-tensorflow-models">List of Tensorflow models</h2><h3 id="classification">Classification</h3><ul>
+<li>Deep Learning Classification: <a href="https://repetere.github.io/tensorscript/manual/usage-classification.html"><code>DeepLearningClassification</code></a></li>
+<li>Logistic Regression: <a href="https://repetere.github.io/tensorscript/manual/usage-classification.html"><code>LogisticRegression</code></a></li>
+</ul>
+<h3 id="regression">Regression</h3><ul>
+<li>Deep Learning Regression: <a href="https://repetere.github.io/tensorscript/manual/usage-regression.html"><code>DeepLearningRegression</code></a></li>
+<li>Multivariate Linear Regression: <a href="https://repetere.github.io/tensorscript/manual/usage-regression.html"><code>MultipleLinearRegression</code></a></li>
+</ul>
+<h3 id="artificial-neural-networks--ann-">Artificial neural networks (ANN)</h3><ul>
+<li>Multi-Layered Perceptrons: <a href="https://repetere.github.io/tensorscript/manual/usage-baseneuralnetwork.html"><code>BaseNeuralNetwork</code></a></li>
+</ul>
+<h3 id="lstm-time-series">LSTM Time Series</h3><ul>
+<li>Long Short Term Memory Time Series: <a href="https://repetere.github.io/tensorscript/manual/usage-timeseries.html"><code>LSTMTimeSeries</code></a> (Matrix class)</li>
+<li>Long Short Term Memory Multivariate Time Series: <a href="https://repetere.github.io/tensorscript/manual/usage-timeseries.html"><code>LSTMMultivariateTimeSeries</code></a></li>
+</ul>
+<h2 id="basic-usage">Basic Usage</h2><p>Tensorscript is and ECMA Script module designed to be used in an <code>ES2015+</code> environment, if you need compiled modules for older versions of node use <code>require(&apos;tensorscript/legacy/&apos;)</code></p>
+<p>Please read more on tensorflow configuration options, specifying epochs, and using custom layers in configuration.</p>
+<h3 id="regression-examples">Regression Examples</h3><pre><code class="lang-javascript"><code class="source-code prettyprint">import { MultipleLinearRegression, DeepLearningRegression, } from &apos;tensorscript&apos;;
 import ms from &apos;modelscript&apos;;
 
 async function main(){
-  const irisFlowerDataCSV = await ms.csv.loadCSV(&apos;./test/mock/data/iris_data.csv&apos;);
-  const DataSet = new ms.DataSet(irisFlowerDataCSV);
-    /**
-     * encodedData = [ 
-     *  { sepal_length_cm: 5.1,
-         sepal_width_cm: 3.5,
-        petal_length_cm: 1.4,
-        petal_width_cm: 0.2,
-        plant: &apos;Iris-setosa&apos;,
-        &apos;plant_Iris-setosa&apos;: 1,
-        &apos;plant_Iris-versicolor&apos;: 0,
-        &apos;plant_Iris-virginica&apos;: 0 },
-        ...
-        { sepal_length_cm: 5.9,
-        sepal_width_cm: 3,
-        petal_length_cm: 4.2,
-        petal_width_cm: 1.5,
-        plant: &apos;Iris-versicolor&apos;,
-        &apos;plant_Iris-setosa&apos;: 0,
-        &apos;plant_Iris-versicolor&apos;: 1,
-        &apos;plant_Iris-virginica&apos;: 0 },
-      ];
-    */
-  const encodedData = DataSet.fitColumns({
-    columns: [
-      {
-        name: &apos;plant&apos;,
-        options: {
-          strategy: &apos;onehot&apos;,
-        },
-      },
-    ],
-    returnData:true,
-  });
+  const independentVariables = [ &apos;sqft&apos;, &apos;bedrooms&apos;,];
+  const dependentVariables = [ &apos;price&apos;, ];
+  const housingdataCSV = await ms.csv.loadCSV(&apos;./test/mock/data/portland_housing_data.csv&apos;);
+  const DataSet = new ms.DataSet(housingdataCSV);
+  const x_matrix = DataSet.columnMatrix(independentVariables);
+  const y_matrix = DataSet.columnMatrix(dependentVariables);
+  const MLR = new MultipleLinearRegression();
+  await MLR.train(x_matrix, y_matrix);
+  const DLR = new DeepLearningRegression();
+  await DLR.train(x_matrix, y_matrix);
+  //1600 sqft, 3 bedrooms
+  await MLR.predict([1650,3]); //=&gt;[293081.46]
+  await DLR.predict([1650,3]); //=&gt;[293081.46]
+}
+main();</code>
+</code></pre>
+<h3 id="classification-examples">Classification Examples</h3><pre><code class="lang-javascript"><code class="source-code prettyprint">import { DeepLearningClassification, } from &apos;tensorscript&apos;;
+import ms from &apos;modelscript&apos;;
+
+async function main(){
   const independentVariables = [
     &apos;sepal_length_cm&apos;,
     &apos;sepal_width_cm&apos;,
@@ -95,22 +95,12 @@ async function main(){
     &apos;plant_Iris-versicolor&apos;,
     &apos;plant_Iris-virginica&apos;,
   ];
-  const x_matrix = DataSet.columnMatrix(independentVariables); 
+  const housingdataCSV = await ms.csv.loadCSV(&apos;./test/mock/data/iris_data.csv&apos;);
+  const DataSet = new ms.DataSet(housingdataCSV).fitColumns({ columns: {plant:&apos;onehot&apos;}, });
+  const x_matrix = DataSet.columnMatrix(independentVariables);
   const y_matrix = DataSet.columnMatrix(dependentVariables);
-  /*
-    x_matrix = [
-      [ 5.1, 3.5, 1.4, 0.2 ],
-      [ 4.9, 3, 1.4, 0.2 ],
-      [ 4.7, 3.2, 1.3, 0.2 ],
-      ...
-    ]; 
-    y_matrix = [
-      [ 1, 0, 0 ],
-      [ 1, 0, 0 ],
-      [ 1, 0, 0 ],
-      ...
-    ] 
-    */
+  const nnClassification = new DeepLearningClassification();
+  await nnClassification.train(x_matrix, y_matrix);
   const input_x = [
     [5.1, 3.5, 1.4, 0.2, ],
     [6.3, 3.3, 6.0, 2.5, ],
@@ -118,12 +108,8 @@ async function main(){
     [5.0, 3.2, 1.2, 0.2, ],
     [4.5, 2.3, 1.3, 0.3, ],
   ];
-  const nnClassification = new DeepLearningClassification();
-  const nnClassificationModel = await nnClassification.train(x_matrix, y_matrix);
-  const predictions = await nnClassification.predict(input_x);
-  const answers = await nnClassification.predict(input_x, {
-    probability:false,
-  });
+  const predictions = await nnClassification.predict(input_x); 
+  const answers = await nnClassification.predict(input_x, { probability:false, });
   /*
     predictions = [
       [ 0.989512026309967, 0.010471616871654987, 0.00001649192017794121, ],
@@ -133,196 +119,20 @@ async function main(){
       [ 0.9545140862464905, 0.04520365223288536, 0.0002823179238475859, ],
     ];
     answers = [
-      [ 1, 0, 0, ],
-      [ 0, 0, 1, ],
-      [ 0, 1, 0, ],
-      [ 1, 0, 0, ],
-      [ 1, 0, 0, ],
+      [ 1, 0, 0, ], //setosa
+      [ 0, 0, 1, ], //virginica
+      [ 0, 1, 0, ], //versicolor
+      [ 1, 0, 0, ], //setosa
+      [ 1, 0, 0, ], //setosa
     ];
    */
 }
-
-main();
-</code>
-</code></pre>
-<h4 id="regression">Regression</h4><p>Test against the <a href="https://machinelearningmastery.com/regression-tutorial-keras-deep-learning-library-python/">Boston Housing Data Set</a></p>
-<pre><code class="lang-javascript"><code class="source-code prettyprint">import { DeepLearningRegression, } from &apos;tensorscript&apos;;
-import ms from &apos;modelscript&apos;;
-
-function scaleColumnMap(columnName) {
-  return {
-    name: columnName,
-    options: {
-      strategy: &apos;scale&apos;,
-      scaleOptions: {
-        strategy:&apos;standard&apos;
-      }
-    }
-  }
-}
-
-async function main(){
-  const housingdataCSV = await ms.csv.loadCSV(&apos;./test/mock/data/boston_housing_data.csv&apos;);
-  /*
-  housingdataCSV = [
-    { CRIM: 0.00632, ZN: 18, INDUS: 2.31, CHAS: 0, NOX: 0.538, RM: 6.575, AGE: 65.2, DIS: 4.09, RAD: 1, TAX: 296, PTRATIO: 15.3, B: 396.9, LSTAT: 4.98, MEDV: 24 },
-    { CRIM: 0.02731, ZN: 0, INDUS: 7.07, CHAS: 0, NOX: 0.469, RM: 6.421, AGE: 78.9, DIS: 4.9671, RAD: 2, TAX: 242, PTRATIO: 17.8, B: 396.9, LSTAT: 9.14, MEDV: 21.6 },
-    ...
-  ]
-  */
-  const DataSet = new ms.DataSet(housingdataCSV);
-  const independentVariables = [
-    &apos;CRIM&apos;,
-    &apos;ZN&apos;,
-    &apos;INDUS&apos;,
-    &apos;CHAS&apos;,
-    &apos;NOX&apos;,
-    &apos;RM&apos;,
-    &apos;AGE&apos;,
-    &apos;DIS&apos;,
-    &apos;RAD&apos;,
-    &apos;TAX&apos;,
-    &apos;PTRATIO&apos;,
-    &apos;B&apos;,
-    &apos;LSTAT&apos;,
-  ];
-  const dependentVariables = [
-    &apos;MEDV&apos;,
-  ];
-  const columns = independentVariables.concat(dependentVariables);
-  DataSet.fitColumns({
-    columns: columns.map(scaleColumnMap),
-    returnData:false,
-  });
-  const x_matrix = DataSet.columnMatrix(independentVariables);
-  const y_matrix = DataSet.columnMatrix(dependentVariables);
-  /* x_matrix = [
-    [ -0.41936692921321594, 0.2845482693404666, -1.2866362317172035, -0.272329067679207, -0.1440748547324509, 0.4132629204530747, -0.119894767215809, 0.1400749839795629, -0.981871187861867, -0.6659491794887338, -1.457557967289609, 0.4406158949991029, -1.074498970343932 ],
-    [ -0.41692666996409716, -0.4872401872268264, -0.5927943782429392, -0.272329067679207, -0.7395303607434242, 0.1940823874370036, 0.3668034264326209, 0.5566090495704026, -0.8670244885881488, -0.9863533804386945, -0.3027944997494681, 0.4406158949991029, -0.49195252491856634 ]
-    ...
-  ];
-  y_matrix = [
-    [ 0.15952778852449556 ],
-    [ -0.1014239172731213 ],
-    ...
-  ];
-  const y_vector = ms.util.pivotVector(y_matrix)[ 0 ];// not used but just illustrative
-  y_vector = [ 0.15952778852449556, -0.1014239172731213, ... ]
-    */
-  const input_x = [
-    [-0.41936692921321594, 0.2845482693404666, -1.2866362317172035, -0.272329067679207, -0.1440748547324509, 0.4132629204530747, -0.119894767215809, 0.1400749839795629, -0.981871187861867, -0.6659491794887338, -1.457557967289609, 0.4406158949991029, -1.074498970343932,],
-    [-0.41692666996409716, -0.4872401872268264, -0.5927943782429392, -0.272329067679207, -0.7395303607434242, 0.1940823874370036, 0.3668034264326209, 0.5566090495704026, -0.8670244885881488, -0.9863533804386945, -0.3027944997494681, 0.4406158949991029, -0.49195252491856634,],
-  ];
-  const nnRegression = new DeepLearningRegression();
-  const model = await nnRegression.train(x_matrix, y_matrix);
-  const predictions = await nnRegressionWide.predict(input_x); // [ [ 0.43396109342575073 ], [ 0.12437985092401505 ] ]
-  const predictions_unscaled = predictions.map(pred=&gt;DataSet.scalers.get(&apos;MEDV&apos;).descale(pred[0])); //[ 26.523991670220486, 23.67674075943165 ]
-}
-
 main();</code>
 </code></pre>
-<h4 id="multiple-linear-regression">Multiple Linear Regression</h4><p>Test against the <a href="http://openclassroom.stanford.edu/MainFolder/DocumentPage.php?course=MachineLearning&amp;doc=exercises/ex3/ex3.html">Portland housing price dataset</a></p>
-<pre><code class="lang-javascript"><code class="source-code prettyprint">import { MultipleLinearRegression, } from &apos;tensorscript&apos;;
-import ms from &apos;modelscript&apos;;
-
-function scaleColumnMap(columnName) {
-  return {
-    name: columnName,
-    options: {
-      strategy: &apos;scale&apos;,
-      scaleOptions: {
-        strategy:&apos;standard&apos;
-      }
-    }
-  }
-}
-
-async function main(){
-  const housingdataCSV = await ms.csv.loadCSV(&apos;./test/mock/data/portland_housing_data.csv&apos;);
-  /*
-  housingdataCSV = [
-    { sqft: 2104, bedrooms: 3, price: 399900 },
-    { sqft: 1600, bedrooms: 3, price: 329900 },
-    ...
-    { sqft: 1203, bedrooms: 3, price: 239500 }
-  ]
-  */
-  const DataSet = new ms.DataSet(housingdataCSV);
-  DataSet.fitColumns({
-    columns: [
-      &apos;sqft&apos;,
-      &apos;bedrooms&apos;,
-      &apos;price&apos;,
-    ].map(scaleColumnMap),
-    returnData:true,
-  });
-  const independentVariables = [ &apos;sqft&apos;, &apos;bedrooms&apos;,];
-  const dependentVariables = [ &apos;price&apos;, ];
-  const x_matrix = DataSet.columnMatrix(independentVariables);
-  const y_matrix = DataSet.columnMatrix(dependentVariables);
-  /* x_matrix = [
-      [2014, 3],
-      [1600, 3],
-    ];
-    y_matrix = [
-      [399900],
-      [329900],
-    ];
-    const y_vector = ms.util.pivotVector(y_matrix)[ 0 ];// not used but just illustrative
-    // y_vector = [ 399900, 329900]
-   */
-  const testSqft = DataSet.scalers.get(&apos;sqft&apos;).scale(1650);
-  const testBedrooms = DataSet.scalers.get(&apos;bedrooms&apos;).scale(3);
-  const input_x = [
-    testSqft,
-    testBedrooms,
-  ]; // input_x: [ -0.4412732005944351, -0.2236751871685913 ]
-  const tfMLR = new MultipleLinearRegression();
-  const model = await tfMLR.train(x_matrix, y_matrix);
-  const scaledPrediction = await tfMLR.predict(input_x); // [ -0.3785287367962629 ]
-  const prediction = DataSet.scalers.get(&apos;price&apos;).descale(scaledPrediction); // prediction: 293081.4643348962
-}
-
-main();</code>
-</code></pre>
-<h4 id="logistic-regression">Logistic Regression</h4><p>Test against the Social Media Ads</p>
 <pre><code class="lang-javascript"><code class="source-code prettyprint">import { LogisticRegression, } from &apos;tensorscript&apos;;
 import ms from &apos;modelscript&apos;;
 
-function scaleColumnMap(columnName) {
-  return {
-    name: columnName,
-    options: {
-      strategy: &apos;scale&apos;,
-      scaleOptions: {
-        strategy:&apos;standard&apos;
-      }
-    }
-  }
-}
-
 async function main(){
-  const CSVData = await ms.csv.loadCSV(&apos;./test/mock/data/social_network_ads.csv&apos;);
-  const DataSet = new ms.DataSet(CSVData);
-  const scaledData = DataSet.fitColumns({
-    columns: independentVariables.map(scaleColumnMap),
-    returnData:true,
-  });
-  /*
-    scaledData = [
-      { &apos;User ID&apos;: 15624510,
-         Gender: &apos;Male&apos;,
-         Age: -1.7795687879022388,
-         EstimatedSalary: -1.4881825118632386,
-         Purchased: 0 },
-      { &apos;User ID&apos;: 15810944,
-         Gender: &apos;Male&apos;,
-         Age: -0.253270175924977,
-         EstimatedSalary: -1.458854384319991,
-         Purchased: 0 },
-      ...
-    ];
-    */
   const independentVariables = [
     &apos;Age&apos;,
     &apos;EstimatedSalary&apos;,
@@ -330,20 +140,13 @@ async function main(){
   const dependentVariables = [
     &apos;Purchased&apos;,
   ];
+  const housingdataCSV = await ms.csv.loadCSV(&apos;./test/mock/data/social_network_ads.csv&apos;);
+  const DataSet = new ms.DataSet(housingdataCSV).fitColumns({ columns: {Age:[&apos;scale&apos;,&apos;standard&apos;],
+  EstimatedSalary:[&apos;scale&apos;,&apos;standard&apos;],}, });
   const x_matrix = DataSet.columnMatrix(independentVariables);
   const y_matrix = DataSet.columnMatrix(dependentVariables);
-  /*
-    x_matrix = [
-      [ -1.7795687879022388, -1.4881825118632386 ],
-      [ -0.253270175924977, -1.458854384319991 ],
-      ...
-    ];
-    y_matrix = [
-      [ 0 ],
-      [ 0 ],
-      ...
-    ];
-    */
+  const LR = new LogisticRegression();
+  await LR.train(x_matrix, y_matrix);
   const input_x = [
     [-0.062482849427819266, 0.30083326827486173,], //0
     [0.7960601198093905, -1.1069168538010206,], //1
@@ -351,11 +154,25 @@ async function main(){
     [0.4144854668150751, -0.49102617539282206,], //0
     [0.3190918035664962, 0.5061301610775946,], //1
   ];
-  const tfLR = new LogisticRegression();
-  const model = await tfLR.train(x_matrix, y_matrix);
-  const prediction = await tfLR.predict(input_x); // =&gt; [ [ 0 ], [ 0 ], [ 1 ], [ 0 ], [ 1 ] ],
+  const predictions = await LR.predict(input_x); // =&gt; [ [ 0 ], [ 0 ], [ 1 ], [ 0 ], [ 1 ] ];
 }
+main();</code>
+</code></pre>
+<h3 id="time-series-example">Time Series Example</h3><pre><code class="lang-javascript"><code class="source-code prettyprint">import { LSTMTimeSeries, } from &apos;tensorscript&apos;;
+import ms from &apos;modelscript&apos;;
 
+async function main(){
+  const dependentVariables = [
+    &apos;Passengers&apos;,
+  ];
+  const airlineCSV = await ms.csv.loadCSV(&apos;./test/mock/data/airline-sales.csv&apos;);
+  const DataSet = new ms.DataSet(airlineCSV);
+  const x_matrix = DataSet.columnMatrix(independentVariables);
+  const TS = new LSTMTimeSeries();
+  await TS.train(x_matrix);
+  const forecastData = TS.getTimeseriesDataSet([ [100 ], [200], [300], ])
+  await TS.predict(forecastData.x_matrix); //=&gt;[200,300,400]
+}
 main();</code>
 </code></pre>
 <h3 id="testing">Testing</h3><pre><code class="lang-sh"><code class="source-code prettyprint">$ npm i

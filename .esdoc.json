@@ -24,7 +24,7 @@
           "image": "https://repetere.ai/favicon.png"
         },
         "manual": {
-          "index": "./manual/index.md",
+          "index": "./README.md",
           "asset": "./manual/asset",
           "files": [
             "./manual/overview.md",
