@@ -80,7 +80,7 @@ async function getModelAccuracy(preddata){
     ) * 100), //.toFixed(2)+'%',
   });
 }
-
+/** @test {LSTMTimeSeries} */
 describe('LSTMTimeSeries', function () {
   this.timeout(120000);
   before(async function () {
@@ -167,6 +167,7 @@ describe('LSTMTimeSeries', function () {
     ];
     return true;
   });
+  /** @test {LSTMTimeSeries#createDataset} */
   describe('static createDataset', () => {
     const lookback = 3;
     it('should return timeseries datasets', () => {
@@ -178,6 +179,7 @@ describe('LSTMTimeSeries', function () {
       expect(datax2[ 0 ]).to.have.lengthOf(lookback);
     });
   });
+  /** @test {LSTMTimeSeries#getTimeseriesShape} */
   describe('static getTimeseriesShape', () => {
     const [datax, datay,] = LSTMTimeSeries.createDataset(ds, 3);
     it('should calculate timeseries shape', () => {
@@ -207,6 +209,7 @@ describe('LSTMTimeSeries', function () {
       expect(tsShape3).to.eql([6, 3, 1,]);
     });
   });
+  /** @test {LSTMTimeSeries#getTimeseriesDataSet} */
   describe('static getTimeseriesDataSet', () => {
     const [datax, datay,] = LSTMTimeSeries.createDataset(ds, 3);
     it('should return timeseries data', () => {
@@ -224,6 +227,7 @@ describe('LSTMTimeSeries', function () {
       // console.log({ tsShape, });
     });
   });
+  /** @test {LSTMTimeSeries#constructor} */
   describe('constructor', () => {
     it('should export a named module class', () => {
       const NN = new LSTMTimeSeries();
@@ -233,6 +237,7 @@ describe('LSTMTimeSeries', function () {
       expect(NNConfigured.settings.test).to.eql('prop');
     });
   });
+  /** @test {LSTMTimeSeries#predict} */
   describe('async predict', () => {
     it('should allow for stateless predictions with one step time windows', async () => {
       const accr = await getModelAccuracy({ model: TSTSONE, modelname: 'TSTSONE', });
@@ -262,6 +267,7 @@ describe('LSTMTimeSeries', function () {
       return true;
     });
   });
+  /** @test {LSTMTimeSeries#train} */
   describe('async train', () => {
     it('should train a model with supplied test data', async () => {
       const testData = TSTSONE.getTimeseriesDataSet(x_matrix_test);
@@ -278,6 +284,7 @@ describe('LSTMTimeSeries', function () {
       return true;
     });
   });
+  /** @test {LSTMTimeSeries#generateLayers} */
   describe('generateLayers', () => {
     // it('should generate a classification network', async () => {
     //   const predictions = await nnClassification.predict(input_x);

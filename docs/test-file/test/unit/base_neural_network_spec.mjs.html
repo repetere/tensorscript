@@ -85,6 +85,7 @@ function scaleColumnMap(columnName) {
     },
   };
 }
+/** @test {BaseNeuralNetwork} */
 describe(&apos;BaseNeuralNetwork&apos;, function () {
   this.timeout(10000);
   before(async function () {
@@ -95,6 +96,7 @@ describe(&apos;BaseNeuralNetwork&apos;, function () {
       returnData:false,
     });
   });
+  /** @test {BaseNeuralNetwork#constructor} */
   describe(&apos;constructor&apos;, () =&gt; {
     it(&apos;should export a named module class&apos;, () =&gt; {
       const MLR = new BaseNeuralNetwork();
@@ -104,6 +106,7 @@ describe(&apos;BaseNeuralNetwork&apos;, function () {
       expect(MLRConfigured.settings.test).to.eql(&apos;prop&apos;);
     });
   });
+  /** @test {BaseNeuralNetwork#generateLayers} */
   describe(&apos;generateLayers&apos;, () =&gt; {
     it(&apos;should throw an error if generateLayers method is not implemented&apos;, () =&gt; {
       class NN extends BaseNeuralNetwork{
@@ -119,6 +122,7 @@ describe(&apos;BaseNeuralNetwork&apos;, function () {
       expect(TSNN.generateLayers.bind(null)).to.be.ok;
     });
   });
+  /** @test {BaseNeuralNetwork#train} */
   describe(&apos;train&apos;, () =&gt; {
     it(&apos;should train a NN&apos;, async function () {
       const NN = new BaseNeuralNetwork();
@@ -154,6 +158,7 @@ describe(&apos;BaseNeuralNetwork&apos;, function () {
       expect(trainedModel2).to.be.an(&apos;object&apos;);
     });
   });
+  /** @test {BaseNeuralNetwork#calculate} */
   describe(&apos;calculate&apos;, () =&gt; {
     it(&apos;should throw an error if input is invalid&apos;, () =&gt; {
       const NN = new BaseNeuralNetwork();

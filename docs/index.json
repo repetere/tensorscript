@@ -2767,7 +2767,7 @@
     "__docId__": 102,
     "kind": "testFile",
     "name": "test/unit/base_neural_network_spec.mjs",
-    "content": "import chai from 'chai';\r\nimport sinon from 'sinon';\r\nimport ms from 'modelscript';\r\nimport sinonChai from 'sinon-chai';\r\nimport chaiAsPromised from 'chai-as-promised';\r\nimport 'babel-polyfill';\r\nimport { BaseNeuralNetwork, } from '../../index.mjs';\r\nconst expect = chai.expect;\r\nconst independentVariables = [\r\n  'CRIM',\r\n  'ZN',\r\n  'INDUS',\r\n  'CHAS',\r\n  'NOX',\r\n  'RM',\r\n  'AGE',\r\n  'DIS',\r\n  'RAD',\r\n  'TAX',\r\n  'PTRATIO',\r\n  'B',\r\n  'LSTAT',\r\n];\r\nconst dependentVariables = [\r\n  'MEDV',\r\n];\r\nconst columns = independentVariables.concat(dependentVariables);\r\nlet housingDataCSV;\r\nlet DataSet;\r\n\r\nchai.use(sinonChai);\r\nchai.use(chaiAsPromised);\r\nfunction scaleColumnMap(columnName) {\r\n  return {\r\n    name: columnName,\r\n    options: {\r\n      strategy: 'scale',\r\n      scaleOptions: {\r\n        strategy:'standard',\r\n      },\r\n    },\r\n  };\r\n}\r\ndescribe('BaseNeuralNetwork', function () {\r\n  this.timeout(10000);\r\n  before(async function () {\r\n    housingDataCSV = await ms.csv.loadCSV('./test/mock/data/boston_housing_data.csv');\r\n    DataSet = new ms.DataSet(housingDataCSV);\r\n    DataSet.fitColumns({\r\n      columns: columns.map(scaleColumnMap),\r\n      returnData:false,\r\n    });\r\n  });\r\n  describe('constructor', () => {\r\n    it('should export a named module class', () => {\r\n      const MLR = new BaseNeuralNetwork();\r\n      const MLRConfigured = new BaseNeuralNetwork({ test: 'prop', });\r\n      expect(BaseNeuralNetwork).to.be.a('function');\r\n      expect(MLR).to.be.instanceOf(BaseNeuralNetwork);\r\n      expect(MLRConfigured.settings.test).to.eql('prop');\r\n    });\r\n  });\r\n  describe('generateLayers', () => {\r\n    it('should throw an error if generateLayers method is not implemented', () => {\r\n      class NN extends BaseNeuralNetwork{\r\n        generateLayers(x, y, layers) {\r\n          return true;\r\n        }\r\n      }\r\n      const TS = new BaseNeuralNetwork();\r\n      const TSNN = new NN();\r\n      expect(TS.generateLayers).to.be.a('function');\r\n      expect(TS.generateLayers.bind(null)).to.throw('generateLayers method is not implemented');\r\n      expect(TSNN.generateLayers).to.be.a('function');\r\n      expect(TSNN.generateLayers.bind(null)).to.be.ok;\r\n    });\r\n  });\r\n  describe('train', () => {\r\n    it('should train a NN', async function () {\r\n      const NN = new BaseNeuralNetwork();\r\n      const x = [];\r\n      const y = [];\r\n      const layers = [];\r\n      const tf = {\r\n        tensor: () => ({ \r\n          dispose: () => { },\r\n        }),\r\n        sequential: () => ({\r\n          compile: () => true,\r\n          fit: () => true,\r\n        }),\r\n      };\r\n      const settings = {};\r\n      function getInputShape() { }\r\n      function generateLayers() { }\r\n      const trainedModel = await NN.train.call({\r\n        getInputShape,\r\n        generateLayers,\r\n        tf,\r\n        settings,\r\n      }, x, y, layers);\r\n      const trainedModel2 = await NN.train.call({\r\n        getInputShape,\r\n        generateLayers,\r\n        tf,\r\n        settings,\r\n        layers:[],\r\n      }, x, y);\r\n      expect(trainedModel).to.be.an('object');\r\n      expect(trainedModel2).to.be.an('object');\r\n    });\r\n  });\r\n  describe('calculate', () => {\r\n    it('should throw an error if input is invalid', () => {\r\n      const NN = new BaseNeuralNetwork();\r\n      expect(NN.calculate).to.be.a('function');\r\n      expect(NN.calculate.bind()).to.throw(/invalid input matrix/);\r\n      expect(NN.calculate.bind(null, 'invalid')).to.throw(/invalid input matrix/);\r\n    });\r\n    it('should train a NN', async function () {\r\n      const NN = new BaseNeuralNetwork();\r\n      const x = [1, 2, 3, ];\r\n      const x2 = [[1, 2, 3, ], [1, 2, 3, ], ];\r\n      const tf = {\r\n        tensor: () => ({ \r\n          dispose: () => { },\r\n        }),\r\n        sequential: () => ({\r\n          compile: () => true,\r\n          fit: () => true,\r\n        }),\r\n      };\r\n      const model = {\r\n        predict: () => true,\r\n      };\r\n      const prediction = NN.calculate.call({\r\n        tf,\r\n        model,\r\n      }, x);\r\n      const prediction2 = NN.calculate.call({\r\n        tf,\r\n        model,\r\n      }, x2);\r\n      expect(prediction).to.be.true;\r\n      expect(prediction2).to.be.true;\r\n    });\r\n  });\r\n});",
+    "content": "import chai from 'chai';\r\nimport sinon from 'sinon';\r\nimport ms from 'modelscript';\r\nimport sinonChai from 'sinon-chai';\r\nimport chaiAsPromised from 'chai-as-promised';\r\nimport 'babel-polyfill';\r\nimport { BaseNeuralNetwork, } from '../../index.mjs';\r\nconst expect = chai.expect;\r\nconst independentVariables = [\r\n  'CRIM',\r\n  'ZN',\r\n  'INDUS',\r\n  'CHAS',\r\n  'NOX',\r\n  'RM',\r\n  'AGE',\r\n  'DIS',\r\n  'RAD',\r\n  'TAX',\r\n  'PTRATIO',\r\n  'B',\r\n  'LSTAT',\r\n];\r\nconst dependentVariables = [\r\n  'MEDV',\r\n];\r\nconst columns = independentVariables.concat(dependentVariables);\r\nlet housingDataCSV;\r\nlet DataSet;\r\n\r\nchai.use(sinonChai);\r\nchai.use(chaiAsPromised);\r\nfunction scaleColumnMap(columnName) {\r\n  return {\r\n    name: columnName,\r\n    options: {\r\n      strategy: 'scale',\r\n      scaleOptions: {\r\n        strategy:'standard',\r\n      },\r\n    },\r\n  };\r\n}\r\n/** @test {BaseNeuralNetwork} */\r\ndescribe('BaseNeuralNetwork', function () {\r\n  this.timeout(10000);\r\n  before(async function () {\r\n    housingDataCSV = await ms.csv.loadCSV('./test/mock/data/boston_housing_data.csv');\r\n    DataSet = new ms.DataSet(housingDataCSV);\r\n    DataSet.fitColumns({\r\n      columns: columns.map(scaleColumnMap),\r\n      returnData:false,\r\n    });\r\n  });\r\n  /** @test {BaseNeuralNetwork#constructor} */\r\n  describe('constructor', () => {\r\n    it('should export a named module class', () => {\r\n      const MLR = new BaseNeuralNetwork();\r\n      const MLRConfigured = new BaseNeuralNetwork({ test: 'prop', });\r\n      expect(BaseNeuralNetwork).to.be.a('function');\r\n      expect(MLR).to.be.instanceOf(BaseNeuralNetwork);\r\n      expect(MLRConfigured.settings.test).to.eql('prop');\r\n    });\r\n  });\r\n  /** @test {BaseNeuralNetwork#generateLayers} */\r\n  describe('generateLayers', () => {\r\n    it('should throw an error if generateLayers method is not implemented', () => {\r\n      class NN extends BaseNeuralNetwork{\r\n        generateLayers(x, y, layers) {\r\n          return true;\r\n        }\r\n      }\r\n      const TS = new BaseNeuralNetwork();\r\n      const TSNN = new NN();\r\n      expect(TS.generateLayers).to.be.a('function');\r\n      expect(TS.generateLayers.bind(null)).to.throw('generateLayers method is not implemented');\r\n      expect(TSNN.generateLayers).to.be.a('function');\r\n      expect(TSNN.generateLayers.bind(null)).to.be.ok;\r\n    });\r\n  });\r\n  /** @test {BaseNeuralNetwork#train} */\r\n  describe('train', () => {\r\n    it('should train a NN', async function () {\r\n      const NN = new BaseNeuralNetwork();\r\n      const x = [];\r\n      const y = [];\r\n      const layers = [];\r\n      const tf = {\r\n        tensor: () => ({ \r\n          dispose: () => { },\r\n        }),\r\n        sequential: () => ({\r\n          compile: () => true,\r\n          fit: () => true,\r\n        }),\r\n      };\r\n      const settings = {};\r\n      function getInputShape() { }\r\n      function generateLayers() { }\r\n      const trainedModel = await NN.train.call({\r\n        getInputShape,\r\n        generateLayers,\r\n        tf,\r\n        settings,\r\n      }, x, y, layers);\r\n      const trainedModel2 = await NN.train.call({\r\n        getInputShape,\r\n        generateLayers,\r\n        tf,\r\n        settings,\r\n        layers:[],\r\n      }, x, y);\r\n      expect(trainedModel).to.be.an('object');\r\n      expect(trainedModel2).to.be.an('object');\r\n    });\r\n  });\r\n  /** @test {BaseNeuralNetwork#calculate} */\r\n  describe('calculate', () => {\r\n    it('should throw an error if input is invalid', () => {\r\n      const NN = new BaseNeuralNetwork();\r\n      expect(NN.calculate).to.be.a('function');\r\n      expect(NN.calculate.bind()).to.throw(/invalid input matrix/);\r\n      expect(NN.calculate.bind(null, 'invalid')).to.throw(/invalid input matrix/);\r\n    });\r\n    it('should train a NN', async function () {\r\n      const NN = new BaseNeuralNetwork();\r\n      const x = [1, 2, 3, ];\r\n      const x2 = [[1, 2, 3, ], [1, 2, 3, ], ];\r\n      const tf = {\r\n        tensor: () => ({ \r\n          dispose: () => { },\r\n        }),\r\n        sequential: () => ({\r\n          compile: () => true,\r\n          fit: () => true,\r\n        }),\r\n      };\r\n      const model = {\r\n        predict: () => true,\r\n      };\r\n      const prediction = NN.calculate.call({\r\n        tf,\r\n        model,\r\n      }, x);\r\n      const prediction2 = NN.calculate.call({\r\n        tf,\r\n        model,\r\n      }, x2);\r\n      expect(prediction).to.be.true;\r\n      expect(prediction2).to.be.true;\r\n    });\r\n  });\r\n});",
     "static": true,
     "longname": "/Users/yawjosephetse/Developer/github/repetere/tensorscript/test/unit/base_neural_network_spec.mjs",
     "access": null,
@@ -2785,7 +2785,10 @@
     "longname": "test/unit/base_neural_network_spec.mjs~describe0",
     "access": null,
     "description": "BaseNeuralNetwork",
-    "lineNumber": 44
+    "lineNumber": 45,
+    "testTargets": [
+      "BaseNeuralNetwork"
+    ]
   },
   {
     "__docId__": 104,
@@ -2798,7 +2801,10 @@
     "longname": "test/unit/base_neural_network_spec.mjs~describe0.describe1",
     "access": null,
     "description": "constructor",
-    "lineNumber": 54
+    "lineNumber": 56,
+    "testTargets": [
+      "BaseNeuralNetwork#constructor"
+    ]
   },
   {
     "__docId__": 105,
@@ -2811,7 +2817,7 @@
     "longname": "test/unit/base_neural_network_spec.mjs~describe0.describe1.it2",
     "access": null,
     "description": "should export a named module class",
-    "lineNumber": 55
+    "lineNumber": 57
   },
   {
     "__docId__": 106,
@@ -2824,7 +2830,10 @@
     "longname": "test/unit/base_neural_network_spec.mjs~describe0.describe3",
     "access": null,
     "description": "generateLayers",
-    "lineNumber": 63
+    "lineNumber": 66,
+    "testTargets": [
+      "BaseNeuralNetwork#generateLayers"
+    ]
   },
   {
     "__docId__": 107,
@@ -2837,7 +2846,7 @@
     "longname": "test/unit/base_neural_network_spec.mjs~describe0.describe3.it4",
     "access": null,
     "description": "should throw an error if generateLayers method is not implemented",
-    "lineNumber": 64
+    "lineNumber": 67
   },
   {
     "__docId__": 108,
@@ -2850,7 +2859,10 @@
     "longname": "test/unit/base_neural_network_spec.mjs~describe0.describe5",
     "access": null,
     "description": "train",
-    "lineNumber": 78
+    "lineNumber": 82,
+    "testTargets": [
+      "BaseNeuralNetwork#train"
+    ]
   },
   {
     "__docId__": 109,
@@ -2863,7 +2875,7 @@
     "longname": "test/unit/base_neural_network_spec.mjs~describe0.describe5.it6",
     "access": null,
     "description": "should train a NN",
-    "lineNumber": 79
+    "lineNumber": 83
   },
   {
     "__docId__": 110,
@@ -2876,7 +2888,10 @@
     "longname": "test/unit/base_neural_network_spec.mjs~describe0.describe7",
     "access": null,
     "description": "calculate",
-    "lineNumber": 113
+    "lineNumber": 118,
+    "testTargets": [
+      "BaseNeuralNetwork#calculate"
+    ]
   },
   {
     "__docId__": 111,
@@ -2889,7 +2904,7 @@
     "longname": "test/unit/base_neural_network_spec.mjs~describe0.describe7.it8",
     "access": null,
     "description": "should throw an error if input is invalid",
-    "lineNumber": 114
+    "lineNumber": 119
   },
   {
     "__docId__": 112,
@@ -2902,13 +2917,13 @@
     "longname": "test/unit/base_neural_network_spec.mjs~describe0.describe7.it9",
     "access": null,
     "description": "should train a NN",
-    "lineNumber": 120
+    "lineNumber": 125
   },
   {
     "__docId__": 113,
     "kind": "testFile",
     "name": "test/unit/classification_spec.mjs",
-    "content": "import chai from 'chai';\r\n// import sinon from 'sinon';\r\nimport ms from 'modelscript';\r\nimport sinonChai from 'sinon-chai';\r\nimport chaiAsPromised from 'chai-as-promised';\r\nimport 'babel-polyfill';\r\nimport { DeepLearningClassification, } from '../../index.mjs';\r\nconst expect = chai.expect;\r\nconst independentVariables = [\r\n  'sepal_length_cm',\r\n  'sepal_width_cm',\r\n  'petal_length_cm',\r\n  'petal_width_cm',\r\n];\r\nconst dependentVariables = [\r\n  'plant_Iris-setosa',\r\n  'plant_Iris-versicolor',\r\n  'plant_Iris-virginica',\r\n];\r\nconst columns = independentVariables.concat(dependentVariables);\r\nlet housingDataCSV;\r\nlet DataSet;\r\nlet x_matrix;\r\nlet y_matrix;\r\nlet nnClassification;\r\nlet nnClassificationModel;\r\nconst fit = {\r\n  epochs: 100,\r\n  batchSize: 5,\r\n};\r\nconst encodedAnswers = {\r\n  'Iris-setosa': [1, 0, 0, ],\r\n  'Iris-versicolor': [0, 1, 0, ],\r\n  'Iris-virginica': [0, 0, 1, ],\r\n};\r\nconst input_x = [\r\n  [5.1, 3.5, 1.4, 0.2, ],\r\n  [6.3,3.3,6.0,2.5, ],\r\n  [5.6, 3.0, 4.5, 1.5, ],\r\n  [5.0, 3.2, 1.2, 0.2, ],\r\n  [4.5, 2.3, 1.3, 0.3, ],\r\n];\r\nchai.use(sinonChai);\r\nchai.use(chaiAsPromised);\r\nfunction scaleColumnMap(columnName) {\r\n  return {\r\n    name: columnName,\r\n    options: {\r\n      strategy: 'scale',\r\n      scaleOptions: {\r\n        strategy:'standard',\r\n      },\r\n    },\r\n  };\r\n}\r\ndescribe('DeepLearningClassification', function () {\r\n  this.timeout(120000);\r\n  before(async function () {\r\n    /**\r\n     * encodedData = [ \r\n     *  { sepal_length_cm: 5.1,\r\n         sepal_width_cm: 3.5,\r\n        petal_length_cm: 1.4,\r\n        petal_width_cm: 0.2,\r\n        plant: 'Iris-setosa',\r\n        'plant_Iris-setosa': 1,\r\n        'plant_Iris-versicolor': 0,\r\n        'plant_Iris-virginica': 0 },\r\n        ...\r\n        { sepal_length_cm: 5.9,\r\n        sepal_width_cm: 3,\r\n        petal_length_cm: 4.2,\r\n        petal_width_cm: 1.5,\r\n        plant: 'Iris-versicolor',\r\n        'plant_Iris-setosa': 0,\r\n        'plant_Iris-versicolor': 1,\r\n        'plant_Iris-virginica': 0 },\r\n      ];\r\n    */\r\n    housingDataCSV = await ms.csv.loadCSV('./test/mock/data/iris_data.csv');\r\n    DataSet = new ms.DataSet(housingDataCSV);\r\n    // DataSet.fitColumns({\r\n    //   columns: columns.map(scaleColumnMap),\r\n    //   returnData:false,\r\n    // });\r\n    const encodedData = DataSet.fitColumns({\r\n      columns: [\r\n        {\r\n          name: 'plant',\r\n          options: {\r\n            strategy: 'onehot',\r\n          },\r\n        },\r\n      ],\r\n      returnData:true,\r\n    });\r\n    x_matrix = DataSet.columnMatrix(independentVariables); \r\n    y_matrix = DataSet.columnMatrix(dependentVariables);\r\n    /*\r\n    x_matrix = [\r\n      [ 5.1, 3.5, 1.4, 0.2 ],\r\n      [ 4.9, 3, 1.4, 0.2 ],\r\n      [ 4.7, 3.2, 1.3, 0.2 ],\r\n      ...\r\n    ]; \r\n    y_matrix = [\r\n      [ 1, 0, 0 ],\r\n      [ 1, 0, 0 ],\r\n      [ 1, 0, 0 ],\r\n      ...\r\n    ] \r\n    */\r\n    // console.log({ x_matrix, y_matrix, });\r\n\r\n    nnClassification = new DeepLearningClassification({ fit, });\r\n    nnClassificationModel = await nnClassification.train(x_matrix, y_matrix);\r\n  });\r\n  describe('constructor', () => {\r\n    it('should export a named module class', () => {\r\n      const NN = new DeepLearningClassification();\r\n      const NNConfigured = new DeepLearningClassification({ test: 'prop', });\r\n      expect(DeepLearningClassification).to.be.a('function');\r\n      expect(NN).to.be.instanceOf(DeepLearningClassification);\r\n      expect(NNConfigured.settings.test).to.eql('prop');\r\n    });\r\n  });\r\n  describe('generateLayers', () => {\r\n    it('should generate a classification network', async () => {\r\n      const predictions = await nnClassification.predict(input_x);\r\n      const answers = await nnClassification.predict(input_x, {\r\n        probability:false,\r\n      });\r\n      const shape = nnClassification.getInputShape(predictions);\r\n      // console.log('nnClassification.layers', nnClassification.layers);\r\n      // console.log({\r\n      //   predictions_unscaled,\r\n      //   predictions,\r\n      //   shape,\r\n      // });\r\n      \r\n      // const probabilities = ms.DataSet.reverseColumnMatrix({\r\n      //   vectors: predictions,\r\n      //   labels: dependentVariables,\r\n      // });\r\n      // const results = ms.DataSet.reverseColumnMatrix({\r\n      //   vectors: answers,\r\n      //   labels: dependentVariables,\r\n      // });\r\n      // console.log({\r\n      //   predictions,\r\n      //   // probabilities,\r\n      //   answers,\r\n      //   // results,\r\n      //   shape,\r\n      // });\r\n      expect(predictions).to.have.lengthOf(input_x.length);\r\n      expect(nnClassification.layers).to.have.lengthOf(2);\r\n      expect(shape).to.eql([5, 3,]);\r\n      expect(answers[ 0 ]).to.eql(encodedAnswers[ 'Iris-setosa' ]);\r\n      // expect(answers[ 1 ]).to.eql(encodedAnswers[ 'Iris-virginica' ]);\r\n      // expect(answers[ 2 ]).to.eql(encodedAnswers[ 'Iris-versicolor' ]);\r\n      // expect(answers[ 3 ]).to.eql(encodedAnswers[ 'Iris-setosa' ]);\r\n      // expect(answers[ 4 ]).to.eql(encodedAnswers[ 'Iris-setosa' ]);\r\n      return true;\r\n    });\r\n    it('should generate a network from layers', async () => { \r\n      const nnClassificationCustom = new DeepLearningClassification({ layerPreference:'custom', fit, });\r\n      await nnClassificationCustom.train(x_matrix, y_matrix, nnClassification.layers);\r\n      expect(nnClassificationCustom.layers).to.have.lengthOf(2);\r\n    });\r\n  });\r\n});",
+    "content": "import chai from 'chai';\r\n// import sinon from 'sinon';\r\nimport ms from 'modelscript';\r\nimport sinonChai from 'sinon-chai';\r\nimport chaiAsPromised from 'chai-as-promised';\r\nimport 'babel-polyfill';\r\nimport { DeepLearningClassification, } from '../../index.mjs';\r\nconst expect = chai.expect;\r\nconst independentVariables = [\r\n  'sepal_length_cm',\r\n  'sepal_width_cm',\r\n  'petal_length_cm',\r\n  'petal_width_cm',\r\n];\r\nconst dependentVariables = [\r\n  'plant_Iris-setosa',\r\n  'plant_Iris-versicolor',\r\n  'plant_Iris-virginica',\r\n];\r\nconst columns = independentVariables.concat(dependentVariables);\r\nlet housingDataCSV;\r\nlet DataSet;\r\nlet x_matrix;\r\nlet y_matrix;\r\nlet nnClassification;\r\nlet nnClassificationModel;\r\nconst fit = {\r\n  epochs: 100,\r\n  batchSize: 5,\r\n};\r\nconst encodedAnswers = {\r\n  'Iris-setosa': [1, 0, 0, ],\r\n  'Iris-versicolor': [0, 1, 0, ],\r\n  'Iris-virginica': [0, 0, 1, ],\r\n};\r\nconst input_x = [\r\n  [5.1, 3.5, 1.4, 0.2, ],\r\n  [6.3,3.3,6.0,2.5, ],\r\n  [5.6, 3.0, 4.5, 1.5, ],\r\n  [5.0, 3.2, 1.2, 0.2, ],\r\n  [4.5, 2.3, 1.3, 0.3, ],\r\n];\r\nchai.use(sinonChai);\r\nchai.use(chaiAsPromised);\r\nfunction scaleColumnMap(columnName) {\r\n  return {\r\n    name: columnName,\r\n    options: {\r\n      strategy: 'scale',\r\n      scaleOptions: {\r\n        strategy:'standard',\r\n      },\r\n    },\r\n  };\r\n}\r\n/** @test {DeepLearningClassification} */\r\ndescribe('DeepLearningClassification', function () {\r\n  this.timeout(120000);\r\n  before(async function () {\r\n    /**\r\n     * encodedData = [ \r\n     *  { sepal_length_cm: 5.1,\r\n         sepal_width_cm: 3.5,\r\n        petal_length_cm: 1.4,\r\n        petal_width_cm: 0.2,\r\n        plant: 'Iris-setosa',\r\n        'plant_Iris-setosa': 1,\r\n        'plant_Iris-versicolor': 0,\r\n        'plant_Iris-virginica': 0 },\r\n        ...\r\n        { sepal_length_cm: 5.9,\r\n        sepal_width_cm: 3,\r\n        petal_length_cm: 4.2,\r\n        petal_width_cm: 1.5,\r\n        plant: 'Iris-versicolor',\r\n        'plant_Iris-setosa': 0,\r\n        'plant_Iris-versicolor': 1,\r\n        'plant_Iris-virginica': 0 },\r\n      ];\r\n    */\r\n    housingDataCSV = await ms.csv.loadCSV('./test/mock/data/iris_data.csv');\r\n    DataSet = new ms.DataSet(housingDataCSV);\r\n    // DataSet.fitColumns({\r\n    //   columns: columns.map(scaleColumnMap),\r\n    //   returnData:false,\r\n    // });\r\n    const encodedData = DataSet.fitColumns({\r\n      columns: [\r\n        {\r\n          name: 'plant',\r\n          options: {\r\n            strategy: 'onehot',\r\n          },\r\n        },\r\n      ],\r\n      returnData:true,\r\n    });\r\n    x_matrix = DataSet.columnMatrix(independentVariables); \r\n    y_matrix = DataSet.columnMatrix(dependentVariables);\r\n    /*\r\n    x_matrix = [\r\n      [ 5.1, 3.5, 1.4, 0.2 ],\r\n      [ 4.9, 3, 1.4, 0.2 ],\r\n      [ 4.7, 3.2, 1.3, 0.2 ],\r\n      ...\r\n    ]; \r\n    y_matrix = [\r\n      [ 1, 0, 0 ],\r\n      [ 1, 0, 0 ],\r\n      [ 1, 0, 0 ],\r\n      ...\r\n    ] \r\n    */\r\n    // console.log({ x_matrix, y_matrix, });\r\n\r\n    nnClassification = new DeepLearningClassification({ fit, });\r\n    nnClassificationModel = await nnClassification.train(x_matrix, y_matrix);\r\n  });\r\n  /** @test {DeepLearningClassification#constructor} */\r\n  describe('constructor', () => {\r\n    it('should export a named module class', () => {\r\n      const NN = new DeepLearningClassification();\r\n      const NNConfigured = new DeepLearningClassification({ test: 'prop', });\r\n      expect(DeepLearningClassification).to.be.a('function');\r\n      expect(NN).to.be.instanceOf(DeepLearningClassification);\r\n      expect(NNConfigured.settings.test).to.eql('prop');\r\n    });\r\n  });\r\n  /** @test {DeepLearningClassification#generateLayers} */\r\n  describe('generateLayers', () => {\r\n    it('should generate a classification network', async () => {\r\n      const predictions = await nnClassification.predict(input_x);\r\n      const answers = await nnClassification.predict(input_x, {\r\n        probability:false,\r\n      });\r\n      const shape = nnClassification.getInputShape(predictions);\r\n      // console.log('nnClassification.layers', nnClassification.layers);\r\n      // console.log({\r\n      //   predictions_unscaled,\r\n      //   predictions,\r\n      //   shape,\r\n      // });\r\n      \r\n      // const probabilities = ms.DataSet.reverseColumnMatrix({\r\n      //   vectors: predictions,\r\n      //   labels: dependentVariables,\r\n      // });\r\n      // const results = ms.DataSet.reverseColumnMatrix({\r\n      //   vectors: answers,\r\n      //   labels: dependentVariables,\r\n      // });\r\n      // console.log({\r\n      //   predictions,\r\n      //   // probabilities,\r\n      //   answers,\r\n      //   // results,\r\n      //   shape,\r\n      // });\r\n      expect(predictions).to.have.lengthOf(input_x.length);\r\n      expect(nnClassification.layers).to.have.lengthOf(2);\r\n      expect(shape).to.eql([5, 3,]);\r\n      expect(answers[ 0 ]).to.eql(encodedAnswers[ 'Iris-setosa' ]);\r\n      // expect(answers[ 1 ]).to.eql(encodedAnswers[ 'Iris-virginica' ]);\r\n      // expect(answers[ 2 ]).to.eql(encodedAnswers[ 'Iris-versicolor' ]);\r\n      // expect(answers[ 3 ]).to.eql(encodedAnswers[ 'Iris-setosa' ]);\r\n      // expect(answers[ 4 ]).to.eql(encodedAnswers[ 'Iris-setosa' ]);\r\n      return true;\r\n    });\r\n    it('should generate a network from layers', async () => { \r\n      const nnClassificationCustom = new DeepLearningClassification({ layerPreference:'custom', fit, });\r\n      await nnClassificationCustom.train(x_matrix, y_matrix, nnClassification.layers);\r\n      expect(nnClassificationCustom.layers).to.have.lengthOf(2);\r\n    });\r\n  });\r\n});",
     "static": true,
     "longname": "/Users/yawjosephetse/Developer/github/repetere/tensorscript/test/unit/classification_spec.mjs",
     "access": null,
@@ -2926,7 +2941,10 @@
     "longname": "test/unit/classification_spec.mjs~describe10",
     "access": null,
     "description": "DeepLearningClassification",
-    "lineNumber": 56
+    "lineNumber": 57,
+    "testTargets": [
+      "DeepLearningClassification"
+    ]
   },
   {
     "__docId__": 115,
@@ -2939,7 +2957,10 @@
     "longname": "test/unit/classification_spec.mjs~describe10.describe11",
     "access": null,
     "description": "constructor",
-    "lineNumber": 118
+    "lineNumber": 120,
+    "testTargets": [
+      "DeepLearningClassification#constructor"
+    ]
   },
   {
     "__docId__": 116,
@@ -2952,7 +2973,7 @@
     "longname": "test/unit/classification_spec.mjs~describe10.describe11.it12",
     "access": null,
     "description": "should export a named module class",
-    "lineNumber": 119
+    "lineNumber": 121
   },
   {
     "__docId__": 117,
@@ -2965,7 +2986,10 @@
     "longname": "test/unit/classification_spec.mjs~describe10.describe13",
     "access": null,
     "description": "generateLayers",
-    "lineNumber": 127
+    "lineNumber": 130,
+    "testTargets": [
+      "DeepLearningClassification#generateLayers"
+    ]
   },
   {
     "__docId__": 118,
@@ -2978,7 +3002,7 @@
     "longname": "test/unit/classification_spec.mjs~describe10.describe13.it14",
     "access": null,
     "description": "should generate a classification network",
-    "lineNumber": 128
+    "lineNumber": 131
   },
   {
     "__docId__": 119,
@@ -2991,13 +3015,13 @@
     "longname": "test/unit/classification_spec.mjs~describe10.describe13.it15",
     "access": null,
     "description": "should generate a network from layers",
-    "lineNumber": 166
+    "lineNumber": 169
   },
   {
     "__docId__": 120,
     "kind": "testFile",
     "name": "test/unit/logistic_regression_spec.mjs",
-    "content": "import chai from 'chai';\r\n// import sinon from 'sinon';\r\nimport ms from 'modelscript';\r\nimport sinonChai from 'sinon-chai';\r\nimport chaiAsPromised from 'chai-as-promised';\r\nimport 'babel-polyfill';\r\nimport { LogisticRegression, } from '../../index.mjs';\r\n\r\nconst expect = chai.expect;\r\nconst independentVariables = [\r\n  'Age',\r\n  'EstimatedSalary',\r\n];\r\nconst dependentVariables = [\r\n  'Purchased',\r\n];\r\nlet CSVData;\r\nlet DataSet;\r\nlet x_matrix;\r\nlet y_matrix;\r\nlet nnLR;\r\nlet nnLRClass;\r\nlet nnLRReg;\r\nlet nnLRModel;\r\nlet nnLRClassModel;\r\nlet nnLRRegModel;\r\nconst encodedAnswers = {\r\n  'yes': [1,],\r\n  'no': [0,],\r\n};\r\nconst fit = {\r\n  epochs: 10,\r\n  batchSize: 5,\r\n};\r\nconst input_x = [\r\n  [-0.062482849427819266, 0.30083326827486173, ], //0\r\n  [0.7960601198093905, -1.1069168538010206, ], //1\r\n  [0.7960601198093905, 0.12486450301537644, ], //0\r\n  [0.4144854668150751, -0.49102617539282206, ], //0\r\n  [0.3190918035664962, 0.5061301610775946, ], //1\r\n];\r\nchai.use(sinonChai);\r\nchai.use(chaiAsPromised);\r\nfunction scaleColumnMap(columnName) {\r\n  return {\r\n    name: columnName,\r\n    options: {\r\n      strategy: 'scale',\r\n      scaleOptions: {\r\n        strategy:'standard',\r\n      },\r\n    },\r\n  };\r\n}\r\ndescribe('LogisticRegression', function () {\r\n  this.timeout(120000);\r\n  before(async function () {\r\n    CSVData = await ms.csv.loadCSV('./test/mock/data/social_network_ads.csv');\r\n    DataSet = new ms.DataSet(CSVData);\r\n    const scaledData = DataSet.fitColumns({\r\n      columns: independentVariables.map(scaleColumnMap),\r\n      returnData:true,\r\n    });\r\n    /*\r\n    scaledData = [ \r\n      { 'User ID': 15624510,\r\n         Gender: 'Male',\r\n         Age: -1.7795687879022388,\r\n         EstimatedSalary: -1.4881825118632386,\r\n         Purchased: 0 },\r\n      { 'User ID': 15810944,\r\n         Gender: 'Male',\r\n         Age: -0.253270175924977,\r\n         EstimatedSalary: -1.458854384319991,\r\n         Purchased: 0 },\r\n      ...\r\n    ];\r\n    */\r\n    x_matrix = DataSet.columnMatrix(independentVariables); \r\n    y_matrix = DataSet.columnMatrix(dependentVariables);\r\n    /*\r\n    x_matrix = [\r\n      [ -1.7795687879022388, -1.4881825118632386 ],\r\n      [ -0.253270175924977, -1.458854384319991 ],\r\n      ...\r\n    ]; \r\n    y_matrix = [\r\n      [ 0 ],\r\n      [ 0 ],\r\n      ...\r\n    ] \r\n    */\r\n    // console.log({ x_matrix, y_matrix, });\r\n\r\n    nnLR = new LogisticRegression({ fit,  });\r\n    nnLRClass = new LogisticRegression({ type: 'class', fit, });\r\n    nnLRReg = new LogisticRegression({ type: 'l1l2', fit, });\r\n    const models = await Promise.all([\r\n      nnLR.train(x_matrix, y_matrix),\r\n      nnLRClass.train(x_matrix, y_matrix),\r\n      nnLRReg.train(x_matrix, y_matrix),\r\n    ]);\r\n    nnLRModel = models[ 0 ];\r\n    nnLRClassModel = models[ 1 ];\r\n    nnLRRegModel = models[ 2 ];\r\n  });\r\n  describe('constructor', () => {\r\n    it('should export a named module class', () => {\r\n      const NN = new LogisticRegression();\r\n      const NNConfigured = new LogisticRegression({ test: 'prop', });\r\n      expect(LogisticRegression).to.be.a('function');\r\n      expect(NN).to.be.instanceOf(LogisticRegression);\r\n      expect(NNConfigured.settings.test).to.eql('prop');\r\n    });\r\n  });\r\n  describe('generateLayers', () => {\r\n    it('should generate a classification network', async () => {\r\n      const predictions = await nnLR.predict(input_x);\r\n      const answers = await nnLR.predict(input_x, {\r\n        probability:false,\r\n      });\r\n      const shape = nnLR.getInputShape(predictions);\r\n     \r\n      expect(predictions).to.have.lengthOf(input_x.length);\r\n      expect(nnLR.layers).to.have.lengthOf(1);\r\n      expect(shape).to.eql([5, 1, ]);\r\n      // expect(answers[ 0 ]).to.eql(encodedAnswers[ 'Iris-setosa' ]);\r\n      return true;\r\n    });\r\n    it('should generate a network from layers', async () => { \r\n      const nnLRCustom = new LogisticRegression({ type:'custom', fit, });\r\n      await nnLRCustom.train(x_matrix, y_matrix, nnLR.layers);\r\n      expect(nnLRCustom.layers).to.have.lengthOf(1);\r\n    });\r\n    // it('should validate trainning data', async () => { \r\n    //   const nnLRCustom = new LogisticRegression({ type:'custom', fit, });\r\n    //   await nnLRCustom.train(x_matrix, y_matrix, nnLR.layers, x_matrix, y_matrix);\r\n    //   expect(nnLRCustom.layers).to.have.lengthOf(1);\r\n    // });\r\n  });\r\n});",
+    "content": "import chai from 'chai';\r\n// import sinon from 'sinon';\r\nimport ms from 'modelscript';\r\nimport sinonChai from 'sinon-chai';\r\nimport chaiAsPromised from 'chai-as-promised';\r\nimport 'babel-polyfill';\r\nimport { LogisticRegression, } from '../../index.mjs';\r\n\r\nconst expect = chai.expect;\r\nconst independentVariables = [\r\n  'Age',\r\n  'EstimatedSalary',\r\n];\r\nconst dependentVariables = [\r\n  'Purchased',\r\n];\r\nlet CSVData;\r\nlet DataSet;\r\nlet x_matrix;\r\nlet y_matrix;\r\nlet nnLR;\r\nlet nnLRClass;\r\nlet nnLRReg;\r\nlet nnLRModel;\r\nlet nnLRClassModel;\r\nlet nnLRRegModel;\r\nconst encodedAnswers = {\r\n  'yes': [1,],\r\n  'no': [0,],\r\n};\r\nconst fit = {\r\n  epochs: 10,\r\n  batchSize: 5,\r\n};\r\nconst input_x = [\r\n  [-0.062482849427819266, 0.30083326827486173, ], //0\r\n  [0.7960601198093905, -1.1069168538010206, ], //1\r\n  [0.7960601198093905, 0.12486450301537644, ], //0\r\n  [0.4144854668150751, -0.49102617539282206, ], //0\r\n  [0.3190918035664962, 0.5061301610775946, ], //1\r\n];\r\nchai.use(sinonChai);\r\nchai.use(chaiAsPromised);\r\nfunction scaleColumnMap(columnName) {\r\n  return {\r\n    name: columnName,\r\n    options: {\r\n      strategy: 'scale',\r\n      scaleOptions: {\r\n        strategy:'standard',\r\n      },\r\n    },\r\n  };\r\n}\r\n/** @test {LogisticRegression} */\r\ndescribe('LogisticRegression', function () {\r\n  this.timeout(120000);\r\n  before(async function () {\r\n    CSVData = await ms.csv.loadCSV('./test/mock/data/social_network_ads.csv');\r\n    DataSet = new ms.DataSet(CSVData);\r\n    const scaledData = DataSet.fitColumns({\r\n      columns: independentVariables.map(scaleColumnMap),\r\n      returnData:true,\r\n    });\r\n    /*\r\n    scaledData = [ \r\n      { 'User ID': 15624510,\r\n         Gender: 'Male',\r\n         Age: -1.7795687879022388,\r\n         EstimatedSalary: -1.4881825118632386,\r\n         Purchased: 0 },\r\n      { 'User ID': 15810944,\r\n         Gender: 'Male',\r\n         Age: -0.253270175924977,\r\n         EstimatedSalary: -1.458854384319991,\r\n         Purchased: 0 },\r\n      ...\r\n    ];\r\n    */\r\n    x_matrix = DataSet.columnMatrix(independentVariables); \r\n    y_matrix = DataSet.columnMatrix(dependentVariables);\r\n    /*\r\n    x_matrix = [\r\n      [ -1.7795687879022388, -1.4881825118632386 ],\r\n      [ -0.253270175924977, -1.458854384319991 ],\r\n      ...\r\n    ]; \r\n    y_matrix = [\r\n      [ 0 ],\r\n      [ 0 ],\r\n      ...\r\n    ] \r\n    */\r\n    // console.log({ x_matrix, y_matrix, });\r\n\r\n    nnLR = new LogisticRegression({ fit,  });\r\n    nnLRClass = new LogisticRegression({ type: 'class', fit, });\r\n    nnLRReg = new LogisticRegression({ type: 'l1l2', fit, });\r\n    const models = await Promise.all([\r\n      nnLR.train(x_matrix, y_matrix),\r\n      nnLRClass.train(x_matrix, y_matrix),\r\n      nnLRReg.train(x_matrix, y_matrix),\r\n    ]);\r\n    nnLRModel = models[ 0 ];\r\n    nnLRClassModel = models[ 1 ];\r\n    nnLRRegModel = models[ 2 ];\r\n  });\r\n  /** @test {LogisticRegression#constructor} */\r\n  describe('constructor', () => {\r\n    it('should export a named module class', () => {\r\n      const NN = new LogisticRegression();\r\n      const NNConfigured = new LogisticRegression({ test: 'prop', });\r\n      expect(LogisticRegression).to.be.a('function');\r\n      expect(NN).to.be.instanceOf(LogisticRegression);\r\n      expect(NNConfigured.settings.test).to.eql('prop');\r\n    });\r\n  });\r\n  /** @test {LogisticRegression#generateLayers} */\r\n  describe('generateLayers', () => {\r\n    it('should generate a classification network', async () => {\r\n      const predictions = await nnLR.predict(input_x);\r\n      const answers = await nnLR.predict(input_x, {\r\n        probability:false,\r\n      });\r\n      const shape = nnLR.getInputShape(predictions);\r\n     \r\n      expect(predictions).to.have.lengthOf(input_x.length);\r\n      expect(nnLR.layers).to.have.lengthOf(1);\r\n      expect(shape).to.eql([5, 1, ]);\r\n      // expect(answers[ 0 ]).to.eql(encodedAnswers[ 'Iris-setosa' ]);\r\n      return true;\r\n    });\r\n    it('should generate a network from layers', async () => { \r\n      const nnLRCustom = new LogisticRegression({ type:'custom', fit, });\r\n      await nnLRCustom.train(x_matrix, y_matrix, nnLR.layers);\r\n      expect(nnLRCustom.layers).to.have.lengthOf(1);\r\n    });\r\n    // it('should validate trainning data', async () => { \r\n    //   const nnLRCustom = new LogisticRegression({ type:'custom', fit, });\r\n    //   await nnLRCustom.train(x_matrix, y_matrix, nnLR.layers, x_matrix, y_matrix);\r\n    //   expect(nnLRCustom.layers).to.have.lengthOf(1);\r\n    // });\r\n  });\r\n});",
     "static": true,
     "longname": "/Users/yawjosephetse/Developer/github/repetere/tensorscript/test/unit/logistic_regression_spec.mjs",
     "access": null,
@@ -3015,7 +3039,10 @@
     "longname": "test/unit/logistic_regression_spec.mjs~describe16",
     "access": null,
     "description": "LogisticRegression",
-    "lineNumber": 55
+    "lineNumber": 56,
+    "testTargets": [
+      "LogisticRegression"
+    ]
   },
   {
     "__docId__": 122,
@@ -3028,7 +3055,10 @@
     "longname": "test/unit/logistic_regression_spec.mjs~describe16.describe17",
     "access": null,
     "description": "constructor",
-    "lineNumber": 107
+    "lineNumber": 109,
+    "testTargets": [
+      "LogisticRegression#constructor"
+    ]
   },
   {
     "__docId__": 123,
@@ -3041,7 +3071,7 @@
     "longname": "test/unit/logistic_regression_spec.mjs~describe16.describe17.it18",
     "access": null,
     "description": "should export a named module class",
-    "lineNumber": 108
+    "lineNumber": 110
   },
   {
     "__docId__": 124,
@@ -3054,7 +3084,10 @@
     "longname": "test/unit/logistic_regression_spec.mjs~describe16.describe19",
     "access": null,
     "description": "generateLayers",
-    "lineNumber": 116
+    "lineNumber": 119,
+    "testTargets": [
+      "LogisticRegression#generateLayers"
+    ]
   },
   {
     "__docId__": 125,
@@ -3067,7 +3100,7 @@
     "longname": "test/unit/logistic_regression_spec.mjs~describe16.describe19.it20",
     "access": null,
     "description": "should generate a classification network",
-    "lineNumber": 117
+    "lineNumber": 120
   },
   {
     "__docId__": 126,
@@ -3080,13 +3113,13 @@
     "longname": "test/unit/logistic_regression_spec.mjs~describe16.describe19.it21",
     "access": null,
     "description": "should generate a network from layers",
-    "lineNumber": 130
+    "lineNumber": 133
   },
   {
     "__docId__": 127,
     "kind": "testFile",
     "name": "test/unit/lstm_multivariate_time_series_spec.mjs",
-    "content": "import chai from 'chai';\r\n// import sinon from 'sinon';\r\nimport ms from 'modelscript';\r\nimport sinonChai from 'sinon-chai';\r\nimport chaiAsPromised from 'chai-as-promised';\r\nimport 'babel-polyfill';\r\nimport { LSTMMultivariateTimeSeries, } from '../../index.mjs';\r\nconst expect = chai.expect;\r\nconst independentVariables = ['i1', 'i2', 'i3', 'i4', 'i5', 'i6', 'i7', 'i8',];\r\nconst dependentVariables = ['o1', ];\r\nconst ds = [\r\n  [10, 20, 30, 40, 50, 60, 70, 80, 90, ],\r\n  [11, 21, 31, 41, 51, 61, 71, 81, 91, ],\r\n  [12, 22, 32, 42, 52, 62, 72, 82, 92, ],\r\n  [13, 23, 33, 43, 53, 63, 73, 83, 93, ],\r\n  [14, 24, 34, 44, 54, 64, 74, 84, 94, ],\r\n  [15, 25, 35, 45, 55, 65, 75, 85, 95, ],\r\n  [16, 26, 36, 46, 56, 66, 76, 86, 96, ],\r\n  [17, 27, 37, 47, 57, 67, 77, 87, 97, ],\r\n  [18, 28, 38, 48, 58, 68, 78, 88, 98, ],\r\n  [19, 29, 39, 49, 59, 69, 79, 89, 99, ],\r\n];\r\nconst columns = dependentVariables.concat(independentVariables);\r\nlet csvData;\r\nlet DataSet;\r\nlet x_matrix;\r\nlet y_matrix;\r\nlet train_size;\r\nlet test_size;\r\nlet train_x_data;\r\nlet test_x_data;\r\nlet trainDataSet;\r\nlet testDataSet;\r\nlet x_matrix_test;\r\nlet TSTS;\r\nlet TSTSStateful;\r\nlet TSTSONE;\r\nlet TSTSStatefulONE;\r\nlet accuracyTest = {};\r\nlet evals;\r\n\r\nconst fit= {\r\n  epochs: 10,\r\n  batchSize: 1,\r\n};\r\n\r\nchai.use(sinonChai);\r\nchai.use(chaiAsPromised);\r\nfunction scaleColumnMap(columnName) {\r\n  return {\r\n    name: columnName,\r\n    options: {\r\n      strategy: 'scale',\r\n      scaleOptions: {\r\n        strategy:'standard',\r\n      },\r\n    },\r\n  };\r\n}\r\nasync function getModelAccuracy(preddata){\r\n  const m = await preddata.model.train(x_matrix);\r\n  const testData = preddata.model.getTimeseriesDataSet(x_matrix_test);\r\n  // const preInputShape = LSTMMultivariateTimeSeries.getInputShape(preddata.input);\r\n  // console.log({ testData })\r\n  // console.log({preInputShape})\r\n  // console.log('preddata.input',preddata.input)\r\n  // console.log('testData.x_matrix',testData.x_matrix)\r\n  // const predictions = await preddata.model.predict(preddata.input);\r\n  const predictions = await preddata.model.predict(testData.x_matrix);\r\n  const predictions_unscaled = predictions.map(pred => DataSet.scalers.get('o1').descale(pred[ 0 ]), );\r\n  const actuals_unscaled = testData.y_matrix.map(act => DataSet.scalers.get('o1').descale(act), );\r\n  // console.log('predictions',predictions)\r\n  // console.log('predictions_unscaled',predictions_unscaled)\r\n  // console.log('actuals_unscaled',actuals_unscaled)\r\n  // let results = ms.DataSet.reverseColumnMatrix({\r\n  //   vectors: predictions_unscaled,\r\n  //   labels: dependentVariables,\r\n  // });\r\n  return({\r\n    model: preddata.modelname,\r\n    // predictions,\r\n    // actuals_unscaled,\r\n    // predictions_unscaled,\r\n    // results,\r\n    accuracy: (ms.util.rSquared(\r\n      actuals_unscaled, //actuals,\r\n      predictions_unscaled, //estimates,\r\n    ) * 100), //.toFixed(2)+'%',\r\n  });\r\n}\r\n\r\ndescribe('LSTMMultivariateTimeSeries', function () {\r\n  this.timeout(120000);\r\n  before(async function () {\r\n    this.timeout(120000);\r\n    /*\r\n    csvData = [ \r\n      { o1: 10,\r\n       i1: 20,\r\n       i2: 30,\r\n       i3: 40,\r\n       i4: 50,\r\n       i5: 60,\r\n       i6: 70,\r\n       i7: 80,\r\n       i8: 90,\r\n       field10: '' },\r\n     { o1: 11,\r\n       i1: 21,\r\n       i2: 31,\r\n       i3: 41,\r\n       i4: 51,\r\n       i5: 61,\r\n       i6: 71,\r\n       i7: 81,\r\n       i8: 91,\r\n       field10: '' },\r\n      ...\r\n      ];\r\n    scaledData = [ \r\n      { o1: -1.3856406460551016,\r\n       i1: -1.3856406460551016,\r\n       i2: -1.3856406460551016,\r\n       i3: -1.3856406460551016,\r\n       i4: -1.3856406460551016,\r\n       i5: -1.3856406460551016,\r\n       i6: -1.3856406460551016,\r\n       i7: -1.3856406460551016,\r\n       i8: -1.3856406460551016,\r\n       field10: '' },\r\n     { o1: -1.0392304845413263,\r\n       i1: -1.0392304845413263,\r\n       i2: -1.0392304845413263,\r\n       i3: -1.0392304845413263,\r\n       i4: -1.0392304845413263,\r\n       i5: -1.0392304845413263,\r\n       i6: -1.0392304845413263,\r\n       i7: -1.0392304845413263,\r\n       i8: -1.0392304845413263,\r\n       field10: '' },\r\n      ...\r\n    ]\r\n    */\r\n    csvData = await ms.csv.loadCSV('./test/mock/data/sample.csv');\r\n    DataSet = new ms.DataSet(csvData);\r\n    const scaledData = DataSet.fitColumns({\r\n      columns: columns.map(scaleColumnMap),\r\n      returnData:true,\r\n    });\r\n    //{ train_size: 16, test_size: 9 }\r\n    train_size = parseInt(DataSet.data.length * 0.67);\r\n    test_size = DataSet.data.length - train_size;\r\n    train_x_data = DataSet.data.slice(0, train_size);\r\n    test_x_data = DataSet.data.slice(train_size, DataSet.data.length);\r\n    trainDataSet = new ms.DataSet(train_x_data);\r\n    testDataSet = new ms.DataSet(test_x_data);\r\n    x_matrix = trainDataSet.columnMatrix(columns); \r\n    x_matrix_test = testDataSet.columnMatrix(columns); \r\n    \r\n    /*\r\n    x_matrix = [ \r\n      [ -1.4028822039369186 ],\r\n      [ -1.3528681653893018 ],\r\n      [ -1.2361687421115288 ],\r\n      ...\r\n    ]; \r\n    x_matrix_test: = [ \r\n      [ 0.2892594335907897 ],\r\n      [ 0.17256001031301674 ],\r\n      [ 0.6310220303328392 ],\r\n      ...\r\n    ]; \r\n    */\r\n    TSTS = new LSTMMultivariateTimeSeries({\r\n      lookback: 1,\r\n      features: 8,\r\n      fit,\r\n    });\r\n    TSTSONE = new LSTMMultivariateTimeSeries({\r\n      lookBack: 1,\r\n      features: 8,\r\n      fit,\r\n    });\r\n    evals = [\r\n      {\r\n        model: TSTS,\r\n        modelname: 'TSTS',\r\n      },\r\n      {\r\n        model: TSTSONE,\r\n        modelname: 'TSTSONE',\r\n      },\r\n    ];\r\n    return true;\r\n  });\r\n  describe('static drop', () => {\r\n    it('should drop matrix columns', () => {\r\n      const data = [\r\n        [0, 1, 2, 3,],\r\n        [0, 1, 2, 3,],\r\n        [0, 1, 2, 3,],\r\n        [0, 1, 2, 3,],\r\n      ];\r\n      const droppedData = [\r\n        [0, 2,],\r\n        [0, 2,],\r\n        [0, 2,],\r\n        [0, 2,],\r\n      ];\r\n      const dropColumns = [1, 3,];\r\n      const droppedFormatted = LSTMMultivariateTimeSeries.drop(data, dropColumns);\r\n      expect(droppedFormatted).to.eql(droppedData);\r\n    });\r\n  });\r\n  describe('static getDropableColumns', () => {\r\n    const data = [\r\n      [0,  1,  2,  3, 10, 11, 12, 13, ],\r\n      [10, 11, 12, 13, 20, 21, 22, 23, ],\r\n      [20, 21, 22, 23, 30, 31, 32, 33, ],\r\n      [30, 31, 32, 33, 40, 41, 42, 43, ],\r\n    ];\r\n    it('should calculate dropable columns', () => {\r\n      const n_in = 1;\r\n      const n_out = 1;\r\n      const features = 8;\r\n      const drops = [10, 11, 12, 13, 14, 15, 16, 17, ];\r\n      const droppableColumns = LSTMMultivariateTimeSeries.getDropableColumns(features, n_in, n_out);\r\n      const droppableColumns1 = LSTMMultivariateTimeSeries.getDropableColumns(1, 1, 1);\r\n      const droppableColumns2 = LSTMMultivariateTimeSeries.getDropableColumns(1, 3, 1);\r\n      const droppableColumns3 = LSTMMultivariateTimeSeries.getDropableColumns(2, 3, 1);\r\n      const droppableColumns4 = LSTMMultivariateTimeSeries.getDropableColumns(2, 1, 1);\r\n      // console.log({ droppableColumns3,droppableColumns4 });\r\n      expect(droppableColumns).to.eql(drops);\r\n      expect(droppableColumns1).to.eql([3, ]);\r\n      expect(droppableColumns2).to.eql([7, ]);\r\n      expect(droppableColumns3).to.eql([10, 11, ]);\r\n      expect(droppableColumns4).to.eql([4, 5, ]);\r\n    });\r\n    it('should throw an error if more that one future iteration', () => {\r\n      expect(LSTMMultivariateTimeSeries.getDropableColumns.bind(null, 8, 1, 3)).to.throw(/Only 1 future/);\r\n    });\r\n  });\r\n  describe('static seriesToSupervised', () => {\r\n    const originalData = [\r\n      [0,  1,  2,  3, ],\r\n      [10, 11, 12, 13, ],\r\n      [20, 21, 22, 23, ],\r\n      [30, 31, 32, 33, ],\r\n      [40, 41, 42, 43, ],\r\n    ];\r\n    const data = [\r\n      [0,  1,  2,  3, 10, 11, 12, 13, ],\r\n      [10, 11, 12, 13, 20, 21, 22, 23, ],\r\n      [20, 21, 22, 23, 30, 31, 32, 33, ],\r\n      [30, 31, 32, 33, 40, 41, 42, 43, ],\r\n    ];\r\n    it('should generate supervised series', () => {\r\n      const n_in = 1;\r\n      const n_out = 1;\r\n      const s1 = [\r\n        [1, 2,],\r\n        [11, 21,],\r\n        [12, 22,],\r\n        [13, 23,],\r\n      ];\r\n      const series = LSTMMultivariateTimeSeries.seriesToSupervised(originalData, n_in, n_out);\r\n      const series1 = LSTMMultivariateTimeSeries.seriesToSupervised(s1, 3, n_out);\r\n      expect(series).to.eql(data);\r\n      expect(series1[ 0 ]).to.have.lengthOf(8);\r\n      // expect(droppableColumns1).to.eql([3]);\r\n      // expect(droppableColumns2).to.eql([7]);\r\n      // expect(droppableColumns3).to.eql([10,11]);\r\n      // expect(droppableColumns4).to.eql([4,5]);\r\n    });\r\n    it('should throw an error if more that one future iteration', () => {\r\n      expect(LSTMMultivariateTimeSeries.seriesToSupervised.bind(null, originalData, 1, 3)).to.throw(/Only 1 future/);\r\n    });\r\n    it('should throw an error if no dependent variable supplied', () => {\r\n      expect(LSTMMultivariateTimeSeries.seriesToSupervised.bind(null, [[1, ], [2, ], ], 1, 1)).to.throw(/Must include at least two columns/);\r\n    });\r\n  });\r\n  describe('static createDataset', () => {\r\n    const lookback = 3;\r\n    it('should return timeseries datasets', () => {\r\n      const [datax, datay, features,] = LSTMMultivariateTimeSeries.createDataset(ds);\r\n      const [datax2, datay2, features2,] = LSTMMultivariateTimeSeries.createDataset(ds, lookback);\r\n      expect(datax).to.have.lengthOf(datay.length);\r\n      expect(datax2).to.have.lengthOf(datay2.length);\r\n      expect(datax[ 0 ]).to.have.lengthOf(features);\r\n      expect(datax[ 0 ]).to.have.lengthOf(features*1+(1-1));\r\n      expect(datax2[ 0 ]).to.have.lengthOf(features2*lookback+(lookback-1));\r\n    });\r\n  });\r\n  describe('static getTimeseriesShape', () => {\r\n    const [datax, datay, ] = LSTMMultivariateTimeSeries.createDataset(ds, 1);\r\n    const [datax2, datay2, ] = LSTMMultivariateTimeSeries.createDataset(ds, 3);\r\n    it('should calculate timeseries shape', () => {\r\n      const tsShape = LSTMMultivariateTimeSeries.getTimeseriesShape.call({\r\n        getInputShape: LSTMMultivariateTimeSeries.getInputShape,\r\n        settings: {\r\n          lookback: 1,\r\n        },\r\n      }, datax);\r\n      const tsShape2 = LSTMMultivariateTimeSeries.getTimeseriesShape.call({\r\n        getInputShape: LSTMMultivariateTimeSeries.getInputShape,\r\n        settings: {\r\n          lookback: 3,\r\n        },\r\n      }, datax2);\r\n      expect(tsShape).to.eql([9,1,8 ]);\r\n      expect(tsShape2).to.eql([7,3,26, ]);\r\n    });\r\n  });\r\n  describe('static getTimeseriesDataSet', () => {\r\n    const [datax, datay,] = LSTMMultivariateTimeSeries.createDataset(ds, 1);\r\n    it('should return timeseries data', () => {\r\n      const tsShape = LSTMMultivariateTimeSeries.getTimeseriesDataSet.call({\r\n        getInputShape: LSTMMultivariateTimeSeries.getInputShape,\r\n        settings: {\r\n        },\r\n      }, ds, 1);\r\n      expect(tsShape.yShape).to.eql([9, 1,]);\r\n      expect(tsShape.xShape).to.eql([9, 1,8,]);\r\n      expect(tsShape.y_matrix).to.eql(datay);\r\n      // expect(tsShape.x_matrix).to.eql(datax);\r\n      // console.log({ tsShape, });\r\n    });\r\n  });\r\n  describe('constructor', () => {\r\n    it('should export a named module class', () => {\r\n      const NN = new LSTMMultivariateTimeSeries();\r\n      const NNConfigured = new LSTMMultivariateTimeSeries({ test: 'prop', });\r\n      expect(LSTMMultivariateTimeSeries).to.be.a('function');\r\n      expect(NN).to.be.instanceOf(LSTMMultivariateTimeSeries);\r\n      expect(NNConfigured.settings.test).to.eql('prop');\r\n    });\r\n  });\r\n  describe('async predict', () => {\r\n    it('should allow for stateless predictions with one step time windows', async () => {\r\n      const accr = await getModelAccuracy({ model: TSTSONE, modelname: 'TSTSONE', });\r\n      // console.log({ accr });\r\n      expect(accr.accuracy).to.be.ok;\r\n      return true;\r\n    });\r\n    it('should allow for stateless predictions with multiple step time windows', async () => {\r\n      const accr = await getModelAccuracy({ model: TSTS, modelname: 'TSTSONE', });\r\n      // console.log({ accr, });\r\n      expect(accr.accuracy).to.be.ok;\r\n      return true;\r\n    });\r\n    it('should make single predictions', async () => {\r\n      const testData = TSTSONE.getTimeseriesDataSet(x_matrix_test);\r\n      const predictions = await TSTSONE.predict(testData.x_matrix[ 0 ]);\r\n      expect(predictions).to.have.lengthOf(1);\r\n      console.log({ predictions });\r\n      return true;\r\n    });\r\n  });\r\n  describe('async train', () => {\r\n    it('should train a model with supplied test data', async () => {\r\n      const testData = TSTSONE.getTimeseriesDataSet(x_matrix_test);\r\n      const LSTMTS = new LSTMMultivariateTimeSeries({\r\n        fit,features:8\r\n      });\r\n      const matrices = LSTMMultivariateTimeSeries.createDataset(x_matrix_test);\r\n      const x = matrices[ 0 ];\r\n      const y = matrices[ 1 ];\r\n      const y_matrix = LSTMMultivariateTimeSeries.reshape(matrices[ 1 ], [ matrices[ 1 ].length, 1 ]);\r\n      // console.log({x, y,y_matrix })\r\n\r\n      await LSTMTS.train(x, y_matrix);\r\n      const predictions = await TSTSONE.predict(testData.x_matrix[ 0 ]);\r\n      const predictions_unscaled = predictions.map(pred => [DataSet.scalers.get('o1').descale(pred[ 0 ]),]);\r\n      // console.log({ predictions_unscaled });\r\n      expect(predictions).to.have.lengthOf(1);\r\n      expect(LSTMTS.layers).to.be.a('object');\r\n      return true;\r\n    });\r\n  });\r\n  describe('generateLayers', () => {\r\n    // it('should generate a classification network', async () => {\r\n    //   const predictions = await nnClassification.predict(input_x);\r\n    //   const answers = await nnClassification.predict(input_x, {\r\n    //     probability:false,\r\n    //   });\r\n    //   const shape = nnClassification.getInputShape(predictions);\r\n    //   // console.log('nnClassification.layers', nnClassification.layers);\r\n    //   // console.log({\r\n    //   //   predictions,\r\n    //   //   // probabilities,\r\n    //   //   answers,\r\n    //   //   // results,\r\n    //   //   shape,\r\n    //   // });\r\n    //   expect(predictions).to.have.lengthOf(input_x.length);\r\n    //   expect(nnClassification.layers).to.have.lengthOf(2);\r\n    //   expect(shape).to.eql([5, 3,]);\r\n    //   expect(answers[ 0 ]).to.eql(encodedAnswers[ 'Iris-setosa' ]);\r\n    //   // expect(answers[ 1 ]).to.eql(encodedAnswers[ 'Iris-virginica' ]);\r\n    //   // expect(answers[ 2 ]).to.eql(encodedAnswers[ 'Iris-versicolor' ]);\r\n    //   // expect(answers[ 3 ]).to.eql(encodedAnswers[ 'Iris-setosa' ]);\r\n    //   // expect(answers[ 4 ]).to.eql(encodedAnswers[ 'Iris-setosa' ]);\r\n    //   return true;\r\n    // });\r\n    it('should generate a network from layers', async () => { \r\n      const LSTMTS = new LSTMMultivariateTimeSeries({ features: 8, fit, });\r\n      const testData = LSTMTS.getTimeseriesDataSet(x_matrix_test);\r\n      console.log('TSTSONE.layers', TSTSONE.layers);\r\n      await LSTMTS.train(x_matrix, y_matrix, TSTSONE.layers,testData.x_matrix,testData.y_matrix);\r\n      expect(LSTMTS.layers).to.be.a('object');\r\n      return true;\r\n    });\r\n  });\r\n});",
+    "content": "import chai from 'chai';\r\n// import sinon from 'sinon';\r\nimport ms from 'modelscript';\r\nimport sinonChai from 'sinon-chai';\r\nimport chaiAsPromised from 'chai-as-promised';\r\nimport 'babel-polyfill';\r\nimport { LSTMMultivariateTimeSeries, } from '../../index.mjs';\r\nconst expect = chai.expect;\r\nconst independentVariables = ['i1', 'i2', 'i3', 'i4', 'i5', 'i6', 'i7', 'i8',];\r\nconst dependentVariables = ['o1', ];\r\nconst ds = [\r\n  [10, 20, 30, 40, 50, 60, 70, 80, 90, ],\r\n  [11, 21, 31, 41, 51, 61, 71, 81, 91, ],\r\n  [12, 22, 32, 42, 52, 62, 72, 82, 92, ],\r\n  [13, 23, 33, 43, 53, 63, 73, 83, 93, ],\r\n  [14, 24, 34, 44, 54, 64, 74, 84, 94, ],\r\n  [15, 25, 35, 45, 55, 65, 75, 85, 95, ],\r\n  [16, 26, 36, 46, 56, 66, 76, 86, 96, ],\r\n  [17, 27, 37, 47, 57, 67, 77, 87, 97, ],\r\n  [18, 28, 38, 48, 58, 68, 78, 88, 98, ],\r\n  [19, 29, 39, 49, 59, 69, 79, 89, 99, ],\r\n];\r\nconst columns = dependentVariables.concat(independentVariables);\r\nlet csvData;\r\nlet DataSet;\r\nlet x_matrix;\r\nlet y_matrix;\r\nlet train_size;\r\nlet test_size;\r\nlet train_x_data;\r\nlet test_x_data;\r\nlet trainDataSet;\r\nlet testDataSet;\r\nlet x_matrix_test;\r\nlet TSTS;\r\nlet TSTSStateful;\r\nlet TSTSONE;\r\nlet TSTSStatefulONE;\r\nlet accuracyTest = {};\r\nlet evals;\r\n\r\nconst fit= {\r\n  epochs: 10,\r\n  batchSize: 1,\r\n};\r\n\r\nchai.use(sinonChai);\r\nchai.use(chaiAsPromised);\r\nfunction scaleColumnMap(columnName) {\r\n  return {\r\n    name: columnName,\r\n    options: {\r\n      strategy: 'scale',\r\n      scaleOptions: {\r\n        strategy:'standard',\r\n      },\r\n    },\r\n  };\r\n}\r\nasync function getModelAccuracy(preddata){\r\n  const m = await preddata.model.train(x_matrix);\r\n  const testData = preddata.model.getTimeseriesDataSet(x_matrix_test);\r\n  // const preInputShape = LSTMMultivariateTimeSeries.getInputShape(preddata.input);\r\n  // console.log({ testData })\r\n  // console.log({preInputShape})\r\n  // console.log('preddata.input',preddata.input)\r\n  // console.log('testData.x_matrix',testData.x_matrix)\r\n  // const predictions = await preddata.model.predict(preddata.input);\r\n  const predictions = await preddata.model.predict(testData.x_matrix);\r\n  const predictions_unscaled = predictions.map(pred => DataSet.scalers.get('o1').descale(pred[ 0 ]), );\r\n  const actuals_unscaled = testData.y_matrix.map(act => DataSet.scalers.get('o1').descale(act), );\r\n  // console.log('predictions',predictions)\r\n  // console.log('predictions_unscaled',predictions_unscaled)\r\n  // console.log('actuals_unscaled',actuals_unscaled)\r\n  // let results = ms.DataSet.reverseColumnMatrix({\r\n  //   vectors: predictions_unscaled,\r\n  //   labels: dependentVariables,\r\n  // });\r\n  return({\r\n    model: preddata.modelname,\r\n    // predictions,\r\n    // actuals_unscaled,\r\n    // predictions_unscaled,\r\n    // results,\r\n    accuracy: (ms.util.rSquared(\r\n      actuals_unscaled, //actuals,\r\n      predictions_unscaled, //estimates,\r\n    ) * 100), //.toFixed(2)+'%',\r\n  });\r\n}\r\n\r\n/** @test {LSTMMultivariateTimeSeries} */\r\ndescribe('LSTMMultivariateTimeSeries', function () {\r\n  this.timeout(120000);\r\n  before(async function () {\r\n    this.timeout(120000);\r\n    /*\r\n    csvData = [ \r\n      { o1: 10,\r\n       i1: 20,\r\n       i2: 30,\r\n       i3: 40,\r\n       i4: 50,\r\n       i5: 60,\r\n       i6: 70,\r\n       i7: 80,\r\n       i8: 90,\r\n       field10: '' },\r\n     { o1: 11,\r\n       i1: 21,\r\n       i2: 31,\r\n       i3: 41,\r\n       i4: 51,\r\n       i5: 61,\r\n       i6: 71,\r\n       i7: 81,\r\n       i8: 91,\r\n       field10: '' },\r\n      ...\r\n      ];\r\n    scaledData = [ \r\n      { o1: -1.3856406460551016,\r\n       i1: -1.3856406460551016,\r\n       i2: -1.3856406460551016,\r\n       i3: -1.3856406460551016,\r\n       i4: -1.3856406460551016,\r\n       i5: -1.3856406460551016,\r\n       i6: -1.3856406460551016,\r\n       i7: -1.3856406460551016,\r\n       i8: -1.3856406460551016,\r\n       field10: '' },\r\n     { o1: -1.0392304845413263,\r\n       i1: -1.0392304845413263,\r\n       i2: -1.0392304845413263,\r\n       i3: -1.0392304845413263,\r\n       i4: -1.0392304845413263,\r\n       i5: -1.0392304845413263,\r\n       i6: -1.0392304845413263,\r\n       i7: -1.0392304845413263,\r\n       i8: -1.0392304845413263,\r\n       field10: '' },\r\n      ...\r\n    ]\r\n    */\r\n    csvData = await ms.csv.loadCSV('./test/mock/data/sample.csv');\r\n    DataSet = new ms.DataSet(csvData);\r\n    const scaledData = DataSet.fitColumns({\r\n      columns: columns.map(scaleColumnMap),\r\n      returnData:true,\r\n    });\r\n    //{ train_size: 16, test_size: 9 }\r\n    train_size = parseInt(DataSet.data.length * 0.67);\r\n    test_size = DataSet.data.length - train_size;\r\n    train_x_data = DataSet.data.slice(0, train_size);\r\n    test_x_data = DataSet.data.slice(train_size, DataSet.data.length);\r\n    trainDataSet = new ms.DataSet(train_x_data);\r\n    testDataSet = new ms.DataSet(test_x_data);\r\n    x_matrix = trainDataSet.columnMatrix(columns); \r\n    x_matrix_test = testDataSet.columnMatrix(columns); \r\n    \r\n    /*\r\n    x_matrix = [ \r\n      [ -1.4028822039369186 ],\r\n      [ -1.3528681653893018 ],\r\n      [ -1.2361687421115288 ],\r\n      ...\r\n    ]; \r\n    x_matrix_test: = [ \r\n      [ 0.2892594335907897 ],\r\n      [ 0.17256001031301674 ],\r\n      [ 0.6310220303328392 ],\r\n      ...\r\n    ]; \r\n    */\r\n    TSTS = new LSTMMultivariateTimeSeries({\r\n      lookback: 1,\r\n      features: 8,\r\n      fit,\r\n    });\r\n    TSTSONE = new LSTMMultivariateTimeSeries({\r\n      lookBack: 1,\r\n      features: 8,\r\n      fit,\r\n    });\r\n    evals = [\r\n      {\r\n        model: TSTS,\r\n        modelname: 'TSTS',\r\n      },\r\n      {\r\n        model: TSTSONE,\r\n        modelname: 'TSTSONE',\r\n      },\r\n    ];\r\n    return true;\r\n  });\r\n  /** @test {LSTMMultivariateTimeSeries#drop} */\r\n  describe('static drop', () => {\r\n    it('should drop matrix columns', () => {\r\n      const data = [\r\n        [0, 1, 2, 3,],\r\n        [0, 1, 2, 3,],\r\n        [0, 1, 2, 3,],\r\n        [0, 1, 2, 3,],\r\n      ];\r\n      const droppedData = [\r\n        [0, 2,],\r\n        [0, 2,],\r\n        [0, 2,],\r\n        [0, 2,],\r\n      ];\r\n      const dropColumns = [1, 3,];\r\n      const droppedFormatted = LSTMMultivariateTimeSeries.drop(data, dropColumns);\r\n      expect(droppedFormatted).to.eql(droppedData);\r\n    });\r\n  });\r\n  /** @test {LSTMMultivariateTimeSeries#getDropableColumns} */\r\n  describe('static getDropableColumns', () => {\r\n    const data = [\r\n      [0,  1,  2,  3, 10, 11, 12, 13, ],\r\n      [10, 11, 12, 13, 20, 21, 22, 23, ],\r\n      [20, 21, 22, 23, 30, 31, 32, 33, ],\r\n      [30, 31, 32, 33, 40, 41, 42, 43, ],\r\n    ];\r\n    it('should calculate dropable columns', () => {\r\n      const n_in = 1;\r\n      const n_out = 1;\r\n      const features = 8;\r\n      const drops = [10, 11, 12, 13, 14, 15, 16, 17, ];\r\n      const droppableColumns = LSTMMultivariateTimeSeries.getDropableColumns(features, n_in, n_out);\r\n      const droppableColumns1 = LSTMMultivariateTimeSeries.getDropableColumns(1, 1, 1);\r\n      const droppableColumns2 = LSTMMultivariateTimeSeries.getDropableColumns(1, 3, 1);\r\n      const droppableColumns3 = LSTMMultivariateTimeSeries.getDropableColumns(2, 3, 1);\r\n      const droppableColumns4 = LSTMMultivariateTimeSeries.getDropableColumns(2, 1, 1);\r\n      // console.log({ droppableColumns3,droppableColumns4 });\r\n      expect(droppableColumns).to.eql(drops);\r\n      expect(droppableColumns1).to.eql([3, ]);\r\n      expect(droppableColumns2).to.eql([7, ]);\r\n      expect(droppableColumns3).to.eql([10, 11, ]);\r\n      expect(droppableColumns4).to.eql([4, 5, ]);\r\n    });\r\n    it('should throw an error if more that one future iteration', () => {\r\n      expect(LSTMMultivariateTimeSeries.getDropableColumns.bind(null, 8, 1, 3)).to.throw(/Only 1 future/);\r\n    });\r\n  });\r\n  /** @test {LSTMMultivariateTimeSeries#seriesToSupervised} */\r\n  describe('static seriesToSupervised', () => {\r\n    const originalData = [\r\n      [0,  1,  2,  3, ],\r\n      [10, 11, 12, 13, ],\r\n      [20, 21, 22, 23, ],\r\n      [30, 31, 32, 33, ],\r\n      [40, 41, 42, 43, ],\r\n    ];\r\n    const data = [\r\n      [0,  1,  2,  3, 10, 11, 12, 13, ],\r\n      [10, 11, 12, 13, 20, 21, 22, 23, ],\r\n      [20, 21, 22, 23, 30, 31, 32, 33, ],\r\n      [30, 31, 32, 33, 40, 41, 42, 43, ],\r\n    ];\r\n    it('should generate supervised series', () => {\r\n      const n_in = 1;\r\n      const n_out = 1;\r\n      const s1 = [\r\n        [1, 2,],\r\n        [11, 21,],\r\n        [12, 22,],\r\n        [13, 23,],\r\n      ];\r\n      const series = LSTMMultivariateTimeSeries.seriesToSupervised(originalData, n_in, n_out);\r\n      const series1 = LSTMMultivariateTimeSeries.seriesToSupervised(s1, 3, n_out);\r\n      expect(series).to.eql(data);\r\n      expect(series1[ 0 ]).to.have.lengthOf(8);\r\n      // expect(droppableColumns1).to.eql([3]);\r\n      // expect(droppableColumns2).to.eql([7]);\r\n      // expect(droppableColumns3).to.eql([10,11]);\r\n      // expect(droppableColumns4).to.eql([4,5]);\r\n    });\r\n    it('should throw an error if more that one future iteration', () => {\r\n      expect(LSTMMultivariateTimeSeries.seriesToSupervised.bind(null, originalData, 1, 3)).to.throw(/Only 1 future/);\r\n    });\r\n    it('should throw an error if no dependent variable supplied', () => {\r\n      expect(LSTMMultivariateTimeSeries.seriesToSupervised.bind(null, [[1, ], [2, ], ], 1, 1)).to.throw(/Must include at least two columns/);\r\n    });\r\n  });\r\n  /** @test {LSTMMultivariateTimeSeries#createDataset} */\r\n  describe('static createDataset', () => {\r\n    const lookback = 3;\r\n    it('should return timeseries datasets', () => {\r\n      const [datax, datay, features,] = LSTMMultivariateTimeSeries.createDataset(ds);\r\n      const [datax2, datay2, features2,] = LSTMMultivariateTimeSeries.createDataset(ds, lookback);\r\n      expect(datax).to.have.lengthOf(datay.length);\r\n      expect(datax2).to.have.lengthOf(datay2.length);\r\n      expect(datax[ 0 ]).to.have.lengthOf(features);\r\n      expect(datax[ 0 ]).to.have.lengthOf(features*1+(1-1));\r\n      expect(datax2[ 0 ]).to.have.lengthOf(features2*lookback+(lookback-1));\r\n    });\r\n  });\r\n  /** @test {LSTMMultivariateTimeSeries#getTimeseriesShape} */\r\n  describe('static getTimeseriesShape', () => {\r\n    const [datax, datay, ] = LSTMMultivariateTimeSeries.createDataset(ds, 1);\r\n    const [datax2, datay2, ] = LSTMMultivariateTimeSeries.createDataset(ds, 3);\r\n    it('should calculate timeseries shape', () => {\r\n      const tsShape = LSTMMultivariateTimeSeries.getTimeseriesShape.call({\r\n        getInputShape: LSTMMultivariateTimeSeries.getInputShape,\r\n        settings: {\r\n          lookback: 1,\r\n        },\r\n      }, datax);\r\n      const tsShape2 = LSTMMultivariateTimeSeries.getTimeseriesShape.call({\r\n        getInputShape: LSTMMultivariateTimeSeries.getInputShape,\r\n        settings: {\r\n          lookback: 3,\r\n        },\r\n      }, datax2);\r\n      expect(tsShape).to.eql([9,1,8 ]);\r\n      expect(tsShape2).to.eql([7,3,26, ]);\r\n    });\r\n  });\r\n  /** @test {LSTMMultivariateTimeSeries#getTimeseriesDataSet} */\r\n  describe('static getTimeseriesDataSet', () => {\r\n    const [datax, datay,] = LSTMMultivariateTimeSeries.createDataset(ds, 1);\r\n    it('should return timeseries data', () => {\r\n      const tsShape = LSTMMultivariateTimeSeries.getTimeseriesDataSet.call({\r\n        getInputShape: LSTMMultivariateTimeSeries.getInputShape,\r\n        settings: {\r\n        },\r\n      }, ds, 1);\r\n      expect(tsShape.yShape).to.eql([9, 1,]);\r\n      expect(tsShape.xShape).to.eql([9, 1,8,]);\r\n      expect(tsShape.y_matrix).to.eql(datay);\r\n      // expect(tsShape.x_matrix).to.eql(datax);\r\n      // console.log({ tsShape, });\r\n    });\r\n  });\r\n  /** @test {LSTMMultivariateTimeSeries#constructor} */\r\n  describe('constructor', () => {\r\n    it('should export a named module class', () => {\r\n      const NN = new LSTMMultivariateTimeSeries();\r\n      const NNConfigured = new LSTMMultivariateTimeSeries({ test: 'prop', });\r\n      expect(LSTMMultivariateTimeSeries).to.be.a('function');\r\n      expect(NN).to.be.instanceOf(LSTMMultivariateTimeSeries);\r\n      expect(NNConfigured.settings.test).to.eql('prop');\r\n    });\r\n  });\r\n  /** @test {LSTMMultivariateTimeSeries#predict} */\r\n  describe('async predict', () => {\r\n    it('should allow for stateless predictions with one step time windows', async () => {\r\n      const accr = await getModelAccuracy({ model: TSTSONE, modelname: 'TSTSONE', });\r\n      // console.log({ accr });\r\n      expect(accr.accuracy).to.be.ok;\r\n      return true;\r\n    });\r\n    it('should allow for stateless predictions with multiple step time windows', async () => {\r\n      const accr = await getModelAccuracy({ model: TSTS, modelname: 'TSTSONE', });\r\n      // console.log({ accr, });\r\n      expect(accr.accuracy).to.be.ok;\r\n      return true;\r\n    });\r\n    it('should make single predictions', async () => {\r\n      const testData = TSTSONE.getTimeseriesDataSet(x_matrix_test);\r\n      const predictions = await TSTSONE.predict(testData.x_matrix[ 0 ]);\r\n      expect(predictions).to.have.lengthOf(1);\r\n      console.log({ predictions });\r\n      return true;\r\n    });\r\n  });\r\n  /** @test {LSTMMultivariateTimeSeries#train} */\r\n  describe('async train', () => {\r\n    it('should train a model with supplied test data', async () => {\r\n      const testData = TSTSONE.getTimeseriesDataSet(x_matrix_test);\r\n      const LSTMTS = new LSTMMultivariateTimeSeries({\r\n        fit,features:8\r\n      });\r\n      const matrices = LSTMMultivariateTimeSeries.createDataset(x_matrix_test);\r\n      const x = matrices[ 0 ];\r\n      const y = matrices[ 1 ];\r\n      const y_matrix = LSTMMultivariateTimeSeries.reshape(matrices[ 1 ], [ matrices[ 1 ].length, 1 ]);\r\n      // console.log({x, y,y_matrix })\r\n\r\n      await LSTMTS.train(x, y_matrix);\r\n      const predictions = await TSTSONE.predict(testData.x_matrix[ 0 ]);\r\n      const predictions_unscaled = predictions.map(pred => [DataSet.scalers.get('o1').descale(pred[ 0 ]),]);\r\n      // console.log({ predictions_unscaled });\r\n      expect(predictions).to.have.lengthOf(1);\r\n      expect(LSTMTS.layers).to.be.a('object');\r\n      return true;\r\n    });\r\n  });\r\n  /** @test {LSTMMultivariateTimeSeries#generateLayers} */\r\n  describe('generateLayers', () => {\r\n    // it('should generate a classification network', async () => {\r\n    //   const predictions = await nnClassification.predict(input_x);\r\n    //   const answers = await nnClassification.predict(input_x, {\r\n    //     probability:false,\r\n    //   });\r\n    //   const shape = nnClassification.getInputShape(predictions);\r\n    //   // console.log('nnClassification.layers', nnClassification.layers);\r\n    //   // console.log({\r\n    //   //   predictions,\r\n    //   //   // probabilities,\r\n    //   //   answers,\r\n    //   //   // results,\r\n    //   //   shape,\r\n    //   // });\r\n    //   expect(predictions).to.have.lengthOf(input_x.length);\r\n    //   expect(nnClassification.layers).to.have.lengthOf(2);\r\n    //   expect(shape).to.eql([5, 3,]);\r\n    //   expect(answers[ 0 ]).to.eql(encodedAnswers[ 'Iris-setosa' ]);\r\n    //   // expect(answers[ 1 ]).to.eql(encodedAnswers[ 'Iris-virginica' ]);\r\n    //   // expect(answers[ 2 ]).to.eql(encodedAnswers[ 'Iris-versicolor' ]);\r\n    //   // expect(answers[ 3 ]).to.eql(encodedAnswers[ 'Iris-setosa' ]);\r\n    //   // expect(answers[ 4 ]).to.eql(encodedAnswers[ 'Iris-setosa' ]);\r\n    //   return true;\r\n    // });\r\n    it('should generate a network from layers', async () => { \r\n      const LSTMTS = new LSTMMultivariateTimeSeries({ features: 8, fit, });\r\n      const testData = LSTMTS.getTimeseriesDataSet(x_matrix_test);\r\n      console.log('TSTSONE.layers', TSTSONE.layers);\r\n      await LSTMTS.train(x_matrix, y_matrix, TSTSONE.layers,testData.x_matrix,testData.y_matrix);\r\n      expect(LSTMTS.layers).to.be.a('object');\r\n      return true;\r\n    });\r\n  });\r\n});",
     "static": true,
     "longname": "/Users/yawjosephetse/Developer/github/repetere/tensorscript/test/unit/lstm_multivariate_time_series_spec.mjs",
     "access": null,
@@ -3104,7 +3137,10 @@
     "longname": "test/unit/lstm_multivariate_time_series_spec.mjs~describe22",
     "access": null,
     "description": "LSTMMultivariateTimeSeries",
-    "lineNumber": 92
+    "lineNumber": 93,
+    "testTargets": [
+      "LSTMMultivariateTimeSeries"
+    ]
   },
   {
     "__docId__": 129,
@@ -3117,7 +3153,10 @@
     "longname": "test/unit/lstm_multivariate_time_series_spec.mjs~describe22.describe23",
     "access": null,
     "description": "static drop",
-    "lineNumber": 196
+    "lineNumber": 198,
+    "testTargets": [
+      "LSTMMultivariateTimeSeries#drop"
+    ]
   },
   {
     "__docId__": 130,
@@ -3130,7 +3169,7 @@
     "longname": "test/unit/lstm_multivariate_time_series_spec.mjs~describe22.describe23.it24",
     "access": null,
     "description": "should drop matrix columns",
-    "lineNumber": 197
+    "lineNumber": 199
   },
   {
     "__docId__": 131,
@@ -3143,7 +3182,10 @@
     "longname": "test/unit/lstm_multivariate_time_series_spec.mjs~describe22.describe25",
     "access": null,
     "description": "static getDropableColumns",
-    "lineNumber": 215
+    "lineNumber": 218,
+    "testTargets": [
+      "LSTMMultivariateTimeSeries#getDropableColumns"
+    ]
   },
   {
     "__docId__": 132,
@@ -3156,7 +3198,7 @@
     "longname": "test/unit/lstm_multivariate_time_series_spec.mjs~describe22.describe25.it26",
     "access": null,
     "description": "should calculate dropable columns",
-    "lineNumber": 222
+    "lineNumber": 225
   },
   {
     "__docId__": 133,
@@ -3169,7 +3211,7 @@
     "longname": "test/unit/lstm_multivariate_time_series_spec.mjs~describe22.describe25.it27",
     "access": null,
     "description": "should throw an error if more that one future iteration",
-    "lineNumber": 239
+    "lineNumber": 242
   },
   {
     "__docId__": 134,
@@ -3182,7 +3224,10 @@
     "longname": "test/unit/lstm_multivariate_time_series_spec.mjs~describe22.describe28",
     "access": null,
     "description": "static seriesToSupervised",
-    "lineNumber": 243
+    "lineNumber": 247,
+    "testTargets": [
+      "LSTMMultivariateTimeSeries#seriesToSupervised"
+    ]
   },
   {
     "__docId__": 135,
@@ -3195,7 +3240,7 @@
     "longname": "test/unit/lstm_multivariate_time_series_spec.mjs~describe22.describe28.it29",
     "access": null,
     "description": "should generate supervised series",
-    "lineNumber": 257
+    "lineNumber": 261
   },
   {
     "__docId__": 136,
@@ -3208,7 +3253,7 @@
     "longname": "test/unit/lstm_multivariate_time_series_spec.mjs~describe22.describe28.it30",
     "access": null,
     "description": "should throw an error if more that one future iteration",
-    "lineNumber": 275
+    "lineNumber": 279
   },
   {
     "__docId__": 137,
@@ -3221,7 +3266,7 @@
     "longname": "test/unit/lstm_multivariate_time_series_spec.mjs~describe22.describe28.it31",
     "access": null,
     "description": "should throw an error if no dependent variable supplied",
-    "lineNumber": 278
+    "lineNumber": 282
   },
   {
     "__docId__": 138,
@@ -3234,7 +3279,10 @@
     "longname": "test/unit/lstm_multivariate_time_series_spec.mjs~describe22.describe32",
     "access": null,
     "description": "static createDataset",
-    "lineNumber": 282
+    "lineNumber": 287,
+    "testTargets": [
+      "LSTMMultivariateTimeSeries#createDataset"
+    ]
   },
   {
     "__docId__": 139,
@@ -3247,7 +3295,7 @@
     "longname": "test/unit/lstm_multivariate_time_series_spec.mjs~describe22.describe32.it33",
     "access": null,
     "description": "should return timeseries datasets",
-    "lineNumber": 284
+    "lineNumber": 289
   },
   {
     "__docId__": 140,
@@ -3260,7 +3308,10 @@
     "longname": "test/unit/lstm_multivariate_time_series_spec.mjs~describe22.describe34",
     "access": null,
     "description": "static getTimeseriesShape",
-    "lineNumber": 294
+    "lineNumber": 300,
+    "testTargets": [
+      "LSTMMultivariateTimeSeries#getTimeseriesShape"
+    ]
   },
   {
     "__docId__": 141,
@@ -3273,7 +3324,7 @@
     "longname": "test/unit/lstm_multivariate_time_series_spec.mjs~describe22.describe34.it35",
     "access": null,
     "description": "should calculate timeseries shape",
-    "lineNumber": 297
+    "lineNumber": 303
   },
   {
     "__docId__": 142,
@@ -3286,7 +3337,10 @@
     "longname": "test/unit/lstm_multivariate_time_series_spec.mjs~describe22.describe36",
     "access": null,
     "description": "static getTimeseriesDataSet",
-    "lineNumber": 314
+    "lineNumber": 321,
+    "testTargets": [
+      "LSTMMultivariateTimeSeries#getTimeseriesDataSet"
+    ]
   },
   {
     "__docId__": 143,
@@ -3299,7 +3353,7 @@
     "longname": "test/unit/lstm_multivariate_time_series_spec.mjs~describe22.describe36.it37",
     "access": null,
     "description": "should return timeseries data",
-    "lineNumber": 316
+    "lineNumber": 323
   },
   {
     "__docId__": 144,
@@ -3312,7 +3366,10 @@
     "longname": "test/unit/lstm_multivariate_time_series_spec.mjs~describe22.describe38",
     "access": null,
     "description": "constructor",
-    "lineNumber": 329
+    "lineNumber": 337,
+    "testTargets": [
+      "LSTMMultivariateTimeSeries#constructor"
+    ]
   },
   {
     "__docId__": 145,
@@ -3325,7 +3382,7 @@
     "longname": "test/unit/lstm_multivariate_time_series_spec.mjs~describe22.describe38.it39",
     "access": null,
     "description": "should export a named module class",
-    "lineNumber": 330
+    "lineNumber": 338
   },
   {
     "__docId__": 146,
@@ -3338,7 +3395,10 @@
     "longname": "test/unit/lstm_multivariate_time_series_spec.mjs~describe22.describe40",
     "access": null,
     "description": "async predict",
-    "lineNumber": 338
+    "lineNumber": 347,
+    "testTargets": [
+      "LSTMMultivariateTimeSeries#predict"
+    ]
   },
   {
     "__docId__": 147,
@@ -3351,7 +3411,7 @@
     "longname": "test/unit/lstm_multivariate_time_series_spec.mjs~describe22.describe40.it41",
     "access": null,
     "description": "should allow for stateless predictions with one step time windows",
-    "lineNumber": 339
+    "lineNumber": 348
   },
   {
     "__docId__": 148,
@@ -3364,7 +3424,7 @@
     "longname": "test/unit/lstm_multivariate_time_series_spec.mjs~describe22.describe40.it42",
     "access": null,
     "description": "should allow for stateless predictions with multiple step time windows",
-    "lineNumber": 345
+    "lineNumber": 354
   },
   {
     "__docId__": 149,
@@ -3377,7 +3437,7 @@
     "longname": "test/unit/lstm_multivariate_time_series_spec.mjs~describe22.describe40.it43",
     "access": null,
     "description": "should make single predictions",
-    "lineNumber": 351
+    "lineNumber": 360
   },
   {
     "__docId__": 150,
@@ -3390,7 +3450,10 @@
     "longname": "test/unit/lstm_multivariate_time_series_spec.mjs~describe22.describe44",
     "access": null,
     "description": "async train",
-    "lineNumber": 359
+    "lineNumber": 369,
+    "testTargets": [
+      "LSTMMultivariateTimeSeries#train"
+    ]
   },
   {
     "__docId__": 151,
@@ -3403,7 +3466,7 @@
     "longname": "test/unit/lstm_multivariate_time_series_spec.mjs~describe22.describe44.it45",
     "access": null,
     "description": "should train a model with supplied test data",
-    "lineNumber": 360
+    "lineNumber": 370
   },
   {
     "__docId__": 152,
@@ -3416,7 +3479,10 @@
     "longname": "test/unit/lstm_multivariate_time_series_spec.mjs~describe22.describe46",
     "access": null,
     "description": "generateLayers",
-    "lineNumber": 380
+    "lineNumber": 391,
+    "testTargets": [
+      "LSTMMultivariateTimeSeries#generateLayers"
+    ]
   },
   {
     "__docId__": 153,
@@ -3429,13 +3495,13 @@
     "longname": "test/unit/lstm_multivariate_time_series_spec.mjs~describe22.describe46.it47",
     "access": null,
     "description": "should generate a network from layers",
-    "lineNumber": 405
+    "lineNumber": 416
   },
   {
     "__docId__": 154,
     "kind": "testFile",
     "name": "test/unit/lstm_time_series_spec.mjs",
-    "content": "import chai from 'chai';\r\n// import sinon from 'sinon';\r\nimport ms from 'modelscript';\r\nimport sinonChai from 'sinon-chai';\r\nimport chaiAsPromised from 'chai-as-promised';\r\nimport 'babel-polyfill';\r\nimport { LSTMTimeSeries, } from '../../index.mjs';\r\nconst expect = chai.expect;\r\nconst independentVariables = [\r\n  'Passengers',\r\n];\r\nconst dependentVariables = [\r\n  'Passengers',\r\n];\r\nconst columns = independentVariables;//.concat(dependentVariables);\r\nlet csvData;\r\nlet DataSet;\r\nlet x_matrix;\r\nlet y_matrix;\r\nlet train_size;\r\nlet test_size;\r\nlet train_x_data;\r\nlet test_x_data;\r\nlet trainDataSet;\r\nlet testDataSet;\r\nlet x_matrix_test;\r\nlet TSTS;\r\nlet TSTSStateful;\r\nlet TSTSONE;\r\nlet TSTSStatefulONE;\r\nlet accuracyTest = {};\r\nlet evals;\r\nconst ds = [\r\n  [ 1, ], [ 2, ], [ 3, ], [ 4, ], [ 5, ], [ 6, ], [ 7, ], [ 8, ], [ 9, ], [ 10, ],\r\n];\r\n\r\nconst fit= {\r\n  epochs: 10,\r\n  batchSize: 1,\r\n};\r\n\r\nchai.use(sinonChai);\r\nchai.use(chaiAsPromised);\r\nfunction scaleColumnMap(columnName) {\r\n  return {\r\n    name: columnName,\r\n    options: {\r\n      strategy: 'scale',\r\n      scaleOptions: {\r\n        strategy:'standard',\r\n      },\r\n    },\r\n  };\r\n}\r\nasync function getModelAccuracy(preddata){\r\n  const m = await preddata.model.train(x_matrix);\r\n  const testData = preddata.model.getTimeseriesDataSet(x_matrix_test);\r\n  // const preInputShape = LSTMTimeSeries.getInputShape(preddata.input);\r\n  // console.log({ testData })\r\n  // console.log({preInputShape})\r\n  // console.log('preddata.input',preddata.input)\r\n  // console.log('testData.x_matrix',testData.x_matrix)\r\n  // const predictions = await preddata.model.predict(preddata.input);\r\n  const predictions = await preddata.model.predict(testData.x_matrix);\r\n  const predictions_unscaled = predictions.map(pred => [DataSet.scalers.get('Passengers').descale(pred[ 0 ]),]);\r\n  const actuals_unscaled = testData.y_matrix.map(act => [DataSet.scalers.get('Passengers').descale(act[ 0 ]),]);\r\n  // let results = ms.DataSet.reverseColumnMatrix({\r\n  //   vectors: predictions_unscaled,\r\n  //   labels: dependentVariables,\r\n  // });\r\n  return({\r\n    model: preddata.modelname,\r\n    // predictions,\r\n    // actuals_unscaled,\r\n    // predictions_unscaled,\r\n    // results,\r\n    accuracy: (ms.util.rSquared(\r\n      ms.util.pivotVector(actuals_unscaled)[ 0 ], //actuals,\r\n      ms.util.pivotVector(predictions_unscaled)[ 0 ], //estimates,\r\n    ) * 100), //.toFixed(2)+'%',\r\n  });\r\n}\r\n\r\ndescribe('LSTMTimeSeries', function () {\r\n  this.timeout(120000);\r\n  before(async function () {\r\n    this.timeout(120000);\r\n    /*\r\n    csvData = [ \r\n      { Month: '1949-01', Passengers: 112 },\r\n      { Month: '1949-02', Passengers: 118 },\r\n      { Month: '1949-03', Passengers: 132 },\r\n      { Month: '1949-04', Passengers: 129 },\r\n      ...\r\n      ];\r\n    scaledData = [ \r\n      { Month: '1949-01', Passengers: -1.4028822039369186 },\r\n      { Month: '1949-02', Passengers: -1.3528681653893018 },\r\n      ...\r\n    ]\r\n    */\r\n    csvData = await ms.csv.loadCSV('./test/mock/data/international-airline-passengers-no_footer.csv');\r\n    DataSet = new ms.DataSet(csvData);\r\n    const scaledData = DataSet.fitColumns({\r\n      columns: columns.map(scaleColumnMap),\r\n      returnData:false,\r\n    });\r\n    //{ train_size: 96, test_size: 48 }\r\n    train_size = parseInt(DataSet.data.length * 0.67);\r\n    test_size = DataSet.data.length - train_size;\r\n    train_x_data = DataSet.data.slice(0, train_size);\r\n    test_x_data = DataSet.data.slice(train_size, DataSet.data.length);\r\n    trainDataSet = new ms.DataSet(train_x_data);\r\n    testDataSet = new ms.DataSet(test_x_data);\r\n    x_matrix = trainDataSet.columnMatrix(independentVariables); \r\n    x_matrix_test = testDataSet.columnMatrix(independentVariables); \r\n    \r\n    /*\r\n    x_matrix = [ \r\n      [ -1.4028822039369186 ],\r\n      [ -1.3528681653893018 ],\r\n      [ -1.2361687421115288 ],\r\n      ...\r\n    ]; \r\n    x_matrix_test: = [ \r\n      [ 0.2892594335907897 ],\r\n      [ 0.17256001031301674 ],\r\n      [ 0.6310220303328392 ],\r\n      ...\r\n    ]; \r\n    */\r\n    TSTS = new LSTMTimeSeries({\r\n      lookBack: 3,\r\n      fit,\r\n    });\r\n    TSTSStateful = new LSTMTimeSeries({\r\n      lookBack: 3,\r\n      stateful: true,\r\n      fit,\r\n    });\r\n    TSTSONE = new LSTMTimeSeries({\r\n      lookBack: 1,\r\n      fit,\r\n    });\r\n    TSTSStatefulONE = new LSTMTimeSeries({\r\n      lookBack: 1,\r\n      stateful: true,\r\n      fit,\r\n    });\r\n    evals = [\r\n      {\r\n        model: TSTS,\r\n        modelname: 'TSTS',\r\n      },\r\n      {\r\n        model: TSTSStateful,\r\n        modelname: 'TSTSStateful',\r\n      },\r\n      {\r\n        model: TSTSONE,\r\n        modelname: 'TSTSONE',\r\n      },\r\n      {\r\n        model: TSTSStatefulONE,\r\n        modelname: 'TSTSStatefulONE',\r\n      },\r\n    ];\r\n    return true;\r\n  });\r\n  describe('static createDataset', () => {\r\n    const lookback = 3;\r\n    it('should return timeseries datasets', () => {\r\n      const [datax, datay, ] = LSTMTimeSeries.createDataset(ds);\r\n      const [ datax2, datay2, ] = LSTMTimeSeries.createDataset(ds, lookback);\r\n      expect(datax).to.have.lengthOf(datay.length);\r\n      expect(datax2).to.have.lengthOf(datay2.length);\r\n      expect(datax[ 0 ]).to.have.lengthOf(1);\r\n      expect(datax2[ 0 ]).to.have.lengthOf(lookback);\r\n    });\r\n  });\r\n  describe('static getTimeseriesShape', () => {\r\n    const [datax, datay,] = LSTMTimeSeries.createDataset(ds, 3);\r\n    it('should calculate timeseries shape', () => {\r\n      const tsShape = LSTMTimeSeries.getTimeseriesShape.call({\r\n        getInputShape: LSTMTimeSeries.getInputShape,\r\n        settings: {\r\n          timeSteps: 1,\r\n          mulitpleTimeSteps:false,\r\n        },\r\n      }, datax);\r\n      const tsShape2 = LSTMTimeSeries.getTimeseriesShape.call({\r\n        getInputShape: LSTMTimeSeries.getInputShape,\r\n        settings: {\r\n          timeSteps: 1,\r\n          mulitpleTimeSteps:true,\r\n        },\r\n      }, datax);\r\n      const tsShape3 = LSTMTimeSeries.getTimeseriesShape.call({\r\n        getInputShape: LSTMTimeSeries.getInputShape,\r\n        settings: {\r\n          timeSteps: 1,\r\n          stateful:true,\r\n        },\r\n      }, datax);\r\n      expect(tsShape).to.eql([6, 1, 3,]);\r\n      expect(tsShape2).to.eql([6, 3, 1,]);\r\n      expect(tsShape3).to.eql([6, 3, 1,]);\r\n    });\r\n  });\r\n  describe('static getTimeseriesDataSet', () => {\r\n    const [datax, datay,] = LSTMTimeSeries.createDataset(ds, 3);\r\n    it('should return timeseries data', () => {\r\n      const tsShape = LSTMTimeSeries.getTimeseriesDataSet.call({\r\n        getInputShape: LSTMTimeSeries.getInputShape,\r\n        settings: {\r\n          timeSteps: 1,\r\n          mulitpleTimeSteps:true,\r\n        },\r\n      }, ds, 3);\r\n      expect(tsShape.yShape).to.eql([6, 1,]);\r\n      expect(tsShape.xShape).to.eql([6, 3,]);\r\n      expect(tsShape.y_matrix).to.eql(datay);\r\n      // expect(tsShape.x_matrix).to.eql(datax);\r\n      // console.log({ tsShape, });\r\n    });\r\n  });\r\n  describe('constructor', () => {\r\n    it('should export a named module class', () => {\r\n      const NN = new LSTMTimeSeries();\r\n      const NNConfigured = new LSTMTimeSeries({ test: 'prop', });\r\n      expect(LSTMTimeSeries).to.be.a('function');\r\n      expect(NN).to.be.instanceOf(LSTMTimeSeries);\r\n      expect(NNConfigured.settings.test).to.eql('prop');\r\n    });\r\n  });\r\n  describe('async predict', () => {\r\n    it('should allow for stateless predictions with one step time windows', async () => {\r\n      const accr = await getModelAccuracy({ model: TSTSONE, modelname: 'TSTSONE', });\r\n      // console.log({ accr });\r\n      expect(accr.accuracy).to.be.ok;\r\n      return true;\r\n    });\r\n    it('should allow for stateless predictions with multiple step time windows', async () => {\r\n      const accr = await getModelAccuracy({ model: TSTS, modelname: 'TSTSONE', });\r\n      // console.log({ accr, });\r\n      expect(accr.accuracy).to.be.ok;\r\n      return true;\r\n    });\r\n    it('should make stateful predictions', async () => {\r\n      const accr = await getModelAccuracy({ model: TSTSStateful, modelname: 'TSTSStateful', });\r\n      const accr2 = await getModelAccuracy({ model: TSTSStatefulONE, modelname: 'TSTSStatefulONE', });\r\n      // console.log({ accr, accr2 });\r\n      expect(accr.accuracy).to.be.ok;\r\n      expect(accr2.accuracy).to.be.ok;\r\n      return true;\r\n    });\r\n    it('should make single predictions', async () => {\r\n      const testData = TSTSONE.getTimeseriesDataSet(x_matrix_test);\r\n      const predictions = await TSTSONE.predict(testData.x_matrix[ 0 ]);\r\n      expect(predictions).to.have.lengthOf(1);\r\n      // console.log({ predictions });\r\n      return true;\r\n    });\r\n  });\r\n  describe('async train', () => {\r\n    it('should train a model with supplied test data', async () => {\r\n      const testData = TSTSONE.getTimeseriesDataSet(x_matrix_test);\r\n      const LSTMTS = new LSTMTimeSeries({ layerPreference: 'custom', fit, });\r\n      const matrices = LSTMTimeSeries.createDataset(x_matrix_test);\r\n      const x = matrices[ 0 ];\r\n      const y = matrices[ 1 ];\r\n      await LSTMTS.train(x, y);\r\n      const predictions = await TSTSONE.predict(testData.x_matrix[ 0 ]);\r\n      const predictions_unscaled = predictions.map(pred => [DataSet.scalers.get('Passengers').descale(pred[ 0 ]),]);\r\n      console.log({ predictions_unscaled });\r\n      expect(predictions).to.have.lengthOf(1);\r\n      expect(LSTMTS.layers).to.be.a('object');\r\n      return true;\r\n    });\r\n  });\r\n  describe('generateLayers', () => {\r\n    // it('should generate a classification network', async () => {\r\n    //   const predictions = await nnClassification.predict(input_x);\r\n    //   const answers = await nnClassification.predict(input_x, {\r\n    //     probability:false,\r\n    //   });\r\n    //   const shape = nnClassification.getInputShape(predictions);\r\n    //   // console.log('nnClassification.layers', nnClassification.layers);\r\n    //   // console.log({\r\n    //   //   predictions,\r\n    //   //   // probabilities,\r\n    //   //   answers,\r\n    //   //   // results,\r\n    //   //   shape,\r\n    //   // });\r\n    //   expect(predictions).to.have.lengthOf(input_x.length);\r\n    //   expect(nnClassification.layers).to.have.lengthOf(2);\r\n    //   expect(shape).to.eql([5, 3,]);\r\n    //   expect(answers[ 0 ]).to.eql(encodedAnswers[ 'Iris-setosa' ]);\r\n    //   // expect(answers[ 1 ]).to.eql(encodedAnswers[ 'Iris-virginica' ]);\r\n    //   // expect(answers[ 2 ]).to.eql(encodedAnswers[ 'Iris-versicolor' ]);\r\n    //   // expect(answers[ 3 ]).to.eql(encodedAnswers[ 'Iris-setosa' ]);\r\n    //   // expect(answers[ 4 ]).to.eql(encodedAnswers[ 'Iris-setosa' ]);\r\n    //   return true;\r\n    // });\r\n    it('should generate a network from layers', async () => { \r\n      const LSTMTS = new LSTMTimeSeries({ layerPreference: 'custom', fit, });\r\n      console.log('TSTSONE.layers', TSTSONE.layers);\r\n      await LSTMTS.train(x_matrix, y_matrix, TSTSONE.layers);\r\n      expect(LSTMTS.layers).to.be.a('object');\r\n      return true;\r\n    });\r\n  });\r\n});",
+    "content": "import chai from 'chai';\r\n// import sinon from 'sinon';\r\nimport ms from 'modelscript';\r\nimport sinonChai from 'sinon-chai';\r\nimport chaiAsPromised from 'chai-as-promised';\r\nimport 'babel-polyfill';\r\nimport { LSTMTimeSeries, } from '../../index.mjs';\r\nconst expect = chai.expect;\r\nconst independentVariables = [\r\n  'Passengers',\r\n];\r\nconst dependentVariables = [\r\n  'Passengers',\r\n];\r\nconst columns = independentVariables;//.concat(dependentVariables);\r\nlet csvData;\r\nlet DataSet;\r\nlet x_matrix;\r\nlet y_matrix;\r\nlet train_size;\r\nlet test_size;\r\nlet train_x_data;\r\nlet test_x_data;\r\nlet trainDataSet;\r\nlet testDataSet;\r\nlet x_matrix_test;\r\nlet TSTS;\r\nlet TSTSStateful;\r\nlet TSTSONE;\r\nlet TSTSStatefulONE;\r\nlet accuracyTest = {};\r\nlet evals;\r\nconst ds = [\r\n  [ 1, ], [ 2, ], [ 3, ], [ 4, ], [ 5, ], [ 6, ], [ 7, ], [ 8, ], [ 9, ], [ 10, ],\r\n];\r\n\r\nconst fit= {\r\n  epochs: 10,\r\n  batchSize: 1,\r\n};\r\n\r\nchai.use(sinonChai);\r\nchai.use(chaiAsPromised);\r\nfunction scaleColumnMap(columnName) {\r\n  return {\r\n    name: columnName,\r\n    options: {\r\n      strategy: 'scale',\r\n      scaleOptions: {\r\n        strategy:'standard',\r\n      },\r\n    },\r\n  };\r\n}\r\nasync function getModelAccuracy(preddata){\r\n  const m = await preddata.model.train(x_matrix);\r\n  const testData = preddata.model.getTimeseriesDataSet(x_matrix_test);\r\n  // const preInputShape = LSTMTimeSeries.getInputShape(preddata.input);\r\n  // console.log({ testData })\r\n  // console.log({preInputShape})\r\n  // console.log('preddata.input',preddata.input)\r\n  // console.log('testData.x_matrix',testData.x_matrix)\r\n  // const predictions = await preddata.model.predict(preddata.input);\r\n  const predictions = await preddata.model.predict(testData.x_matrix);\r\n  const predictions_unscaled = predictions.map(pred => [DataSet.scalers.get('Passengers').descale(pred[ 0 ]),]);\r\n  const actuals_unscaled = testData.y_matrix.map(act => [DataSet.scalers.get('Passengers').descale(act[ 0 ]),]);\r\n  // let results = ms.DataSet.reverseColumnMatrix({\r\n  //   vectors: predictions_unscaled,\r\n  //   labels: dependentVariables,\r\n  // });\r\n  return({\r\n    model: preddata.modelname,\r\n    // predictions,\r\n    // actuals_unscaled,\r\n    // predictions_unscaled,\r\n    // results,\r\n    accuracy: (ms.util.rSquared(\r\n      ms.util.pivotVector(actuals_unscaled)[ 0 ], //actuals,\r\n      ms.util.pivotVector(predictions_unscaled)[ 0 ], //estimates,\r\n    ) * 100), //.toFixed(2)+'%',\r\n  });\r\n}\r\n/** @test {LSTMTimeSeries} */\r\ndescribe('LSTMTimeSeries', function () {\r\n  this.timeout(120000);\r\n  before(async function () {\r\n    this.timeout(120000);\r\n    /*\r\n    csvData = [ \r\n      { Month: '1949-01', Passengers: 112 },\r\n      { Month: '1949-02', Passengers: 118 },\r\n      { Month: '1949-03', Passengers: 132 },\r\n      { Month: '1949-04', Passengers: 129 },\r\n      ...\r\n      ];\r\n    scaledData = [ \r\n      { Month: '1949-01', Passengers: -1.4028822039369186 },\r\n      { Month: '1949-02', Passengers: -1.3528681653893018 },\r\n      ...\r\n    ]\r\n    */\r\n    csvData = await ms.csv.loadCSV('./test/mock/data/international-airline-passengers-no_footer.csv');\r\n    DataSet = new ms.DataSet(csvData);\r\n    const scaledData = DataSet.fitColumns({\r\n      columns: columns.map(scaleColumnMap),\r\n      returnData:false,\r\n    });\r\n    //{ train_size: 96, test_size: 48 }\r\n    train_size = parseInt(DataSet.data.length * 0.67);\r\n    test_size = DataSet.data.length - train_size;\r\n    train_x_data = DataSet.data.slice(0, train_size);\r\n    test_x_data = DataSet.data.slice(train_size, DataSet.data.length);\r\n    trainDataSet = new ms.DataSet(train_x_data);\r\n    testDataSet = new ms.DataSet(test_x_data);\r\n    x_matrix = trainDataSet.columnMatrix(independentVariables); \r\n    x_matrix_test = testDataSet.columnMatrix(independentVariables); \r\n    \r\n    /*\r\n    x_matrix = [ \r\n      [ -1.4028822039369186 ],\r\n      [ -1.3528681653893018 ],\r\n      [ -1.2361687421115288 ],\r\n      ...\r\n    ]; \r\n    x_matrix_test: = [ \r\n      [ 0.2892594335907897 ],\r\n      [ 0.17256001031301674 ],\r\n      [ 0.6310220303328392 ],\r\n      ...\r\n    ]; \r\n    */\r\n    TSTS = new LSTMTimeSeries({\r\n      lookBack: 3,\r\n      fit,\r\n    });\r\n    TSTSStateful = new LSTMTimeSeries({\r\n      lookBack: 3,\r\n      stateful: true,\r\n      fit,\r\n    });\r\n    TSTSONE = new LSTMTimeSeries({\r\n      lookBack: 1,\r\n      fit,\r\n    });\r\n    TSTSStatefulONE = new LSTMTimeSeries({\r\n      lookBack: 1,\r\n      stateful: true,\r\n      fit,\r\n    });\r\n    evals = [\r\n      {\r\n        model: TSTS,\r\n        modelname: 'TSTS',\r\n      },\r\n      {\r\n        model: TSTSStateful,\r\n        modelname: 'TSTSStateful',\r\n      },\r\n      {\r\n        model: TSTSONE,\r\n        modelname: 'TSTSONE',\r\n      },\r\n      {\r\n        model: TSTSStatefulONE,\r\n        modelname: 'TSTSStatefulONE',\r\n      },\r\n    ];\r\n    return true;\r\n  });\r\n  /** @test {LSTMTimeSeries#createDataset} */\r\n  describe('static createDataset', () => {\r\n    const lookback = 3;\r\n    it('should return timeseries datasets', () => {\r\n      const [datax, datay, ] = LSTMTimeSeries.createDataset(ds);\r\n      const [ datax2, datay2, ] = LSTMTimeSeries.createDataset(ds, lookback);\r\n      expect(datax).to.have.lengthOf(datay.length);\r\n      expect(datax2).to.have.lengthOf(datay2.length);\r\n      expect(datax[ 0 ]).to.have.lengthOf(1);\r\n      expect(datax2[ 0 ]).to.have.lengthOf(lookback);\r\n    });\r\n  });\r\n  /** @test {LSTMTimeSeries#getTimeseriesShape} */\r\n  describe('static getTimeseriesShape', () => {\r\n    const [datax, datay,] = LSTMTimeSeries.createDataset(ds, 3);\r\n    it('should calculate timeseries shape', () => {\r\n      const tsShape = LSTMTimeSeries.getTimeseriesShape.call({\r\n        getInputShape: LSTMTimeSeries.getInputShape,\r\n        settings: {\r\n          timeSteps: 1,\r\n          mulitpleTimeSteps:false,\r\n        },\r\n      }, datax);\r\n      const tsShape2 = LSTMTimeSeries.getTimeseriesShape.call({\r\n        getInputShape: LSTMTimeSeries.getInputShape,\r\n        settings: {\r\n          timeSteps: 1,\r\n          mulitpleTimeSteps:true,\r\n        },\r\n      }, datax);\r\n      const tsShape3 = LSTMTimeSeries.getTimeseriesShape.call({\r\n        getInputShape: LSTMTimeSeries.getInputShape,\r\n        settings: {\r\n          timeSteps: 1,\r\n          stateful:true,\r\n        },\r\n      }, datax);\r\n      expect(tsShape).to.eql([6, 1, 3,]);\r\n      expect(tsShape2).to.eql([6, 3, 1,]);\r\n      expect(tsShape3).to.eql([6, 3, 1,]);\r\n    });\r\n  });\r\n  /** @test {LSTMTimeSeries#getTimeseriesDataSet} */\r\n  describe('static getTimeseriesDataSet', () => {\r\n    const [datax, datay,] = LSTMTimeSeries.createDataset(ds, 3);\r\n    it('should return timeseries data', () => {\r\n      const tsShape = LSTMTimeSeries.getTimeseriesDataSet.call({\r\n        getInputShape: LSTMTimeSeries.getInputShape,\r\n        settings: {\r\n          timeSteps: 1,\r\n          mulitpleTimeSteps:true,\r\n        },\r\n      }, ds, 3);\r\n      expect(tsShape.yShape).to.eql([6, 1,]);\r\n      expect(tsShape.xShape).to.eql([6, 3,]);\r\n      expect(tsShape.y_matrix).to.eql(datay);\r\n      // expect(tsShape.x_matrix).to.eql(datax);\r\n      // console.log({ tsShape, });\r\n    });\r\n  });\r\n  /** @test {LSTMTimeSeries#constructor} */\r\n  describe('constructor', () => {\r\n    it('should export a named module class', () => {\r\n      const NN = new LSTMTimeSeries();\r\n      const NNConfigured = new LSTMTimeSeries({ test: 'prop', });\r\n      expect(LSTMTimeSeries).to.be.a('function');\r\n      expect(NN).to.be.instanceOf(LSTMTimeSeries);\r\n      expect(NNConfigured.settings.test).to.eql('prop');\r\n    });\r\n  });\r\n  /** @test {LSTMTimeSeries#predict} */\r\n  describe('async predict', () => {\r\n    it('should allow for stateless predictions with one step time windows', async () => {\r\n      const accr = await getModelAccuracy({ model: TSTSONE, modelname: 'TSTSONE', });\r\n      // console.log({ accr });\r\n      expect(accr.accuracy).to.be.ok;\r\n      return true;\r\n    });\r\n    it('should allow for stateless predictions with multiple step time windows', async () => {\r\n      const accr = await getModelAccuracy({ model: TSTS, modelname: 'TSTSONE', });\r\n      // console.log({ accr, });\r\n      expect(accr.accuracy).to.be.ok;\r\n      return true;\r\n    });\r\n    it('should make stateful predictions', async () => {\r\n      const accr = await getModelAccuracy({ model: TSTSStateful, modelname: 'TSTSStateful', });\r\n      const accr2 = await getModelAccuracy({ model: TSTSStatefulONE, modelname: 'TSTSStatefulONE', });\r\n      // console.log({ accr, accr2 });\r\n      expect(accr.accuracy).to.be.ok;\r\n      expect(accr2.accuracy).to.be.ok;\r\n      return true;\r\n    });\r\n    it('should make single predictions', async () => {\r\n      const testData = TSTSONE.getTimeseriesDataSet(x_matrix_test);\r\n      const predictions = await TSTSONE.predict(testData.x_matrix[ 0 ]);\r\n      expect(predictions).to.have.lengthOf(1);\r\n      // console.log({ predictions });\r\n      return true;\r\n    });\r\n  });\r\n  /** @test {LSTMTimeSeries#train} */\r\n  describe('async train', () => {\r\n    it('should train a model with supplied test data', async () => {\r\n      const testData = TSTSONE.getTimeseriesDataSet(x_matrix_test);\r\n      const LSTMTS = new LSTMTimeSeries({ layerPreference: 'custom', fit, });\r\n      const matrices = LSTMTimeSeries.createDataset(x_matrix_test);\r\n      const x = matrices[ 0 ];\r\n      const y = matrices[ 1 ];\r\n      await LSTMTS.train(x, y);\r\n      const predictions = await TSTSONE.predict(testData.x_matrix[ 0 ]);\r\n      const predictions_unscaled = predictions.map(pred => [DataSet.scalers.get('Passengers').descale(pred[ 0 ]),]);\r\n      console.log({ predictions_unscaled });\r\n      expect(predictions).to.have.lengthOf(1);\r\n      expect(LSTMTS.layers).to.be.a('object');\r\n      return true;\r\n    });\r\n  });\r\n  /** @test {LSTMTimeSeries#generateLayers} */\r\n  describe('generateLayers', () => {\r\n    // it('should generate a classification network', async () => {\r\n    //   const predictions = await nnClassification.predict(input_x);\r\n    //   const answers = await nnClassification.predict(input_x, {\r\n    //     probability:false,\r\n    //   });\r\n    //   const shape = nnClassification.getInputShape(predictions);\r\n    //   // console.log('nnClassification.layers', nnClassification.layers);\r\n    //   // console.log({\r\n    //   //   predictions,\r\n    //   //   // probabilities,\r\n    //   //   answers,\r\n    //   //   // results,\r\n    //   //   shape,\r\n    //   // });\r\n    //   expect(predictions).to.have.lengthOf(input_x.length);\r\n    //   expect(nnClassification.layers).to.have.lengthOf(2);\r\n    //   expect(shape).to.eql([5, 3,]);\r\n    //   expect(answers[ 0 ]).to.eql(encodedAnswers[ 'Iris-setosa' ]);\r\n    //   // expect(answers[ 1 ]).to.eql(encodedAnswers[ 'Iris-virginica' ]);\r\n    //   // expect(answers[ 2 ]).to.eql(encodedAnswers[ 'Iris-versicolor' ]);\r\n    //   // expect(answers[ 3 ]).to.eql(encodedAnswers[ 'Iris-setosa' ]);\r\n    //   // expect(answers[ 4 ]).to.eql(encodedAnswers[ 'Iris-setosa' ]);\r\n    //   return true;\r\n    // });\r\n    it('should generate a network from layers', async () => { \r\n      const LSTMTS = new LSTMTimeSeries({ layerPreference: 'custom', fit, });\r\n      console.log('TSTSONE.layers', TSTSONE.layers);\r\n      await LSTMTS.train(x_matrix, y_matrix, TSTSONE.layers);\r\n      expect(LSTMTS.layers).to.be.a('object');\r\n      return true;\r\n    });\r\n  });\r\n});",
     "static": true,
     "longname": "/Users/yawjosephetse/Developer/github/repetere/tensorscript/test/unit/lstm_time_series_spec.mjs",
     "access": null,
@@ -3453,7 +3519,10 @@
     "longname": "test/unit/lstm_time_series_spec.mjs~describe48",
     "access": null,
     "description": "LSTMTimeSeries",
-    "lineNumber": 84
+    "lineNumber": 84,
+    "testTargets": [
+      "LSTMTimeSeries"
+    ]
   },
   {
     "__docId__": 156,
@@ -3466,7 +3535,10 @@
     "longname": "test/unit/lstm_time_series_spec.mjs~describe48.describe49",
     "access": null,
     "description": "static createDataset",
-    "lineNumber": 170
+    "lineNumber": 171,
+    "testTargets": [
+      "LSTMTimeSeries#createDataset"
+    ]
   },
   {
     "__docId__": 157,
@@ -3479,7 +3551,7 @@
     "longname": "test/unit/lstm_time_series_spec.mjs~describe48.describe49.it50",
     "access": null,
     "description": "should return timeseries datasets",
-    "lineNumber": 172
+    "lineNumber": 173
   },
   {
     "__docId__": 158,
@@ -3492,7 +3564,10 @@
     "longname": "test/unit/lstm_time_series_spec.mjs~describe48.describe51",
     "access": null,
     "description": "static getTimeseriesShape",
-    "lineNumber": 181
+    "lineNumber": 183,
+    "testTargets": [
+      "LSTMTimeSeries#getTimeseriesShape"
+    ]
   },
   {
     "__docId__": 159,
@@ -3505,7 +3580,7 @@
     "longname": "test/unit/lstm_time_series_spec.mjs~describe48.describe51.it52",
     "access": null,
     "description": "should calculate timeseries shape",
-    "lineNumber": 183
+    "lineNumber": 185
   },
   {
     "__docId__": 160,
@@ -3518,7 +3593,10 @@
     "longname": "test/unit/lstm_time_series_spec.mjs~describe48.describe53",
     "access": null,
     "description": "static getTimeseriesDataSet",
-    "lineNumber": 210
+    "lineNumber": 213,
+    "testTargets": [
+      "LSTMTimeSeries#getTimeseriesDataSet"
+    ]
   },
   {
     "__docId__": 161,
@@ -3531,7 +3609,7 @@
     "longname": "test/unit/lstm_time_series_spec.mjs~describe48.describe53.it54",
     "access": null,
     "description": "should return timeseries data",
-    "lineNumber": 212
+    "lineNumber": 215
   },
   {
     "__docId__": 162,
@@ -3544,7 +3622,10 @@
     "longname": "test/unit/lstm_time_series_spec.mjs~describe48.describe55",
     "access": null,
     "description": "constructor",
-    "lineNumber": 227
+    "lineNumber": 231,
+    "testTargets": [
+      "LSTMTimeSeries#constructor"
+    ]
   },
   {
     "__docId__": 163,
@@ -3557,7 +3638,7 @@
     "longname": "test/unit/lstm_time_series_spec.mjs~describe48.describe55.it56",
     "access": null,
     "description": "should export a named module class",
-    "lineNumber": 228
+    "lineNumber": 232
   },
   {
     "__docId__": 164,
@@ -3570,7 +3651,10 @@
     "longname": "test/unit/lstm_time_series_spec.mjs~describe48.describe57",
     "access": null,
     "description": "async predict",
-    "lineNumber": 236
+    "lineNumber": 241,
+    "testTargets": [
+      "LSTMTimeSeries#predict"
+    ]
   },
   {
     "__docId__": 165,
@@ -3583,7 +3667,7 @@
     "longname": "test/unit/lstm_time_series_spec.mjs~describe48.describe57.it58",
     "access": null,
     "description": "should allow for stateless predictions with one step time windows",
-    "lineNumber": 237
+    "lineNumber": 242
   },
   {
     "__docId__": 166,
@@ -3596,7 +3680,7 @@
     "longname": "test/unit/lstm_time_series_spec.mjs~describe48.describe57.it59",
     "access": null,
     "description": "should allow for stateless predictions with multiple step time windows",
-    "lineNumber": 243
+    "lineNumber": 248
   },
   {
     "__docId__": 167,
@@ -3609,7 +3693,7 @@
     "longname": "test/unit/lstm_time_series_spec.mjs~describe48.describe57.it60",
     "access": null,
     "description": "should make stateful predictions",
-    "lineNumber": 249
+    "lineNumber": 254
   },
   {
     "__docId__": 168,
@@ -3622,7 +3706,7 @@
     "longname": "test/unit/lstm_time_series_spec.mjs~describe48.describe57.it61",
     "access": null,
     "description": "should make single predictions",
-    "lineNumber": 257
+    "lineNumber": 262
   },
   {
     "__docId__": 169,
@@ -3635,7 +3719,10 @@
     "longname": "test/unit/lstm_time_series_spec.mjs~describe48.describe62",
     "access": null,
     "description": "async train",
-    "lineNumber": 265
+    "lineNumber": 271,
+    "testTargets": [
+      "LSTMTimeSeries#train"
+    ]
   },
   {
     "__docId__": 170,
@@ -3648,7 +3735,7 @@
     "longname": "test/unit/lstm_time_series_spec.mjs~describe48.describe62.it63",
     "access": null,
     "description": "should train a model with supplied test data",
-    "lineNumber": 266
+    "lineNumber": 272
   },
   {
     "__docId__": 171,
@@ -3661,7 +3748,10 @@
     "longname": "test/unit/lstm_time_series_spec.mjs~describe48.describe64",
     "access": null,
     "description": "generateLayers",
-    "lineNumber": 281
+    "lineNumber": 288,
+    "testTargets": [
+      "LSTMTimeSeries#generateLayers"
+    ]
   },
   {
     "__docId__": 172,
@@ -3674,7 +3764,7 @@
     "longname": "test/unit/lstm_time_series_spec.mjs~describe48.describe64.it65",
     "access": null,
     "description": "should generate a network from layers",
-    "lineNumber": 306
+    "lineNumber": 313
   },
   {
     "__docId__": 173,
@@ -4366,7 +4456,7 @@
     "__docId__": 223,
     "kind": "testFile",
     "name": "test/unit/regression_spec.mjs",
-    "content": "import chai from 'chai';\r\n// import sinon from 'sinon';\r\nimport ms from 'modelscript';\r\nimport sinonChai from 'sinon-chai';\r\nimport chaiAsPromised from 'chai-as-promised';\r\nimport 'babel-polyfill';\r\nimport { DeepLearningRegression, } from '../../index.mjs';\r\nconst expect = chai.expect;\r\nconst independentVariables = [\r\n  'CRIM',\r\n  'ZN',\r\n  'INDUS',\r\n  'CHAS',\r\n  'NOX',\r\n  'RM',\r\n  'AGE',\r\n  'DIS',\r\n  'RAD',\r\n  'TAX',\r\n  'PTRATIO',\r\n  'B',\r\n  'LSTAT',\r\n];\r\nconst dependentVariables = [\r\n  'MEDV',\r\n];\r\nconst columns = independentVariables.concat(dependentVariables);\r\nlet housingDataCSV;\r\nlet DataSet;\r\nlet x_matrix;\r\nlet y_matrix;\r\nlet nnRegressionDeep;\r\nlet nnRegressionWide;\r\nlet nnRegressionDeepModel;\r\nlet nnRegressionWideModel;\r\nconst fit = {\r\n  epochs: 10,\r\n  batchSize: 5,\r\n};\r\nconst input_x = [\r\n  [-0.41936692921321594, 0.2845482693404666, -1.2866362317172035, -0.272329067679207, -0.1440748547324509, 0.4132629204530747, -0.119894767215809, 0.1400749839795629, -0.981871187861867, -0.6659491794887338, -1.457557967289609, 0.4406158949991029, -1.074498970343932,],\r\n  [-0.41692666996409716, -0.4872401872268264, -0.5927943782429392, -0.272329067679207, -0.7395303607434242, 0.1940823874370036, 0.3668034264326209, 0.5566090495704026, -0.8670244885881488, -0.9863533804386945, -0.3027944997494681, 0.4406158949991029, -0.49195252491856634,],\r\n];\r\n\r\nchai.use(sinonChai);\r\nchai.use(chaiAsPromised);\r\nfunction scaleColumnMap(columnName) {\r\n  return {\r\n    name: columnName,\r\n    options: {\r\n      strategy: 'scale',\r\n      scaleOptions: {\r\n        strategy:'standard',\r\n      },\r\n    },\r\n  };\r\n}\r\ndescribe('DeepLearningRegression', function () {\r\n  this.timeout(120000);\r\n  before(async function () {\r\n    /*\r\n      housingdataCSV = [ \r\n        { CRIM: 0.00632, ZN: 18, INDUS: 2.31, CHAS: 0, NOX: 0.538, RM: 6.575, AGE: 65.2, DIS: 4.09, RAD: 1, TAX: 296, PTRATIO: 15.3, B: 396.9, LSTAT: 4.98, MEDV: 24 },\r\n        { CRIM: 0.02731, ZN: 0, INDUS: 7.07, CHAS: 0, NOX: 0.469, RM: 6.421, AGE: 78.9, DIS: 4.9671, RAD: 2, TAX: 242, PTRATIO: 17.8, B: 396.9, LSTAT: 9.14, MEDV: 21.6 },\r\n        ...\r\n      ] \r\n      */\r\n    housingDataCSV = await ms.csv.loadCSV('./test/mock/data/boston_housing_data.csv');\r\n    DataSet = new ms.DataSet(housingDataCSV);\r\n    DataSet.fitColumns({\r\n      columns: columns.map(scaleColumnMap),\r\n      returnData:false,\r\n    });\r\n    x_matrix = DataSet.columnMatrix(independentVariables); \r\n    y_matrix = DataSet.columnMatrix(dependentVariables);\r\n    /* x_matrix = [\r\n      [ -0.41936692921321594, 0.2845482693404666, -1.2866362317172035, -0.272329067679207, -0.1440748547324509, 0.4132629204530747, -0.119894767215809, 0.1400749839795629, -0.981871187861867, -0.6659491794887338, -1.457557967289609, 0.4406158949991029, -1.074498970343932 ],\r\n      [ -0.41692666996409716, -0.4872401872268264, -0.5927943782429392, -0.272329067679207, -0.7395303607434242, 0.1940823874370036, 0.3668034264326209, 0.5566090495704026, -0.8670244885881488, -0.9863533804386945, -0.3027944997494681, 0.4406158949991029, -0.49195252491856634 ]\r\n      ...\r\n    ]; \r\n    y_matrix = [\r\n      [ 0.15952778852449556 ],\r\n      [ -0.1014239172731213 ],\r\n      ...\r\n    ] \r\n    const y_vector = ms.util.pivotVector(y_matrix)[ 0 ];// not used but just illustrative\r\n    y_vector = [ 0.15952778852449556,\r\n       -0.1014239172731213, ... ]\r\n     */\r\n\r\n    nnRegressionDeep = new DeepLearningRegression({ layerPreference:'deep', fit, });\r\n    nnRegressionWide = new DeepLearningRegression({ layerPreference: 'wide', fit, });\r\n    const models = await Promise.all([\r\n      nnRegressionDeep.train(x_matrix, y_matrix),\r\n      nnRegressionWide.train(x_matrix, y_matrix),\r\n    ]);\r\n    nnRegressionDeepModel = models[ 0 ];\r\n    nnRegressionWideModel = models[ 1 ];\r\n    return true;\r\n  });\r\n  describe('constructor', () => {\r\n    it('should export a named module class', () => {\r\n      const NN = new DeepLearningRegression();\r\n      const NNConfigured = new DeepLearningRegression({ test: 'prop', });\r\n      expect(DeepLearningRegression).to.be.a('function');\r\n      expect(NN).to.be.instanceOf(DeepLearningRegression);\r\n      expect(NNConfigured.settings.test).to.eql('prop');\r\n    });\r\n  });\r\n  describe('generateLayers', () => {\r\n    it('should generate a deep network', async () => {\r\n      const predictions = await nnRegressionDeep.predict(input_x);\r\n      const predictions_unscaled = predictions.map(pred=>DataSet.scalers.get('MEDV').descale(pred[0]));\r\n      const shape = nnRegressionDeep.getInputShape(predictions);\r\n      // console.log('nnRegressionDeep.layers', nnRegressionDeep.layers);\r\n      // console.log({\r\n      //   predictions_unscaled,\r\n      //   predictions,\r\n      //   shape,\r\n      // });\r\n      expect(predictions).to.have.lengthOf(input_x.length);\r\n      expect(nnRegressionDeep.layers).to.have.lengthOf(3);\r\n      expect(shape).to.eql([2, 1,]);\r\n      expect(predictions_unscaled[ 0 ]).to.be.closeTo(24, 15);\r\n      expect(predictions_unscaled[ 0 ]).to.be.closeTo(21, 15);\r\n    });\r\n    it('should generate a wide network', async () => {\r\n      const predictions = await nnRegressionWide.predict(input_x);\r\n      const predictions_unscaled = predictions.map(pred=>DataSet.scalers.get('MEDV').descale(pred[0]));\r\n      const shape = nnRegressionWide.getInputShape(predictions);\r\n      // console.log('nnRegressionWide.layers', nnRegressionWide.layers);\r\n      expect(predictions).to.have.lengthOf(input_x.length);\r\n      expect(nnRegressionWide.layers).to.have.lengthOf(2);\r\n      expect(shape).to.eql([2, 1,]);\r\n      expect(predictions_unscaled[ 0 ]).to.be.closeTo(24, 15);\r\n      expect(predictions_unscaled[ 0 ]).to.be.closeTo(21, 15);\r\n    });\r\n    it('should generate a network from layers', async () => { \r\n      const nnRegressionCustom = new DeepLearningRegression({ layerPreference:'custom', fit, });\r\n      await nnRegressionCustom.train(x_matrix, y_matrix, nnRegressionWide.layers);\r\n      expect(nnRegressionCustom.layers).to.have.lengthOf(2);\r\n    });\r\n  });\r\n});",
+    "content": "import chai from 'chai';\r\n// import sinon from 'sinon';\r\nimport ms from 'modelscript';\r\nimport sinonChai from 'sinon-chai';\r\nimport chaiAsPromised from 'chai-as-promised';\r\nimport 'babel-polyfill';\r\nimport { DeepLearningRegression, } from '../../index.mjs';\r\nconst expect = chai.expect;\r\nconst independentVariables = [\r\n  'CRIM',\r\n  'ZN',\r\n  'INDUS',\r\n  'CHAS',\r\n  'NOX',\r\n  'RM',\r\n  'AGE',\r\n  'DIS',\r\n  'RAD',\r\n  'TAX',\r\n  'PTRATIO',\r\n  'B',\r\n  'LSTAT',\r\n];\r\nconst dependentVariables = [\r\n  'MEDV',\r\n];\r\nconst columns = independentVariables.concat(dependentVariables);\r\nlet housingDataCSV;\r\nlet DataSet;\r\nlet x_matrix;\r\nlet y_matrix;\r\nlet nnRegressionDeep;\r\nlet nnRegressionWide;\r\nlet nnRegressionDeepModel;\r\nlet nnRegressionWideModel;\r\nconst fit = {\r\n  epochs: 10,\r\n  batchSize: 5,\r\n};\r\nconst input_x = [\r\n  [-0.41936692921321594, 0.2845482693404666, -1.2866362317172035, -0.272329067679207, -0.1440748547324509, 0.4132629204530747, -0.119894767215809, 0.1400749839795629, -0.981871187861867, -0.6659491794887338, -1.457557967289609, 0.4406158949991029, -1.074498970343932,],\r\n  [-0.41692666996409716, -0.4872401872268264, -0.5927943782429392, -0.272329067679207, -0.7395303607434242, 0.1940823874370036, 0.3668034264326209, 0.5566090495704026, -0.8670244885881488, -0.9863533804386945, -0.3027944997494681, 0.4406158949991029, -0.49195252491856634,],\r\n];\r\n\r\nchai.use(sinonChai);\r\nchai.use(chaiAsPromised);\r\nfunction scaleColumnMap(columnName) {\r\n  return {\r\n    name: columnName,\r\n    options: {\r\n      strategy: 'scale',\r\n      scaleOptions: {\r\n        strategy:'standard',\r\n      },\r\n    },\r\n  };\r\n}\r\n/** @test {DeepLearningRegression} */\r\ndescribe('DeepLearningRegression', function () {\r\n  this.timeout(120000);\r\n  before(async function () {\r\n    /*\r\n      housingdataCSV = [ \r\n        { CRIM: 0.00632, ZN: 18, INDUS: 2.31, CHAS: 0, NOX: 0.538, RM: 6.575, AGE: 65.2, DIS: 4.09, RAD: 1, TAX: 296, PTRATIO: 15.3, B: 396.9, LSTAT: 4.98, MEDV: 24 },\r\n        { CRIM: 0.02731, ZN: 0, INDUS: 7.07, CHAS: 0, NOX: 0.469, RM: 6.421, AGE: 78.9, DIS: 4.9671, RAD: 2, TAX: 242, PTRATIO: 17.8, B: 396.9, LSTAT: 9.14, MEDV: 21.6 },\r\n        ...\r\n      ] \r\n      */\r\n    housingDataCSV = await ms.csv.loadCSV('./test/mock/data/boston_housing_data.csv');\r\n    DataSet = new ms.DataSet(housingDataCSV);\r\n    DataSet.fitColumns({\r\n      columns: columns.map(scaleColumnMap),\r\n      returnData:false,\r\n    });\r\n    x_matrix = DataSet.columnMatrix(independentVariables); \r\n    y_matrix = DataSet.columnMatrix(dependentVariables);\r\n    /* x_matrix = [\r\n      [ -0.41936692921321594, 0.2845482693404666, -1.2866362317172035, -0.272329067679207, -0.1440748547324509, 0.4132629204530747, -0.119894767215809, 0.1400749839795629, -0.981871187861867, -0.6659491794887338, -1.457557967289609, 0.4406158949991029, -1.074498970343932 ],\r\n      [ -0.41692666996409716, -0.4872401872268264, -0.5927943782429392, -0.272329067679207, -0.7395303607434242, 0.1940823874370036, 0.3668034264326209, 0.5566090495704026, -0.8670244885881488, -0.9863533804386945, -0.3027944997494681, 0.4406158949991029, -0.49195252491856634 ]\r\n      ...\r\n    ]; \r\n    y_matrix = [\r\n      [ 0.15952778852449556 ],\r\n      [ -0.1014239172731213 ],\r\n      ...\r\n    ] \r\n    const y_vector = ms.util.pivotVector(y_matrix)[ 0 ];// not used but just illustrative\r\n    y_vector = [ 0.15952778852449556,\r\n       -0.1014239172731213, ... ]\r\n     */\r\n\r\n    nnRegressionDeep = new DeepLearningRegression({ layerPreference:'deep', fit, });\r\n    nnRegressionWide = new DeepLearningRegression({ layerPreference: 'wide', fit, });\r\n    const models = await Promise.all([\r\n      nnRegressionDeep.train(x_matrix, y_matrix),\r\n      nnRegressionWide.train(x_matrix, y_matrix),\r\n    ]);\r\n    nnRegressionDeepModel = models[ 0 ];\r\n    nnRegressionWideModel = models[ 1 ];\r\n    return true;\r\n  });\r\n  /** @test {DeepLearningRegression#constructor} */\r\n  describe('constructor', () => {\r\n    it('should export a named module class', () => {\r\n      const NN = new DeepLearningRegression();\r\n      const NNConfigured = new DeepLearningRegression({ test: 'prop', });\r\n      expect(DeepLearningRegression).to.be.a('function');\r\n      expect(NN).to.be.instanceOf(DeepLearningRegression);\r\n      expect(NNConfigured.settings.test).to.eql('prop');\r\n    });\r\n  });\r\n  /** @test {DeepLearningRegression#generateLayers} */\r\n  describe('generateLayers', () => {\r\n    it('should generate a deep network', async () => {\r\n      const predictions = await nnRegressionDeep.predict(input_x);\r\n      const predictions_unscaled = predictions.map(pred=>DataSet.scalers.get('MEDV').descale(pred[0]));\r\n      const shape = nnRegressionDeep.getInputShape(predictions);\r\n      // console.log('nnRegressionDeep.layers', nnRegressionDeep.layers);\r\n      // console.log({\r\n      //   predictions_unscaled,\r\n      //   predictions,\r\n      //   shape,\r\n      // });\r\n      expect(predictions).to.have.lengthOf(input_x.length);\r\n      expect(nnRegressionDeep.layers).to.have.lengthOf(3);\r\n      expect(shape).to.eql([2, 1,]);\r\n      expect(predictions_unscaled[ 0 ]).to.be.closeTo(24, 15);\r\n      expect(predictions_unscaled[ 0 ]).to.be.closeTo(21, 15);\r\n    });\r\n    it('should generate a wide network', async () => {\r\n      const predictions = await nnRegressionWide.predict(input_x);\r\n      const predictions_unscaled = predictions.map(pred=>DataSet.scalers.get('MEDV').descale(pred[0]));\r\n      const shape = nnRegressionWide.getInputShape(predictions);\r\n      // console.log('nnRegressionWide.layers', nnRegressionWide.layers);\r\n      expect(predictions).to.have.lengthOf(input_x.length);\r\n      expect(nnRegressionWide.layers).to.have.lengthOf(2);\r\n      expect(shape).to.eql([2, 1,]);\r\n      expect(predictions_unscaled[ 0 ]).to.be.closeTo(24, 15);\r\n      expect(predictions_unscaled[ 0 ]).to.be.closeTo(21, 15);\r\n    });\r\n    it('should generate a network from layers', async () => { \r\n      const nnRegressionCustom = new DeepLearningRegression({ layerPreference:'custom', fit, });\r\n      await nnRegressionCustom.train(x_matrix, y_matrix, nnRegressionWide.layers);\r\n      expect(nnRegressionCustom.layers).to.have.lengthOf(2);\r\n    });\r\n  });\r\n});",
     "static": true,
     "longname": "/Users/yawjosephetse/Developer/github/repetere/tensorscript/test/unit/regression_spec.mjs",
     "access": null,
@@ -4384,7 +4474,10 @@
     "longname": "test/unit/regression_spec.mjs~describe113",
     "access": null,
     "description": "DeepLearningRegression",
-    "lineNumber": 58
+    "lineNumber": 59,
+    "testTargets": [
+      "DeepLearningRegression"
+    ]
   },
   {
     "__docId__": 225,
@@ -4397,7 +4490,10 @@
     "longname": "test/unit/regression_spec.mjs~describe113.describe114",
     "access": null,
     "description": "constructor",
-    "lineNumber": 101
+    "lineNumber": 103,
+    "testTargets": [
+      "DeepLearningRegression#constructor"
+    ]
   },
   {
     "__docId__": 226,
@@ -4410,7 +4506,7 @@
     "longname": "test/unit/regression_spec.mjs~describe113.describe114.it115",
     "access": null,
     "description": "should export a named module class",
-    "lineNumber": 102
+    "lineNumber": 104
   },
   {
     "__docId__": 227,
@@ -4423,7 +4519,10 @@
     "longname": "test/unit/regression_spec.mjs~describe113.describe116",
     "access": null,
     "description": "generateLayers",
-    "lineNumber": 110
+    "lineNumber": 113,
+    "testTargets": [
+      "DeepLearningRegression#generateLayers"
+    ]
   },
   {
     "__docId__": 228,
@@ -4436,7 +4535,7 @@
     "longname": "test/unit/regression_spec.mjs~describe113.describe116.it117",
     "access": null,
     "description": "should generate a deep network",
-    "lineNumber": 111
+    "lineNumber": 114
   },
   {
     "__docId__": 229,
@@ -4449,7 +4548,7 @@
     "longname": "test/unit/regression_spec.mjs~describe113.describe116.it118",
     "access": null,
     "description": "should generate a wide network",
-    "lineNumber": 127
+    "lineNumber": 130
   },
   {
     "__docId__": 230,
@@ -4462,6 +4561,6 @@
     "longname": "test/unit/regression_spec.mjs~describe113.describe116.it119",
     "access": null,
     "description": "should generate a network from layers",
-    "lineNumber": 138
+    "lineNumber": 141
   }
 ]

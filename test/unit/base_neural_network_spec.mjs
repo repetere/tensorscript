@@ -41,6 +41,7 @@ function scaleColumnMap(columnName) {
     },
   };
 }
+/** @test {BaseNeuralNetwork} */
 describe('BaseNeuralNetwork', function () {
   this.timeout(10000);
   before(async function () {
@@ -51,6 +52,7 @@ describe('BaseNeuralNetwork', function () {
       returnData:false,
     });
   });
+  /** @test {BaseNeuralNetwork#constructor} */
   describe('constructor', () => {
     it('should export a named module class', () => {
       const MLR = new BaseNeuralNetwork();
@@ -60,6 +62,7 @@ describe('BaseNeuralNetwork', function () {
       expect(MLRConfigured.settings.test).to.eql('prop');
     });
   });
+  /** @test {BaseNeuralNetwork#generateLayers} */
   describe('generateLayers', () => {
     it('should throw an error if generateLayers method is not implemented', () => {
       class NN extends BaseNeuralNetwork{
@@ -75,6 +78,7 @@ describe('BaseNeuralNetwork', function () {
       expect(TSNN.generateLayers.bind(null)).to.be.ok;
     });
   });
+  /** @test {BaseNeuralNetwork#train} */
   describe('train', () => {
     it('should train a NN', async function () {
       const NN = new BaseNeuralNetwork();
@@ -110,6 +114,7 @@ describe('BaseNeuralNetwork', function () {
       expect(trainedModel2).to.be.an('object');
     });
   });
+  /** @test {BaseNeuralNetwork#calculate} */
   describe('calculate', () => {
     it('should throw an error if input is invalid', () => {
       const NN = new BaseNeuralNetwork();

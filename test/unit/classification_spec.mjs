@@ -53,6 +53,7 @@ function scaleColumnMap(columnName) {
     },
   };
 }
+/** @test {DeepLearningClassification} */
 describe('DeepLearningClassification', function () {
   this.timeout(120000);
   before(async function () {
@@ -115,6 +116,7 @@ describe('DeepLearningClassification', function () {
     nnClassification = new DeepLearningClassification({ fit, });
     nnClassificationModel = await nnClassification.train(x_matrix, y_matrix);
   });
+  /** @test {DeepLearningClassification#constructor} */
   describe('constructor', () => {
     it('should export a named module class', () => {
       const NN = new DeepLearningClassification();
@@ -124,6 +126,7 @@ describe('DeepLearningClassification', function () {
       expect(NNConfigured.settings.test).to.eql('prop');
     });
   });
+  /** @test {DeepLearningClassification#generateLayers} */
   describe('generateLayers', () => {
     it('should generate a classification network', async () => {
       const predictions = await nnClassification.predict(input_x);

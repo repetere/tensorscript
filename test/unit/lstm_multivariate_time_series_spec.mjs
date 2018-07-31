@@ -89,6 +89,7 @@ async function getModelAccuracy(preddata){
   });
 }
 
+/** @test {LSTMMultivariateTimeSeries} */
 describe('LSTMMultivariateTimeSeries', function () {
   this.timeout(120000);
   before(async function () {
@@ -193,6 +194,7 @@ describe('LSTMMultivariateTimeSeries', function () {
     ];
     return true;
   });
+  /** @test {LSTMMultivariateTimeSeries#drop} */
   describe('static drop', () => {
     it('should drop matrix columns', () => {
       const data = [
@@ -212,6 +214,7 @@ describe('LSTMMultivariateTimeSeries', function () {
       expect(droppedFormatted).to.eql(droppedData);
     });
   });
+  /** @test {LSTMMultivariateTimeSeries#getDropableColumns} */
   describe('static getDropableColumns', () => {
     const data = [
       [0,  1,  2,  3, 10, 11, 12, 13, ],
@@ -240,6 +243,7 @@ describe('LSTMMultivariateTimeSeries', function () {
       expect(LSTMMultivariateTimeSeries.getDropableColumns.bind(null, 8, 1, 3)).to.throw(/Only 1 future/);
     });
   });
+  /** @test {LSTMMultivariateTimeSeries#seriesToSupervised} */
   describe('static seriesToSupervised', () => {
     const originalData = [
       [0,  1,  2,  3, ],
@@ -279,6 +283,7 @@ describe('LSTMMultivariateTimeSeries', function () {
       expect(LSTMMultivariateTimeSeries.seriesToSupervised.bind(null, [[1, ], [2, ], ], 1, 1)).to.throw(/Must include at least two columns/);
     });
   });
+  /** @test {LSTMMultivariateTimeSeries#createDataset} */
   describe('static createDataset', () => {
     const lookback = 3;
     it('should return timeseries datasets', () => {
@@ -291,6 +296,7 @@ describe('LSTMMultivariateTimeSeries', function () {
       expect(datax2[ 0 ]).to.have.lengthOf(features2*lookback+(lookback-1));
     });
   });
+  /** @test {LSTMMultivariateTimeSeries#getTimeseriesShape} */
   describe('static getTimeseriesShape', () => {
     const [datax, datay, ] = LSTMMultivariateTimeSeries.createDataset(ds, 1);
     const [datax2, datay2, ] = LSTMMultivariateTimeSeries.createDataset(ds, 3);
@@ -311,6 +317,7 @@ describe('LSTMMultivariateTimeSeries', function () {
       expect(tsShape2).to.eql([7,3,26, ]);
     });
   });
+  /** @test {LSTMMultivariateTimeSeries#getTimeseriesDataSet} */
   describe('static getTimeseriesDataSet', () => {
     const [datax, datay,] = LSTMMultivariateTimeSeries.createDataset(ds, 1);
     it('should return timeseries data', () => {
@@ -326,6 +333,7 @@ describe('LSTMMultivariateTimeSeries', function () {
       // console.log({ tsShape, });
     });
   });
+  /** @test {LSTMMultivariateTimeSeries#constructor} */
   describe('constructor', () => {
     it('should export a named module class', () => {
       const NN = new LSTMMultivariateTimeSeries();
@@ -335,6 +343,7 @@ describe('LSTMMultivariateTimeSeries', function () {
       expect(NNConfigured.settings.test).to.eql('prop');
     });
   });
+  /** @test {LSTMMultivariateTimeSeries#predict} */
   describe('async predict', () => {
     it('should allow for stateless predictions with one step time windows', async () => {
       const accr = await getModelAccuracy({ model: TSTSONE, modelname: 'TSTSONE', });
@@ -356,6 +365,7 @@ describe('LSTMMultivariateTimeSeries', function () {
       return true;
     });
   });
+  /** @test {LSTMMultivariateTimeSeries#train} */
   describe('async train', () => {
     it('should train a model with supplied test data', async () => {
       const testData = TSTSONE.getTimeseriesDataSet(x_matrix_test);
@@ -377,6 +387,7 @@ describe('LSTMMultivariateTimeSeries', function () {
       return true;
     });
   });
+  /** @test {LSTMMultivariateTimeSeries#generateLayers} */
   describe('generateLayers', () => {
     // it('should generate a classification network', async () => {
     //   const predictions = await nnClassification.predict(input_x);

@@ -99,6 +99,7 @@ function scaleColumnMap(columnName) {
     },
   };
 }
+/** @test {DeepLearningRegression} */
 describe(&apos;DeepLearningRegression&apos;, function () {
   this.timeout(120000);
   before(async function () {
@@ -142,6 +143,7 @@ describe(&apos;DeepLearningRegression&apos;, function () {
     nnRegressionWideModel = models[ 1 ];
     return true;
   });
+  /** @test {DeepLearningRegression#constructor} */
   describe(&apos;constructor&apos;, () =&gt; {
     it(&apos;should export a named module class&apos;, () =&gt; {
       const NN = new DeepLearningRegression();
@@ -151,6 +153,7 @@ describe(&apos;DeepLearningRegression&apos;, function () {
       expect(NNConfigured.settings.test).to.eql(&apos;prop&apos;);
     });
   });
+  /** @test {DeepLearningRegression#generateLayers} */
   describe(&apos;generateLayers&apos;, () =&gt; {
     it(&apos;should generate a deep network&apos;, async () =&gt; {
       const predictions = await nnRegressionDeep.predict(input_x);

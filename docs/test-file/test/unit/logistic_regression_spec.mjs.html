@@ -96,6 +96,7 @@ function scaleColumnMap(columnName) {
     },
   };
 }
+/** @test {LogisticRegression} */
 describe(&apos;LogisticRegression&apos;, function () {
   this.timeout(120000);
   before(async function () {
@@ -148,6 +149,7 @@ describe(&apos;LogisticRegression&apos;, function () {
     nnLRClassModel = models[ 1 ];
     nnLRRegModel = models[ 2 ];
   });
+  /** @test {LogisticRegression#constructor} */
   describe(&apos;constructor&apos;, () =&gt; {
     it(&apos;should export a named module class&apos;, () =&gt; {
       const NN = new LogisticRegression();
@@ -157,6 +159,7 @@ describe(&apos;LogisticRegression&apos;, function () {
       expect(NNConfigured.settings.test).to.eql(&apos;prop&apos;);
     });
   });
+  /** @test {LogisticRegression#generateLayers} */
   describe(&apos;generateLayers&apos;, () =&gt; {
     it(&apos;should generate a classification network&apos;, async () =&gt; {
       const predictions = await nnLR.predict(input_x);

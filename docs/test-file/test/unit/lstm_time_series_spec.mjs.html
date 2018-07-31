@@ -124,7 +124,7 @@ async function getModelAccuracy(preddata){
     ) * 100), //.toFixed(2)+&apos;%&apos;,
   });
 }
-
+/** @test {LSTMTimeSeries} */
 describe(&apos;LSTMTimeSeries&apos;, function () {
   this.timeout(120000);
   before(async function () {
@@ -211,6 +211,7 @@ describe(&apos;LSTMTimeSeries&apos;, function () {
     ];
     return true;
   });
+  /** @test {LSTMTimeSeries#createDataset} */
   describe(&apos;static createDataset&apos;, () =&gt; {
     const lookback = 3;
     it(&apos;should return timeseries datasets&apos;, () =&gt; {
@@ -222,6 +223,7 @@ describe(&apos;LSTMTimeSeries&apos;, function () {
       expect(datax2[ 0 ]).to.have.lengthOf(lookback);
     });
   });
+  /** @test {LSTMTimeSeries#getTimeseriesShape} */
   describe(&apos;static getTimeseriesShape&apos;, () =&gt; {
     const [datax, datay,] = LSTMTimeSeries.createDataset(ds, 3);
     it(&apos;should calculate timeseries shape&apos;, () =&gt; {
@@ -251,6 +253,7 @@ describe(&apos;LSTMTimeSeries&apos;, function () {
       expect(tsShape3).to.eql([6, 3, 1,]);
     });
   });
+  /** @test {LSTMTimeSeries#getTimeseriesDataSet} */
   describe(&apos;static getTimeseriesDataSet&apos;, () =&gt; {
     const [datax, datay,] = LSTMTimeSeries.createDataset(ds, 3);
     it(&apos;should return timeseries data&apos;, () =&gt; {
@@ -268,6 +271,7 @@ describe(&apos;LSTMTimeSeries&apos;, function () {
       // console.log({ tsShape, });
     });
   });
+  /** @test {LSTMTimeSeries#constructor} */
   describe(&apos;constructor&apos;, () =&gt; {
     it(&apos;should export a named module class&apos;, () =&gt; {
       const NN = new LSTMTimeSeries();
@@ -277,6 +281,7 @@ describe(&apos;LSTMTimeSeries&apos;, function () {
       expect(NNConfigured.settings.test).to.eql(&apos;prop&apos;);
     });
   });
+  /** @test {LSTMTimeSeries#predict} */
   describe(&apos;async predict&apos;, () =&gt; {
     it(&apos;should allow for stateless predictions with one step time windows&apos;, async () =&gt; {
       const accr = await getModelAccuracy({ model: TSTSONE, modelname: &apos;TSTSONE&apos;, });
@@ -306,6 +311,7 @@ describe(&apos;LSTMTimeSeries&apos;, function () {
       return true;
     });
   });
+  /** @test {LSTMTimeSeries#train} */
   describe(&apos;async train&apos;, () =&gt; {
     it(&apos;should train a model with supplied test data&apos;, async () =&gt; {
       const testData = TSTSONE.getTimeseriesDataSet(x_matrix_test);
@@ -322,6 +328,7 @@ describe(&apos;LSTMTimeSeries&apos;, function () {
       return true;
     });
   });
+  /** @test {LSTMTimeSeries#generateLayers} */
   describe(&apos;generateLayers&apos;, () =&gt; {
     // it(&apos;should generate a classification network&apos;, async () =&gt; {
     //   const predictions = await nnClassification.predict(input_x);

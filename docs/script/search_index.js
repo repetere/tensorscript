@@ -48,440 +48,440 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
-    "",
-    "test-file/test/unit/base_neural_network_spec.mjs.html#lineNumber44",
+    "baseneuralnetwork lib/deep_learning.mjs~baseneuralnetwork,baseneuralnetwork",
+    "test-file/test/unit/base_neural_network_spec.mjs.html#lineNumber45",
     "BaseNeuralNetwork",
     "test"
   ],
   [
-    "",
-    "test-file/test/unit/base_neural_network_spec.mjs.html#lineNumber113",
+    "baseneuralnetwork#calculate lib/deep_learning.mjs~baseneuralnetwork#calculate,baseneuralnetwork#calculate",
+    "test-file/test/unit/base_neural_network_spec.mjs.html#lineNumber118",
     "BaseNeuralNetwork calculate",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/base_neural_network_spec.mjs.html#lineNumber114",
+    "test-file/test/unit/base_neural_network_spec.mjs.html#lineNumber119",
     "BaseNeuralNetwork calculate should throw an error if input is invalid",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/base_neural_network_spec.mjs.html#lineNumber120",
+    "test-file/test/unit/base_neural_network_spec.mjs.html#lineNumber125",
     "BaseNeuralNetwork calculate should train a NN",
     "test"
   ],
   [
-    "",
-    "test-file/test/unit/base_neural_network_spec.mjs.html#lineNumber54",
+    "baseneuralnetwork#constructor lib/deep_learning.mjs~baseneuralnetwork#constructor,baseneuralnetwork#constructor",
+    "test-file/test/unit/base_neural_network_spec.mjs.html#lineNumber56",
     "BaseNeuralNetwork constructor",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/base_neural_network_spec.mjs.html#lineNumber55",
+    "test-file/test/unit/base_neural_network_spec.mjs.html#lineNumber57",
     "BaseNeuralNetwork constructor should export a named module class",
     "test"
   ],
   [
-    "",
-    "test-file/test/unit/base_neural_network_spec.mjs.html#lineNumber63",
+    "baseneuralnetwork#generatelayers lib/deep_learning.mjs~baseneuralnetwork#generatelayers,baseneuralnetwork#generatelayers",
+    "test-file/test/unit/base_neural_network_spec.mjs.html#lineNumber66",
     "BaseNeuralNetwork generateLayers",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/base_neural_network_spec.mjs.html#lineNumber64",
+    "test-file/test/unit/base_neural_network_spec.mjs.html#lineNumber67",
     "BaseNeuralNetwork generateLayers should throw an error if generateLayers method is not implemented",
     "test"
   ],
   [
-    "",
-    "test-file/test/unit/base_neural_network_spec.mjs.html#lineNumber78",
+    "baseneuralnetwork#train lib/deep_learning.mjs~baseneuralnetwork#train,baseneuralnetwork#train",
+    "test-file/test/unit/base_neural_network_spec.mjs.html#lineNumber82",
     "BaseNeuralNetwork train",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/base_neural_network_spec.mjs.html#lineNumber79",
+    "test-file/test/unit/base_neural_network_spec.mjs.html#lineNumber83",
     "BaseNeuralNetwork train should train a NN",
     "test"
   ],
   [
-    "",
-    "test-file/test/unit/classification_spec.mjs.html#lineNumber56",
+    "deeplearningclassification lib/classification.mjs~deeplearningclassification,deeplearningclassification",
+    "test-file/test/unit/classification_spec.mjs.html#lineNumber57",
     "DeepLearningClassification",
     "test"
   ],
   [
-    "",
-    "test-file/test/unit/classification_spec.mjs.html#lineNumber118",
+    "deeplearningclassification#constructor lib/classification.mjs~deeplearningclassification#constructor,deeplearningclassification#constructor",
+    "test-file/test/unit/classification_spec.mjs.html#lineNumber120",
     "DeepLearningClassification constructor",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/classification_spec.mjs.html#lineNumber119",
+    "test-file/test/unit/classification_spec.mjs.html#lineNumber121",
     "DeepLearningClassification constructor should export a named module class",
     "test"
   ],
   [
-    "",
-    "test-file/test/unit/classification_spec.mjs.html#lineNumber127",
+    "deeplearningclassification#generatelayers lib/classification.mjs~deeplearningclassification#generatelayers,deeplearningclassification#generatelayers",
+    "test-file/test/unit/classification_spec.mjs.html#lineNumber130",
     "DeepLearningClassification generateLayers",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/classification_spec.mjs.html#lineNumber128",
+    "test-file/test/unit/classification_spec.mjs.html#lineNumber131",
     "DeepLearningClassification generateLayers should generate a classification network",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/classification_spec.mjs.html#lineNumber166",
+    "test-file/test/unit/classification_spec.mjs.html#lineNumber169",
     "DeepLearningClassification generateLayers should generate a network from layers",
     "test"
   ],
   [
-    "",
-    "test-file/test/unit/regression_spec.mjs.html#lineNumber58",
+    "deeplearningregression lib/regression.mjs~deeplearningregression,deeplearningregression",
+    "test-file/test/unit/regression_spec.mjs.html#lineNumber59",
     "DeepLearningRegression",
     "test"
   ],
   [
-    "",
-    "test-file/test/unit/regression_spec.mjs.html#lineNumber101",
+    "deeplearningregression#constructor lib/regression.mjs~deeplearningregression#constructor,deeplearningregression#constructor",
+    "test-file/test/unit/regression_spec.mjs.html#lineNumber103",
     "DeepLearningRegression constructor",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/regression_spec.mjs.html#lineNumber102",
+    "test-file/test/unit/regression_spec.mjs.html#lineNumber104",
     "DeepLearningRegression constructor should export a named module class",
     "test"
   ],
   [
-    "",
-    "test-file/test/unit/regression_spec.mjs.html#lineNumber110",
+    "deeplearningregression#generatelayers lib/regression.mjs~deeplearningregression#generatelayers,deeplearningregression#generatelayers",
+    "test-file/test/unit/regression_spec.mjs.html#lineNumber113",
     "DeepLearningRegression generateLayers",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/regression_spec.mjs.html#lineNumber111",
+    "test-file/test/unit/regression_spec.mjs.html#lineNumber114",
     "DeepLearningRegression generateLayers should generate a deep network",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/regression_spec.mjs.html#lineNumber138",
+    "test-file/test/unit/regression_spec.mjs.html#lineNumber141",
     "DeepLearningRegression generateLayers should generate a network from layers",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/regression_spec.mjs.html#lineNumber127",
+    "test-file/test/unit/regression_spec.mjs.html#lineNumber130",
     "DeepLearningRegression generateLayers should generate a wide network",
     "test"
   ],
   [
-    "",
-    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber92",
+    "lstmmultivariatetimeseries lib/lstm_multivariate_time_series.mjs~lstmmultivariatetimeseries,lstmmultivariatetimeseries",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber93",
     "LSTMMultivariateTimeSeries",
     "test"
   ],
   [
-    "",
-    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber338",
+    "lstmmultivariatetimeseries#predict lib/lstm_time_series.mjs~lstmtimeseries#predict,lstmmultivariatetimeseries#predict",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber347",
     "LSTMMultivariateTimeSeries async predict",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber345",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber354",
     "LSTMMultivariateTimeSeries async predict should allow for stateless predictions with multiple step time windows",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber339",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber348",
     "LSTMMultivariateTimeSeries async predict should allow for stateless predictions with one step time windows",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber351",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber360",
     "LSTMMultivariateTimeSeries async predict should make single predictions",
     "test"
   ],
   [
-    "",
-    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber359",
+    "lstmmultivariatetimeseries#train lib/lstm_multivariate_time_series.mjs~lstmmultivariatetimeseries#train,lstmmultivariatetimeseries#train",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber369",
     "LSTMMultivariateTimeSeries async train",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber360",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber370",
     "LSTMMultivariateTimeSeries async train should train a model with supplied test data",
     "test"
   ],
   [
-    "",
-    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber329",
+    "lstmmultivariatetimeseries#constructor lib/lstm_multivariate_time_series.mjs~lstmmultivariatetimeseries#constructor,lstmmultivariatetimeseries#constructor",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber337",
     "LSTMMultivariateTimeSeries constructor",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber330",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber338",
     "LSTMMultivariateTimeSeries constructor should export a named module class",
     "test"
   ],
   [
-    "",
-    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber380",
+    "lstmmultivariatetimeseries#generatelayers lib/lstm_multivariate_time_series.mjs~lstmmultivariatetimeseries#generatelayers,lstmmultivariatetimeseries#generatelayers",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber391",
     "LSTMMultivariateTimeSeries generateLayers",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber405",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber416",
     "LSTMMultivariateTimeSeries generateLayers should generate a network from layers",
     "test"
   ],
   [
-    "",
-    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber282",
+    "lstmmultivariatetimeseries#createdataset lib/lstm_multivariate_time_series.mjs~lstmmultivariatetimeseries#createdataset,lstmmultivariatetimeseries#createdataset",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber287",
     "LSTMMultivariateTimeSeries static createDataset",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber284",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber289",
     "LSTMMultivariateTimeSeries static createDataset should return timeseries datasets",
     "test"
   ],
   [
-    "",
-    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber196",
+    "lstmmultivariatetimeseries#drop lib/lstm_multivariate_time_series.mjs~lstmmultivariatetimeseries#drop,lstmmultivariatetimeseries#drop",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber198",
     "LSTMMultivariateTimeSeries static drop",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber197",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber199",
     "LSTMMultivariateTimeSeries static drop should drop matrix columns",
     "test"
   ],
   [
-    "",
-    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber215",
+    "lstmmultivariatetimeseries#getdropablecolumns lib/lstm_multivariate_time_series.mjs~lstmmultivariatetimeseries#getdropablecolumns,lstmmultivariatetimeseries#getdropablecolumns",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber218",
     "LSTMMultivariateTimeSeries static getDropableColumns",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber222",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber225",
     "LSTMMultivariateTimeSeries static getDropableColumns should calculate dropable columns",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber239",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber242",
     "LSTMMultivariateTimeSeries static getDropableColumns should throw an error if more that one future iteration",
     "test"
   ],
   [
-    "",
-    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber314",
+    "lstmmultivariatetimeseries#gettimeseriesdataset lib/lstm_multivariate_time_series.mjs~lstmmultivariatetimeseries#gettimeseriesdataset,lstmmultivariatetimeseries#gettimeseriesdataset",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber321",
     "LSTMMultivariateTimeSeries static getTimeseriesDataSet",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber316",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber323",
     "LSTMMultivariateTimeSeries static getTimeseriesDataSet should return timeseries data",
     "test"
   ],
   [
-    "",
-    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber294",
+    "lstmmultivariatetimeseries#gettimeseriesshape lib/lstm_multivariate_time_series.mjs~lstmmultivariatetimeseries#gettimeseriesshape,lstmmultivariatetimeseries#gettimeseriesshape",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber300",
     "LSTMMultivariateTimeSeries static getTimeseriesShape",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber297",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber303",
     "LSTMMultivariateTimeSeries static getTimeseriesShape should calculate timeseries shape",
     "test"
   ],
   [
-    "",
-    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber243",
+    "lstmmultivariatetimeseries#seriestosupervised lib/lstm_multivariate_time_series.mjs~lstmmultivariatetimeseries#seriestosupervised,lstmmultivariatetimeseries#seriestosupervised",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber247",
     "LSTMMultivariateTimeSeries static seriesToSupervised",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber257",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber261",
     "LSTMMultivariateTimeSeries static seriesToSupervised should generate supervised series",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber275",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber279",
     "LSTMMultivariateTimeSeries static seriesToSupervised should throw an error if more that one future iteration",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber278",
+    "test-file/test/unit/lstm_multivariate_time_series_spec.mjs.html#lineNumber282",
     "LSTMMultivariateTimeSeries static seriesToSupervised should throw an error if no dependent variable supplied",
     "test"
   ],
   [
-    "",
+    "lstmtimeseries lib/lstm_time_series.mjs~lstmtimeseries,lstmtimeseries",
     "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber84",
     "LSTMTimeSeries",
     "test"
   ],
   [
-    "",
-    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber236",
+    "lstmtimeseries#predict lib/lstm_time_series.mjs~lstmtimeseries#predict,lstmtimeseries#predict",
+    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber241",
     "LSTMTimeSeries async predict",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber243",
+    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber248",
     "LSTMTimeSeries async predict should allow for stateless predictions with multiple step time windows",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber237",
+    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber242",
     "LSTMTimeSeries async predict should allow for stateless predictions with one step time windows",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber257",
+    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber262",
     "LSTMTimeSeries async predict should make single predictions",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber249",
+    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber254",
     "LSTMTimeSeries async predict should make stateful predictions",
     "test"
   ],
   [
-    "",
-    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber265",
+    "lstmtimeseries#train lib/lstm_time_series.mjs~lstmtimeseries#train,lstmtimeseries#train",
+    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber271",
     "LSTMTimeSeries async train",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber266",
+    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber272",
     "LSTMTimeSeries async train should train a model with supplied test data",
     "test"
   ],
   [
-    "",
-    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber227",
+    "lstmtimeseries#constructor lib/lstm_time_series.mjs~lstmtimeseries#constructor,lstmtimeseries#constructor",
+    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber231",
     "LSTMTimeSeries constructor",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber228",
+    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber232",
     "LSTMTimeSeries constructor should export a named module class",
     "test"
   ],
   [
-    "",
-    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber281",
+    "lstmtimeseries#generatelayers lib/lstm_time_series.mjs~lstmtimeseries#generatelayers,lstmtimeseries#generatelayers",
+    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber288",
     "LSTMTimeSeries generateLayers",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber306",
+    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber313",
     "LSTMTimeSeries generateLayers should generate a network from layers",
     "test"
   ],
   [
-    "",
-    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber170",
+    "lstmtimeseries#createdataset lib/lstm_time_series.mjs~lstmtimeseries#createdataset,lstmtimeseries#createdataset",
+    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber171",
     "LSTMTimeSeries static createDataset",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber172",
+    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber173",
     "LSTMTimeSeries static createDataset should return timeseries datasets",
     "test"
   ],
   [
-    "",
-    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber210",
+    "lstmtimeseries#gettimeseriesdataset lib/lstm_time_series.mjs~lstmtimeseries#gettimeseriesdataset,lstmtimeseries#gettimeseriesdataset",
+    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber213",
     "LSTMTimeSeries static getTimeseriesDataSet",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber212",
+    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber215",
     "LSTMTimeSeries static getTimeseriesDataSet should return timeseries data",
     "test"
   ],
   [
-    "",
-    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber181",
+    "lstmtimeseries#gettimeseriesshape lib/lstm_time_series.mjs~lstmtimeseries#gettimeseriesshape,lstmtimeseries#gettimeseriesshape",
+    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber183",
     "LSTMTimeSeries static getTimeseriesShape",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber183",
+    "test-file/test/unit/lstm_time_series_spec.mjs.html#lineNumber185",
     "LSTMTimeSeries static getTimeseriesShape should calculate timeseries shape",
     "test"
   ],
   [
-    "",
-    "test-file/test/unit/logistic_regression_spec.mjs.html#lineNumber55",
+    "logisticregression lib/logistic_regression.mjs~logisticregression,logisticregression",
+    "test-file/test/unit/logistic_regression_spec.mjs.html#lineNumber56",
     "LogisticRegression",
     "test"
   ],
   [
-    "",
-    "test-file/test/unit/logistic_regression_spec.mjs.html#lineNumber107",
+    "logisticregression#constructor lib/logistic_regression.mjs~logisticregression#constructor,logisticregression#constructor",
+    "test-file/test/unit/logistic_regression_spec.mjs.html#lineNumber109",
     "LogisticRegression constructor",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/logistic_regression_spec.mjs.html#lineNumber108",
+    "test-file/test/unit/logistic_regression_spec.mjs.html#lineNumber110",
     "LogisticRegression constructor should export a named module class",
     "test"
   ],
   [
-    "",
-    "test-file/test/unit/logistic_regression_spec.mjs.html#lineNumber116",
+    "logisticregression#generatelayers lib/logistic_regression.mjs~logisticregression#generatelayers,logisticregression#generatelayers",
+    "test-file/test/unit/logistic_regression_spec.mjs.html#lineNumber119",
     "LogisticRegression generateLayers",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/logistic_regression_spec.mjs.html#lineNumber117",
+    "test-file/test/unit/logistic_regression_spec.mjs.html#lineNumber120",
     "LogisticRegression generateLayers should generate a classification network",
     "test"
   ],
   [
     "",
-    "test-file/test/unit/logistic_regression_spec.mjs.html#lineNumber130",
+    "test-file/test/unit/logistic_regression_spec.mjs.html#lineNumber133",
     "LogisticRegression generateLayers should generate a network from layers",
     "test"
   ],
