@@ -32,7 +32,7 @@ This library is a compilation of model building modules with a consistent API fo
 
 ## Basic Usage
 
-TensorScript is and ECMA Script module designed to be used in an `ES2015+` environment, if you need compiled modules for older versions of node use the compiled modules in the legacy folder.
+TensorScript is and ECMA Script module designed to be used in an `ES2015+` environment, if you need compiled modules for older versions of node use the compiled modules in the bundle folder.
 
 Please read more on tensorflow configuration options, specifying epochs, and using custom layers in [configuration](https://repetere.github.io/tensorscript/manual/overview.html#configuration).
 

@@ -1,11 +1,15 @@
 {
   "name": "tensorscript",
-  "version": "0.9.2",
+  "version": "0.9.3",
   "description": "Deep Learning Classification, LSTM Time Series, Regression and Multi-Layered Perceptrons with Tensorflow",
   "main": "index.mjs",
+  "browser": "bundle/tensorscript.umd.js",
+  "node": "bundle/tensorscript.cjs.js",
+  "es": "bundle/tensorscript.esm.js",
   "scripts": {
     "test": "nyc mocha  -r @std/esm \"test/**/*.{js,mjs}\"",
     "doc": "esdoc",
+    "build": "rollup -c",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
@@ -57,6 +61,12 @@
     "mocha": "^5.2.0",
     "modelscript": "^1.4.4",
     "nyc": "^12.0.2",
+    "rollup": "^0.63.4",
+    "rollup-plugin-async": "^1.2.0",
+    "rollup-plugin-commonjs": "^9.1.4",
+    "rollup-plugin-node-builtins": "^2.1.2",
+    "rollup-plugin-node-globals": "^1.2.1",
+    "rollup-plugin-node-resolve": "^3.3.0",
     "sinon": "^6.1.4",
     "sinon-chai": "^3.2.0"
   },
