@@ -1,12 +1,6 @@
-'use strict';
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var tensorflow = require('@tensorflow/tfjs');
-var tensorflow__default = _interopDefault(tensorflow);
-var range = _interopDefault(require('lodash.range'));
+import * as tensorflow from '@tensorflow/tfjs';
+import tensorflow__default, {  } from '@tensorflow/tfjs';
+import range from 'lodash.range';
 
 const tf = (tensorflow__default) ? tensorflow__default : tensorflow;
 // console.log({ tf });
@@ -1232,11 +1226,4 @@ function pivotVector(vectors=[]) {
   }, []);
 }
 
-exports.TensorScriptModelInterface = TensorScriptModelInterface;
-exports.BaseNeuralNetwork = BaseNeuralNetwork;
-exports.DeepLearningRegression = DeepLearningRegression;
-exports.DeepLearningClassification = DeepLearningClassification;
-exports.LogisticRegression = LogisticRegression;
-exports.MultipleLinearRegression = MultipleLinearRegression;
-exports.LSTMTimeSeries = LSTMTimeSeries;
-exports.LSTMMultivariateTimeSeries = LSTMMultivariateTimeSeries;
+export { TensorScriptModelInterface, BaseNeuralNetwork, DeepLearningRegression, DeepLearningClassification, LogisticRegression, MultipleLinearRegression, LSTMTimeSeries, LSTMMultivariateTimeSeries };

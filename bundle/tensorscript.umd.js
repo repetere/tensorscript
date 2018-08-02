@@ -2232,7 +2232,7 @@
             // @tensorflow/tfjs Copyright 2018 Google
             var version$4="0.12.3",version$1$1={"tfjs-core":version$1,"tfjs-layers":version$2,"tfjs-converter":version$3,tfjs:version$4};
 
-            var tf = /*#__PURE__*/Object.freeze({
+            var tensorflow = /*#__PURE__*/Object.freeze({
                         version: version$1$1,
                         setBackend: setBackend,
                         getBackend: getBackend,
@@ -2466,6 +2466,8 @@
                         version_converter: version$3
             });
 
+            const tf = (undefined) ? undefined : tensorflow;
+            // console.log({ tf });
             /**
              * Base class for tensorscript models
              * @interface TensorScriptModelInterface

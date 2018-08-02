@@ -2,9 +2,10 @@
  * Node 8+
  * $ node --experimental-modules manual/examples/ex_classification-iris.mjs
  */
-import ms from 'modelscript'; // used for scaling, data manipulation
+import * as ms from 'modelscript'; // used for scaling, data manipulation
 import { DeepLearningClassification, } from '../../index.mjs';
-import { scaleColumnMap, } from './helper';
+//if running on node
+// import tf from '@tensorflow/tfjs-node';
 const ConfusionMatrix = ms.ml.ConfusionMatrix;
 
 const independentVariables = [
@@ -23,14 +24,7 @@ async function main() {
   const CSVData = await ms.csv.loadCSV('./test/mock/data/iris_data.csv');
   const DataSet = new ms.DataSet(CSVData);
   DataSet.fitColumns({
-    columns: [
-      {
-        name: 'plant',
-        options: {
-          strategy: 'onehot',
-        },
-      },
-    ],
+    plant: 'onehot',
   });
   const testTrainSplit = ms.cross_validation.train_test_split(DataSet.data, { train_size: 0.7, });
   const { train, test, } = testTrainSplit;
@@ -50,26 +44,72 @@ async function main() {
   ]
   */
   const fit = {
-    epochs: 100,
+    epochs: 200,
     batchSize:10,
   };
-  const nnClassification = new DeepLearningClassification({ fit, });
+  const nnClassification = new DeepLearningClassification({ fit, }, {
+    // tf - can switch to tensorflow gpu here
+  });
+  console.log('training model');
   await nnClassification.train(x_matrix_train, y_matrix_train);
-  const estimates = await nnClassification.predict(x_matrix_test, { probability: false, });
+  const estimatesPredictions = await nnClassification.predict(x_matrix_test, { probability: false, });
   /* 
   estimates = [ 
     [ 1, 0, 0 ],
     [ 1, 0, 0 ],
+    ...
+  ]
+  y_matrix_test = [ 
     [ 1, 0, 0 ],
     [ 1, 0, 0 ],
     ...
   ]
   */
-  const estimatedValues = ms.DataSet.reverseColumnMatrix({ vectors: estimates, labels: dependentVariables, });
-  // console.log('estimatedValues', estimatedValues);
-  // console.log('y_matrix_test', y_matrix_test);
-  // const CM = ConfusionMatrix.fromLabels([[1],[2],[3]], [[1],[2],[3]]);
-  // const accuracy = CM.getAccuracy();
+  const estimatedValues = ms.DataSet.reverseColumnMatrix({ vectors: estimatesPredictions, labels: dependentVariables, });
+  const actualValues = ms.DataSet.reverseColumnMatrix({ vectors: y_matrix_test, labels: dependentVariables, });
+  /*
+  estimatedValues = [ 
+    { 'plant_Iris-setosa': 1, 'plant_Iris-versicolor': 0, 'plant_Iris-virginica': 0 },
+    { 'plant_Iris-setosa': 1, 'plant_Iris-versicolor': 0, 'plant_Iris-virginica': 0 },
+    ...
+  ];
+  actualValues = [ 
+    { 'plant_Iris-setosa': 1, 'plant_Iris-versicolor': 0, 'plant_Iris-virginica': 0 },
+    { 'plant_Iris-setosa': 1, 'plant_Iris-versicolor': 0, 'plant_Iris-virginica': 0 },
+    ...
+  ];
+  */
+  const reformattedEstimatesValues = DataSet.oneHotDecoder('plant', { data: estimatedValues, });
+  const reformattedActualValues = DataSet.oneHotDecoder('plant', { data: actualValues, });
+  /*
+  reformattedEstimatesValues = [ 
+    { plant: 'Iris-setosa' },
+    { plant: 'Iris-setosa' },
+    ...
+  ];
+  reformattedActualValues = [ 
+    { plant: 'Iris-setosa' },
+    { plant: 'Iris-setosa' },
+    ...
+  ];
+  */
+  const estimates = ms.DataSet.columnArray('plant', { data: reformattedEstimatesValues, });
+  const actuals = ms.DataSet.columnArray('plant', { data: reformattedActualValues, });
+  /*
+  estimates = [ 
+    'Iris-setosa',
+    'Iris-setosa',
+    ...
+  ];
+  actuals = [ 
+    'Iris-setosa',
+    'Iris-setosa',
+    ...
+  ];
+  */
+  const CM = ConfusionMatrix.fromLabels(actuals,estimates);
+  const accuracy = CM.getAccuracy();
+  console.log({ accuracy, }); // { accuracy: 0.9111111111111111 } ~ 91%
 }
 
 main();
