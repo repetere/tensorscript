@@ -1,6 +1,6 @@
 import chai from 'chai';
 // import sinon from 'sinon';
-import ms from 'modelscript';
+import * as ms from 'modelscript';
 import sinonChai from 'sinon-chai';
 import chaiAsPromised from 'chai-as-promised';
 import 'babel-polyfill';
