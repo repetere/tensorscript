@@ -3,6 +3,13 @@
   "destination": "./docs",
   "plugins": [
     {
+      "name": "@repetere/esdoc-inject-gtm-plugin", 
+      "option": {
+        "enable": true, 
+        "id": "UA-112697260-2"
+      }
+    },
+    {
       "name": "esdoc-ecmascript-proposal-plugin",
       "option": {"all": true}
     },
