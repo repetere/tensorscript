@@ -42,7 +42,7 @@
   ],
   "homepage": "https://repetere.github.io/tensorscript",
   "devDependencies": {
-    "@repetere/esdoc-inject-gtm-plugin": "0.0.1",
+    "@repetere/esdoc-inject-gtm-plugin": "0.0.2",
     "@std/esm": "^0.26.0",
     "babel-core": "^6.26.3",
     "babel-plugin-istanbul": "^4.1.6",
