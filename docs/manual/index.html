@@ -208,8 +208,8 @@ $ npm test</code>
 </code></pre>
 <h3 id="contributing">Contributing</h3><p>Fork, write tests and create a pull request!</p>
 <h3 id="misc">Misc</h3><p>As of Node 8, ES modules are still used behind a flag, when running natively as an ES module</p>
-<pre><code class="lang-sh"><code class="source-code prettyprint">$ node --experimental-modules my-machine-learning-script.mjs
-# Also there are native bindings that require Python 2.x, make sure if you&apos;re using Andaconda, you build with your Python 2.x bin
+<pre><code class="lang-sh"><code class="source-code prettyprint">$ node --experimental-modules manual/examples/ex_regression-boston.mjs
+# Also there are native bindings that require Python 2.x, make sure if you&apos;re using Anaconda, you build with your Python 2.x bin
 $ npm i --python=/usr/bin/python</code>
 </code></pre>
 <h2 id="license">License</h2><p>MIT</p>
@@ -286,7 +286,12 @@ async function main(){
         <div data-ice="card"><h1>Frequently Asked Questions</h1><h2>Scaling</h2><ul>
 <li><strong>How do I scale and descale my inputs?</strong><ul>
 <li>The library is only for model create, data engineering and modeling is typically handled elsewhere</li>
-<li>Check out the regression examples (hint: use model script).</li>
+<li>Check out the regression examples (hint: use <a href="https://repetere.github.io/modelscript/">ModelScript</a>).</li>
+</ul>
+</li>
+<li><strong>How do I cross validate, test/train split, K-fold, etc?</strong><ul>
+<li>(See above) The library is only for model create, data engineering and modeling is typically handled elsewhere</li>
+<li>Check out the code examples (hint: use <a href="https://repetere.github.io/modelscript/">ModelScript</a>).</li>
 </ul>
 </li>
 </ul></div>

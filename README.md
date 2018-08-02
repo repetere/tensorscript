@@ -181,8 +181,8 @@ Fork, write tests and create a pull request!
 As of Node 8, ES modules are still used behind a flag, when running natively as an ES module
 
 ```sh
-$ node --experimental-modules my-machine-learning-script.mjs
-# Also there are native bindings that require Python 2.x, make sure if you're using Andaconda, you build with your Python 2.x bin
+$ node --experimental-modules manual/examples/ex_regression-boston.mjs
+# Also there are native bindings that require Python 2.x, make sure if you're using Anaconda, you build with your Python 2.x bin
 $ npm i --python=/usr/bin/python
  ```
 

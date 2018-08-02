@@ -1,6 +1,6 @@
 /**
  * Node 8+
- * $ node --experimental-modules manual/examples/ex_classification-iris.mjs
+ * $ node --experimental-modules manual/examples/ex_classification-social.mjs
  */
 import * as ms from 'modelscript'; // used for scaling, data manipulation
 import { LogisticRegression, } from '../../index.mjs';

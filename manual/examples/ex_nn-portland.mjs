@@ -1,9 +1,9 @@
 /**
  * Node 8+
- * $ node --experimental-modules manual/examples/ex_regression-boston.mjs
+ * $ node --experimental-modules manual/examples/ex_nn-portland.mjs
  */
 import * as ms from 'modelscript'; // used for scaling, data manipulation
-import { DeepLearningRegression, } from '../../index.mjs';
+import { BaseNeuralNetwork, } from '../../index.mjs';
 //if running on node
 // import tf from '@tensorflow/tfjs-node';
 
@@ -77,9 +77,26 @@ async function main() {
     epochs: 100,
     batchSize:10,
   };
-  const nnLR = new DeepLearningRegression({ layerPreference:'deep', fit, }, {
+  const compile = {
+    loss: 'meanSquaredError',
+    optimizer: 'adam',
+  };
+  const nnLR = new BaseNeuralNetwork({
+    layerPreference: 'deep',
+    compile,
+    fit,
+  }, {
     // tf - can switch to tensorflow gpu here
   });
+  /*
+    Every BaseNeuralNetwork requires you to implement a function that add layers to a sequential tensorflow model
+  */
+  nnLR.generateLayers = function generateLayers(x_matrix, y_matrix) {
+    const xShape = this.getInputShape(x_matrix);
+    const yShape = this.getInputShape(y_matrix);
+    this.model.add(this.tf.layers.dense({ units: (xShape[ 1 ] * 2), inputShape: [ xShape[ 1 ], ], kernelInitializer: 'randomNormal', activation: 'relu', }));
+    this.model.add(this.tf.layers.dense({ units: yShape[ 1 ], kernelInitializer: 'randomNormal', }));
+  };
   console.log('training model');
   await nnLR.train(x_matrix_train, y_matrix_train);
   const estimatesPredictions = await nnLR.predict(x_matrix_test);

@@ -2466,8 +2466,9 @@
                         version_converter: version$3
             });
 
+            /* fix for rollup */
+            /* istanbul ignore next */
             const tf = (undefined) ? undefined : tensorflow;
-            // console.log({ tf });
             /**
              * Base class for tensorscript models
              * @interface TensorScriptModelInterface

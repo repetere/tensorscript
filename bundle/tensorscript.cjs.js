@@ -8,8 +8,9 @@ var tensorflow = require('@tensorflow/tfjs');
 var tensorflow__default = _interopDefault(tensorflow);
 var range = _interopDefault(require('lodash.range'));
 
+/* fix for rollup */
+/* istanbul ignore next */
 const tf = (tensorflow__default) ? tensorflow__default : tensorflow;
-// console.log({ tf });
 /**
  * Base class for tensorscript models
  * @interface TensorScriptModelInterface

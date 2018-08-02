@@ -2,8 +2,9 @@ import * as tensorflow from '@tensorflow/tfjs';
 import tensorflow__default, {  } from '@tensorflow/tfjs';
 import range from 'lodash.range';
 
+/* fix for rollup */
+/* istanbul ignore next */
 const tf = (tensorflow__default) ? tensorflow__default : tensorflow;
-// console.log({ tf });
 /**
  * Base class for tensorscript models
  * @interface TensorScriptModelInterface

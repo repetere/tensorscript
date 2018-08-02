@@ -1,6 +1,6 @@
 {
-  "coverage": "57.3%",
-  "expectCount": 89,
+  "coverage": "56.66%",
+  "expectCount": 90,
   "actualCount": 51,
   "files": {
     "lib/classification.mjs": {
@@ -63,16 +63,17 @@
       ]
     },
     "lib/model_interface.mjs": {
-      "expectCount": 24,
+      "expectCount": 25,
       "actualCount": 17,
       "undocumentLines": [
-        251,
-        256,
-        257,
+        4,
+        253,
         258,
+        259,
         260,
-        261,
-        262
+        262,
+        263,
+        264
       ]
     },
     "lib/multiple_linear_regression.mjs": {
