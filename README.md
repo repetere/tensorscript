@@ -186,6 +186,13 @@ $ node --experimental-modules manual/examples/ex_regression-boston.mjs
 $ npm i --python=/usr/bin/python
  ```
 
+ ### Special Thanks
+ - [Machine Learning Mastery](https://machinelearningmastery.com/)
+ - [Super Data Science](https://www.superdatascience.com/)
+ - [Python Programming](https://pythonprogramming.net/)
+ - [Towards Data Science](https://towardsdatascience.com/)
+ - [ml.js](https://github.com/mljs/ml)
+
 License
 ----
 
