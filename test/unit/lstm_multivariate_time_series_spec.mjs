@@ -5,6 +5,7 @@ import sinonChai from 'sinon-chai';
 import chaiAsPromised from 'chai-as-promised';
 import 'babel-polyfill';
 import { LSTMMultivariateTimeSeries, } from '../../index.mjs';
+
 const expect = chai.expect;
 const independentVariables = ['i1', 'i2', 'i3', 'i4', 'i5', 'i6', 'i7', 'i8',];
 const dependentVariables = ['o1', ];
