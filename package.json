@@ -1,6 +1,6 @@
 {
   "name": "tensorscript",
-  "version": "1.1.1",
+  "version": "1.2.2",
   "description": "Deep Learning Classification, LSTM Time Series, Regression and Multi-Layered Perceptrons with Tensorflow",
   "main": "index.mjs",
   "module": "index.mjs",
@@ -44,7 +44,7 @@
   "devDependencies": {
     "@repetere/esdoc-inject-gtm-plugin": "^0.1.0",
     "@std/esm": "^0.26.0",
-    "@tensorflow/tfjs-node": "^0.1.18",
+    "@tensorflow/tfjs-node": "^0.1.20",
     "babel-core": "^6.26.3",
     "babel-plugin-istanbul": "^4.1.6",
     "babel-polyfill": "^6.26.0",
@@ -63,7 +63,7 @@
     "esdoc-standard-plugin": "^1.0.0",
     "esm": "^3.0.72",
     "mocha": "^5.2.0",
-    "modelscript": "^2.0.10",
+    "modelscript": "^2.1.0",
     "nyc": "^12.0.2",
     "rollup": "^0.63.4",
     "rollup-plugin-alias": "^1.4.0",
