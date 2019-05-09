@@ -4,7 +4,7 @@ import * as ms from 'modelscript';
 import sinonChai from 'sinon-chai';
 import chaiAsPromised from 'chai-as-promised';
 import 'babel-polyfill';
-import { MultipleLinearRegression, } from '../../index.mjs';
+import { MultipleLinearRegression, } from '../../index.js';
 import '@tensorflow/tfjs-node';
 const expect = chai.expect;
 const independentVariables = ['sqft', 'bedrooms', ];

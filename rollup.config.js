@@ -9,13 +9,21 @@ import pkg from './package.json';
 export default [
   // browser-friendly UMD build
   {
-    input: 'index.mjs',
-    output: {
-      exports: 'named',
-      file: pkg.browser,
-      name: 'tensorscript',
-      format: 'umd',
-    },
+    input: 'index.js',
+    output: [
+      {
+        exports: 'named',
+        file: pkg.browser,
+        name: 'tensorscript',
+        format: 'umd',
+      },
+      {
+        exports: 'named',
+        file: pkg.web,
+        name: 'tensorscript',
+        format: 'iife',
+      },
+    ],
     plugins: [
       resolve({
         preferBuiltins: true,
@@ -42,7 +50,7 @@ export default [
   // an array for the `output` option, where we can specify 
   // `file` and `format` for each target)
   {
-    input: 'index.mjs',
+    input: 'index.js',
     external: [
       '@tensorflow/tfjs',
       'lodash.range',

@@ -1,5 +1,5 @@
 import chai from 'chai';
-import { TensorScriptModelInterface, size, flatten, } from '../../lib/model_interface.mjs';
+import { TensorScriptModelInterface, size, flatten, } from '../../lib/model_interface.js';
 import assert from 'assert';
 const expect = chai.expect;
 const array = {
