@@ -4,13 +4,14 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var tensorflow = require('@tensorflow/tfjs');
-var tensorflow__default = _interopDefault(tensorflow);
+var tf = require('@tensorflow/tfjs-node');
 var range = _interopDefault(require('lodash.range'));
 
+// import * as tensorflow from '@tensorflow/tfjs';
+// console.log({tensorflow})
 /* fix for rollup */
 /* istanbul ignore next */
-const tf = (tensorflow__default) ? tensorflow__default : tensorflow;
+// const tf = (tensorflow && tensorflow.default) ? tensorflow.default : tensorflow;
 /**
  * Base class for tensorscript models
  * @interface TensorScriptModelInterface
@@ -28,7 +29,7 @@ class TensorScriptModelInterface {
    */
   constructor(options = {}, properties = {}) {
     /** @type {Object} */
-    this.settings = options;
+    this.settings = Object.assign({ verbose:0, },options);
     /** @type {Object} */
     this.model = properties.model;
     /** @type {Object} */
@@ -1233,11 +1234,11 @@ function pivotVector(vectors=[]) {
   }, []);
 }
 
-exports.TensorScriptModelInterface = TensorScriptModelInterface;
 exports.BaseNeuralNetwork = BaseNeuralNetwork;
-exports.DeepLearningRegression = DeepLearningRegression;
 exports.DeepLearningClassification = DeepLearningClassification;
+exports.DeepLearningRegression = DeepLearningRegression;
+exports.LSTMMultivariateTimeSeries = LSTMMultivariateTimeSeries;
+exports.LSTMTimeSeries = LSTMTimeSeries;
 exports.LogisticRegression = LogisticRegression;
 exports.MultipleLinearRegression = MultipleLinearRegression;
-exports.LSTMTimeSeries = LSTMTimeSeries;
-exports.LSTMMultivariateTimeSeries = LSTMMultivariateTimeSeries;
+exports.TensorScriptModelInterface = TensorScriptModelInterface;

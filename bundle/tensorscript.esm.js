@@ -1,10 +1,11 @@
-import * as tensorflow from '@tensorflow/tfjs';
-import tensorflow__default, {  } from '@tensorflow/tfjs';
+import * as tf from '@tensorflow/tfjs-node';
 import range from 'lodash.range';
 
+// import * as tensorflow from '@tensorflow/tfjs';
+// console.log({tensorflow})
 /* fix for rollup */
 /* istanbul ignore next */
-const tf = (tensorflow__default) ? tensorflow__default : tensorflow;
+// const tf = (tensorflow && tensorflow.default) ? tensorflow.default : tensorflow;
 /**
  * Base class for tensorscript models
  * @interface TensorScriptModelInterface
@@ -22,7 +23,7 @@ class TensorScriptModelInterface {
    */
   constructor(options = {}, properties = {}) {
     /** @type {Object} */
-    this.settings = options;
+    this.settings = Object.assign({ verbose:0, },options);
     /** @type {Object} */
     this.model = properties.model;
     /** @type {Object} */
@@ -1227,4 +1228,4 @@ function pivotVector(vectors=[]) {
   }, []);
 }
 
-export { TensorScriptModelInterface, BaseNeuralNetwork, DeepLearningRegression, DeepLearningClassification, LogisticRegression, MultipleLinearRegression, LSTMTimeSeries, LSTMMultivariateTimeSeries };
+export { BaseNeuralNetwork, DeepLearningClassification, DeepLearningRegression, LSTMMultivariateTimeSeries, LSTMTimeSeries, LogisticRegression, MultipleLinearRegression, TensorScriptModelInterface };
