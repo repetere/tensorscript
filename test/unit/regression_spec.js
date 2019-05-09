@@ -4,7 +4,7 @@ import * as ms from 'modelscript';
 import sinonChai from 'sinon-chai';
 import chaiAsPromised from 'chai-as-promised';
 import 'babel-polyfill';
-import { DeepLearningRegression, } from '../../index.mjs';
+import { DeepLearningRegression, } from '../../index.js';
 const expect = chai.expect;
 const independentVariables = [
   'CRIM',

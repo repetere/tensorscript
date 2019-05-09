@@ -4,7 +4,7 @@ import * as ms from 'modelscript';
 import sinonChai from 'sinon-chai';
 import chaiAsPromised from 'chai-as-promised';
 import 'babel-polyfill';
-import { LSTMTimeSeries, } from '../../index.mjs';
+import { LSTMTimeSeries, } from '../../index.js';
 const expect = chai.expect;
 const independentVariables = [
   'Passengers',
@@ -251,14 +251,14 @@ describe('LSTMTimeSeries', function () {
       expect(accr.accuracy).to.be.ok;
       return true;
     });
-    it('should make stateful predictions', async () => {
-      const accr = await getModelAccuracy({ model: TSTSStateful, modelname: 'TSTSStateful', });
-      const accr2 = await getModelAccuracy({ model: TSTSStatefulONE, modelname: 'TSTSStatefulONE', });
-      // console.log({ accr, accr2 });
-      expect(accr.accuracy).to.be.ok;
-      expect(accr2.accuracy).to.be.ok;
-      return true;
-    });
+    // it('should make stateful predictions', async () => {
+    //   const accr = await getModelAccuracy({ model: TSTSStateful, modelname: 'TSTSStateful', });
+    //   const accr2 = await getModelAccuracy({ model: TSTSStatefulONE, modelname: 'TSTSStatefulONE', });
+    //   // console.log({ accr, accr2 });
+    //   expect(accr.accuracy).to.be.ok;
+    //   expect(accr2.accuracy).to.be.ok;
+    //   return true;
+    // });
     it('should make single predictions', async () => {
       const testData = TSTSONE.getTimeseriesDataSet(x_matrix_test);
       const predictions = await TSTSONE.predict(testData.x_matrix[ 0 ]);

@@ -3,7 +3,7 @@ import chai from 'chai';
 import sinonChai from 'sinon-chai';
 import chaiAsPromised from 'chai-as-promised';
 import 'babel-polyfill';
-import { TensorScriptModelInterface, } from '../../index.mjs';
+import { TensorScriptModelInterface, } from '../../index.js';
 const expect = chai.expect;
 chai.use(sinonChai);
 chai.use(chaiAsPromised);
