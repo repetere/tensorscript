@@ -36015,9 +36015,10 @@
 	      throw new ReferenceError('calculate method is not implemented');
 	    }
 	    /**
-	     * Loads a saved tensoflow / keras model
+	     * Loads a saved tensoflow / keras model, this is an alias for 
 	     * @param {Object} options - tensorflow load model options
 	     * @return {Object} tensorflow model
+	     * @see {@link https://www.tensorflow.org/js/guide/save_load#loading_a_tfmodel}
 	     */
 
 	  }, {
@@ -36031,13 +36032,15 @@
 	            switch (_context.prev = _context.next) {
 	              case 0:
 	                _context.next = 2;
-	                return this.tf.loadModel(options);
+	                return this.tf.loadLayersModel(options);
 
 	              case 2:
 	                this.model = _context.sent;
+	                this.xShape = this.model.inputs[0].shape;
+	                this.yShape = this.model.outputs[0].shape;
 	                return _context.abrupt("return", this.model);
 
-	              case 4:
+	              case 6:
 	              case "end":
 	                return _context.stop();
 	            }
@@ -36052,6 +36055,45 @@
 	      return loadModel;
 	    }()
 	    /**
+	     * saves a tensorflow model, this is an alias for 
+	     * @param {Object} options - tensorflow save model options
+	     * @return {Object} tensorflow model
+	     * @see {@link https://www.tensorflow.org/js/guide/save_load#save_a_tfmodel}
+	     */
+
+	  }, {
+	    key: "saveModel",
+	    value: function () {
+	      var _saveModel = asyncToGenerator(
+	      /*#__PURE__*/
+	      regenerator.mark(function _callee2(options) {
+	        var savedStatus;
+	        return regenerator.wrap(function _callee2$(_context2) {
+	          while (1) {
+	            switch (_context2.prev = _context2.next) {
+	              case 0:
+	                _context2.next = 2;
+	                return this.model.save(options);
+
+	              case 2:
+	                savedStatus = _context2.sent;
+	                return _context2.abrupt("return", savedStatus);
+
+	              case 4:
+	              case "end":
+	                return _context2.stop();
+	            }
+	          }
+	        }, _callee2, this);
+	      }));
+
+	      function saveModel(_x2) {
+	        return _saveModel.apply(this, arguments);
+	      }
+
+	      return saveModel;
+	    }()
+	    /**
 	     * Returns prediction values from tensorflow model
 	     * @param {Array<Array<number>>|Array<number>} input_matrix - new test independent variables 
 	     * @param {Boolean} [options.json=true] - return object instead of typed array
@@ -36064,21 +36106,21 @@
 	    value: function () {
 	      var _predict = asyncToGenerator(
 	      /*#__PURE__*/
-	      regenerator.mark(function _callee2(input_matrix) {
+	      regenerator.mark(function _callee3(input_matrix) {
 	        var _this = this;
 
 	        var options,
 	            x_matrix,
 	            config,
-	            _args2 = arguments;
-	        return regenerator.wrap(function _callee2$(_context2) {
+	            _args3 = arguments;
+	        return regenerator.wrap(function _callee3$(_context3) {
 	          while (1) {
-	            switch (_context2.prev = _context2.next) {
+	            switch (_context3.prev = _context3.next) {
 	              case 0:
-	                options = _args2.length > 1 && _args2[1] !== undefined ? _args2[1] : {};
+	                options = _args3.length > 1 && _args3[1] !== undefined ? _args3[1] : {};
 
 	                if (!(!input_matrix || Array.isArray(input_matrix) === false)) {
-	                  _context2.next = 3;
+	                  _context3.next = 3;
 	                  break;
 	                }
 
@@ -36090,10 +36132,12 @@
 	                  json: true,
 	                  probability: true
 	                }, options);
-	                return _context2.abrupt("return", this.calculate(x_matrix).data().then(function (predictions) {
+	                return _context3.abrupt("return", this.calculate(x_matrix).data().then(function (predictions) {
+	                  // console.log({ predictions });
 	                  if (config.json === false) {
 	                    return predictions;
 	                  } else {
+	                    if (!_this.yShape) throw new Error('Model is missing yShape');
 	                    var shape = [x_matrix.length, _this.yShape[1]];
 	                    var predictionValues = options.probability === false ? Array.from(predictions).map(Math.round) : Array.from(predictions);
 	                    return _this.reshape(predictionValues, shape);
@@ -36104,13 +36148,13 @@
 
 	              case 6:
 	              case "end":
-	                return _context2.stop();
+	                return _context3.stop();
 	            }
 	          }
-	        }, _callee2, this);
+	        }, _callee3, this);
 	      }));
 
-	      function predict(_x2) {
+	      function predict(_x3) {
 	        return _predict.apply(this, arguments);
 	      }
 

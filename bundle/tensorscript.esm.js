@@ -148,13 +148,26 @@ class TensorScriptModelInterface {
     throw new ReferenceError('calculate method is not implemented');
   }
   /**
-   * Loads a saved tensoflow / keras model
+   * Loads a saved tensoflow / keras model, this is an alias for 
    * @param {Object} options - tensorflow load model options
    * @return {Object} tensorflow model
+   * @see {@link https://www.tensorflow.org/js/guide/save_load#loading_a_tfmodel}
    */
   async loadModel(options) {
-    this.model = await this.tf.loadModel(options);
+    this.model = await this.tf.loadLayersModel(options);
+    this.xShape = this.model.inputs[0].shape;
+    this.yShape = this.model.outputs[0].shape;
     return this.model;
+  }
+  /**
+   * saves a tensorflow model, this is an alias for 
+   * @param {Object} options - tensorflow save model options
+   * @return {Object} tensorflow model
+   * @see {@link https://www.tensorflow.org/js/guide/save_load#save_a_tfmodel}
+   */
+  async saveModel(options) {
+    const savedStatus = await this.model.save(options);
+    return savedStatus;
   }
   /**
    * Returns prediction values from tensorflow model
@@ -177,9 +190,11 @@ class TensorScriptModelInterface {
     return this.calculate(x_matrix)
       .data()
       .then(predictions => {
+        // console.log({ predictions });
         if (config.json === false) {
           return predictions;
         } else {
+          if (!this.yShape) throw new Error('Model is missing yShape');
           const shape = [x_matrix.length, this.yShape[ 1 ], ];
           const predictionValues = (options.probability === false) ? Array.from(predictions).map(Math.round) : Array.from(predictions);
           return this.reshape(predictionValues, shape);

@@ -1,6 +1,6 @@
 {
   "name": "tensorscript",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Deep Learning Classification, LSTM Time Series, Regression and Multi-Layered Perceptrons with Tensorflow",
   "main": "index.js",
   "module": "index.js",
@@ -11,6 +11,7 @@
   "es": "bundle/tensorscript.esm.js",
   "scripts": {
     "test": "nyc mocha  -r @std/esm \"test/**/*.{js,mjs}\"",
+    "test-file": "nyc mocha  -r @std/esm ",
     "doc": "esdoc",
     "build": "rollup -c && esdoc",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
@@ -69,6 +70,7 @@
     "esdoc-publish-markdown-plugin": "^1.1.0",
     "esdoc-standard-plugin": "^1.0.0",
     "esm": "^3.2.22",
+    "fs-extra": "^7.0.1",
     "mocha": "^6.1.4",
     "modelscript": "^2.1.3",
     "nyc": "^14.1.0",
@@ -94,10 +96,12 @@
   "@std/esm": "cjs",
   "nyc": {
     "extension": [
-      ".mjs"
+      ".mjs",
+      ".js"
     ],
     "include": [
-      "lib/**/*.mjs"
+      "lib/**/*.mjs",
+      "lib/**/*.js"
     ],
     "require": [
       "@std/esm"
