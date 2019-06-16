@@ -6,3 +6,4 @@ export { LogisticRegression, } from './lib/logistic_regression.js';
 export { MultipleLinearRegression, } from './lib/multiple_linear_regression.js';
 export { LSTMTimeSeries, } from './lib/lstm_time_series.js';
 export { LSTMMultivariateTimeSeries, } from './lib/lstm_multivariate_time_series.js';
+export { TextEmbedding, } from './lib/text_embedding.js';

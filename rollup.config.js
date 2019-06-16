@@ -109,6 +109,7 @@ export default [
     external: [
       '@tensorflow/tfjs',
       '@tensorflow/tfjs-node',
+      '@tensorflow-models/universal-sentence-encoder',
       'lodash.range',
       // 'lodash.rangeright'
     ],
