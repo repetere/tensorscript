@@ -89,9 +89,9 @@
     "sinon-chai": "^3.3.0"
   },
   "dependencies": {
-    "@tensorflow-models/universal-sentence-encoder": "^1.0.3",
-    "@tensorflow/tfjs": "^1.2.1",
-    "@tensorflow/tfjs-node": "^1.2.1",
+    "@tensorflow-models/universal-sentence-encoder": "^1.1.1",
+    "@tensorflow/tfjs": "^1.2.7",
+    "@tensorflow/tfjs-node": "^1.2.7",
     "lodash.range": "^3.2.0"
   },
   "@std/esm": "cjs",
