@@ -1,6 +1,6 @@
 {
   "name": "tensorscript",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "Deep Learning Classification, LSTM Time Series, Regression and Multi-Layered Perceptrons with Tensorflow",
   "main": "index.js",
   "module": "index.js",
