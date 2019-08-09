@@ -36126,6 +36126,9 @@ var tensorscript = (function (exports) {
 	    /** @type {Object} */
 
 	    this.tf = properties.tf || tf;
+	    /** @type {Boolean} */
+
+	    this.trained = false;
 	    /** @type {Function} */
 
 	    this.reshape = TensorScriptModelInterface.reshape;
@@ -36618,18 +36621,22 @@ var tensorscript = (function (exports) {
 	                ys = this.tf.tensor(y_matrix, yShape);
 	                this.xShape = xShape;
 	                this.yShape = yShape;
-	                this.model = this.tf.sequential();
-	                this.generateLayers.call(this, x_matrix, y_matrix, layers || this.layers, x_test, y_test);
-	                this.model.compile(this.settings.compile);
-	                _context.next = 11;
+
+	                if (this.trained === false) {
+	                  this.model = this.tf.sequential();
+	                  this.generateLayers.call(this, x_matrix, y_matrix, layers || this.layers, x_test, y_test);
+	                  this.model.compile(this.settings.compile);
+	                }
+
+	                _context.next = 9;
 	                return this.model.fit(xs, ys, this.settings.fit);
 
-	              case 11:
+	              case 9:
 	                xs.dispose();
 	                ys.dispose();
 	                return _context.abrupt("return", this.model);
 
-	              case 14:
+	              case 12:
 	              case "end":
 	                return _context.stop();
 	            }
@@ -37827,24 +37834,27 @@ var tensorscript = (function (exports) {
 	                ys = this.tf.tensor(y_matrix, yShape);
 	                this.xShape = timeseriesShape;
 	                this.yShape = yShape;
-	                this.model = this.tf.sequential();
-	                this.generateLayers.call(this, x_matrix_timeseries, y_matrix, layers || this.layers, x_test, y_test);
-	                this.model.compile(this.settings.compile);
 
-	                if (this.settings.stateful) {
-	                  this.settings.fit.shuffle = false;
+	                if (this.trained === false) {
+	                  this.model = this.tf.sequential();
+	                  this.generateLayers.call(this, x_matrix_timeseries, y_matrix, layers || this.layers, x_test, y_test);
+	                  this.model.compile(this.settings.compile);
+
+	                  if (this.settings.stateful) {
+	                    this.settings.fit.shuffle = false;
+	                  }
 	                }
 
-	                _context.next = 14;
+	                _context.next = 11;
 	                return this.model.fit(xs, ys, this.settings.fit);
 
-	              case 14:
+	              case 11:
 	                // this.model.summary();
 	                xs.dispose();
 	                ys.dispose();
 	                return _context.abrupt("return", this.model);
 
-	              case 17:
+	              case 14:
 	              case "end":
 	                return _context.stop();
 	            }
@@ -38342,24 +38352,27 @@ var tensorscript = (function (exports) {
 	                ys = this.tf.tensor(y_matrix, yShape);
 	                this.xShape = timeseriesShape;
 	                this.yShape = yShape;
-	                this.model = this.tf.sequential();
-	                this.generateLayers.call(this, x_matrix_timeseries, y_matrix, layers || this.layers, x_test, y_test);
-	                this.model.compile(this.settings.compile);
+
+	                if (this.trained === false) {
+	                  this.model = this.tf.sequential();
+	                  this.generateLayers.call(this, x_matrix_timeseries, y_matrix, layers || this.layers, x_test, y_test);
+	                  this.model.compile(this.settings.compile);
+	                }
 
 	                if (x_test && y_test) {
 	                  this.settings.fit.validation_data = [x_test, y_test];
 	                }
 
-	                _context.next = 14;
+	                _context.next = 12;
 	                return this.model.fit(xs, ys, this.settings.fit);
 
-	              case 14:
+	              case 12:
 	                // this.model.summary();
 	                xs.dispose();
 	                ys.dispose();
 	                return _context.abrupt("return", this.model);
 
-	              case 17:
+	              case 15:
 	              case "end":
 	                return _context.stop();
 	            }

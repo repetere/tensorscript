@@ -35,6 +35,8 @@ class TensorScriptModelInterface {
     this.model = properties.model;
     /** @type {Object} */
     this.tf = properties.tf || tf;
+    /** @type {Boolean} */
+    this.trained = false;
     /** @type {Function} */
     this.reshape = TensorScriptModelInterface.reshape;
     /** @type {Function} */
@@ -374,9 +376,11 @@ class BaseNeuralNetwork extends TensorScriptModelInterface {
     const ys = this.tf.tensor(y_matrix, yShape);
     this.xShape = xShape;
     this.yShape = yShape;
-    this.model = this.tf.sequential();
-    this.generateLayers.call(this, x_matrix, y_matrix, layers || this.layers, x_test, y_test);
-    this.model.compile(this.settings.compile);
+    if (this.trained === false) {
+      this.model = this.tf.sequential();
+      this.generateLayers.call(this, x_matrix, y_matrix, layers || this.layers, x_test, y_test);
+      this.model.compile(this.settings.compile);
+    }
     await this.model.fit(xs, ys, this.settings.fit);
     xs.dispose();
     ys.dispose();
@@ -820,11 +824,13 @@ class LSTMTimeSeries extends BaseNeuralNetwork {
     const ys = this.tf.tensor(y_matrix, yShape);
     this.xShape = timeseriesShape;
     this.yShape = yShape;
-    this.model = this.tf.sequential();
-    this.generateLayers.call(this, x_matrix_timeseries, y_matrix, layers || this.layers, x_test, y_test);
-    this.model.compile(this.settings.compile);
-    if (this.settings.stateful) {
-      this.settings.fit.shuffle = false;
+    if (this.trained === false) {
+      this.model = this.tf.sequential();
+      this.generateLayers.call(this, x_matrix_timeseries, y_matrix, layers || this.layers, x_test, y_test);
+      this.model.compile(this.settings.compile);
+      if (this.settings.stateful) {
+        this.settings.fit.shuffle = false;
+      }
     }
     await this.model.fit(xs, ys, this.settings.fit);
     // this.model.summary();
@@ -1213,9 +1219,11 @@ const dropped = getDropableColumns(8, n_in, n_out); //=> [ 10, 11, 12, 13, 14, 1
     const ys = this.tf.tensor(y_matrix, yShape);
     this.xShape = timeseriesShape;
     this.yShape = yShape;
-    this.model = this.tf.sequential();
-    this.generateLayers.call(this, x_matrix_timeseries, y_matrix, layers || this.layers, x_test, y_test);
-    this.model.compile(this.settings.compile);
+    if (this.trained===false) {
+      this.model = this.tf.sequential();
+      this.generateLayers.call(this, x_matrix_timeseries, y_matrix, layers || this.layers, x_test, y_test);
+      this.model.compile(this.settings.compile);
+    }
     if (x_test && y_test) {
       this.settings.fit.validation_data = [ x_test, y_test, ];
     }
