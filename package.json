@@ -90,7 +90,7 @@
   },
   "dependencies": {
     "@tensorflow-models/universal-sentence-encoder": "^1.1.1",
-    "@tensorflow/tfjs": "^1.2.7",
+    "@tensorflow/tfjs": "^2.0.0",
     "@tensorflow/tfjs-node": "^1.2.7",
     "lodash.range": "^3.2.0"
   },
