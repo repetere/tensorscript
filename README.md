@@ -1,4 +1,4 @@
-##🚨🚨⚠️⚠️ THIS REPO HAS MOVED TO: [JSONM Models](https://github.com/repetere/jsonm-model) ⚠️⚠️🚨🚨##
+# 🚨🚨⚠️⚠️ THIS REPO HAS MOVED TO: [JSONM Models](https://github.com/repetere/jsonm-model) ⚠️⚠️🚨🚨 #
 
 # TensorScript - Machine Learning and Neural Networks with Tensorflow
 
