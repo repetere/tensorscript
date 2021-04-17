@@ -1,3 +1,5 @@
+##🚨🚨⚠️⚠️ THIS REPO HAS MOVED TO: [JSONM Models](https://github.com/repetere/jsonm-model) ⚠️⚠️🚨🚨##
+
 # TensorScript - Machine Learning and Neural Networks with Tensorflow
 
 [![Coverage Status](https://coveralls.io/repos/github/repetere/tensorscript/badge.svg?branch=master)](https://coveralls.io/github/repetere/tensorscript?branch=master) [![Build Status](https://travis-ci.org/repetere/tensorscript.svg?branch=master)](https://travis-ci.org/repetere/tensorscript)
